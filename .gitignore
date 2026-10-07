@@ -1,0 +1,17 @@
+# data sintetis lengkap (±45 MB) - buat ulang dengan generate_data.py
+data/
+hasil/triase_peserta.csv
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.ipynb_checkpoints/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
