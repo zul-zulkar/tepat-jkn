@@ -2,7 +2,9 @@
 
 Prototipe untuk **BPJS Kesehatan Healthkathon 2026**, kategori **Efisiensi Risiko pada Peserta**.
 
-**Tim:** _(isi nama anggota)_
+**Tim:**
+1. Muhammad Zulkarnain
+2. Zenda Oka Briantiko
 
 > **Semua data di repositori ini sintetis.** Tidak ada data peserta JKN atau data DTSEN asli.
 > Parameter perilaku dan biaya **ilustratif** (bukan tarif INA-CBG) dan wajib dikalibrasi bersama BPJS Kesehatan.
