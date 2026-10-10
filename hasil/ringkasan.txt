@@ -1,10 +1,17 @@
+== 0. CAKUPAN (Perpres 59/2024 Ps. 42 ayat 7-8) ==
+peserta PBPU/BP mandiri yang dianalisis : 20,000
+dikeluarkan, PPU                         : 1,543
+dikeluarkan, PBI                         : 1,036
+dikeluarkan, PBPU_BP_Pemda               : 421
+reaktivasi segmen lain yang tidak ikut dihitung : 159 (tunggakan pemberi kerja, bukan pola bayar peserta)
+
 == 1. BUNCHING DI BATAS DENDA 45 HARI ==
 kasus rawat inap terjadwal 0-120 hari setelah reaktivasi : 1,295
 lunas tunggakan di hari masuk RS (hari 0) : 62 kasus (sinyal terpisah)
 massa berlebih hari 46-60 : 169 kasus (IK95% bootstrap 131-213)
 catatan: kasus yang ditunda bisa berasal dari hari 0-45 mana pun. Untuk data nyata,
          pakai estimator dengan batasan integrasi (Chetty dkk. 2011).
-estimasi denda terhindar  : Rp777 juta
+estimasi denda terhindar  : Rp745 juta (satu kali rawat inap per reaktivasi, paling tinggi Rp20 juta; biaya sintetis)
 
 == 2. RUTE TRIASE (tanpa label) ==
                             peserta  tunggakan_rp_miliar  klaim_rp_miliar  iuran_rp_miliar

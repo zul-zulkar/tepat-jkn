@@ -7,13 +7,28 @@ Data ini fiktif. Tidak ada data peserta JKN atau data DTSEN asli di dalamnya.
 Parameter perilaku dan biaya juga karangan kami, jadi kalibrasi dulu sebelum
 mengutip angkanya.
 
-Aturan JKN yang kami modelkan (disederhanakan):
-  - Iuran porsi peserta: Kelas 1 Rp150.000, Kelas 2 Rp100.000, Kelas 3 Rp42.000.
+Aturan JKN yang kami modelkan (disederhanakan; rujukan lengkap ada di README):
+  - Cakupan analisis: PBPU/BP yang iurannya dibayar sendiri. Peserta PPU, PBI, dan
+    PBPU/BP yang iurannya dibayar Pemda dibuat terpisah (--n_lain) supaya model bisa
+    mengeluarkannya. Denda tidak berlaku bagi PBI dan PBPU/BP-Pemda (Perpres 59/2024
+    Ps. 42 ayat 8); denda PPU ditanggung pemberi kerja (Ps. 42 ayat 7).
+  - Iuran per orang per bulan: Kelas 1 Rp150.000, Kelas 2 Rp100.000, Kelas 3 Rp42.000
+    (Rp35.000 dibayar peserta + Rp7.000 bantuan pemerintah; Perpres 64/2020 Ps. 34
+    ayat 1 huruf b). Prototipe menagih Rp42.000 penuh untuk kelas 3, termasuk bulan
+    tertunggak. Bantuan hanya untuk peserta aktif (Ps. 34 ayat 4), jadi porsi yang
+    ditagih untuk bulan tertunggak masih TERBUKA.
   - Peserta baru membayar iuran pertama >= 14 hari setelah daftar, aktif sejak bayar.
-  - Peserta nonaktif kalau ada bulan sebelum bulan berjalan yang belum ia bayar.
-  - Peserta aktif lagi pada hari ia melunasi tunggakan (maks 24 bulan terakhir).
-  - Denda pelayanan untuk rawat inap dalam 45 hari setelah reaktivasi
-        = 5% x biaya x min(bulan tertunggak, 12), maksimal Rp30 juta.
+    Dasar hukum masa tunggu ini belum kami verifikasi (TERBUKA).
+  - Penjaminan dihentikan sementara per Peserta kalau ada bulan sebelum bulan berjalan
+    yang belum dibayar (Perpres 59/2024 Ps. 42 ayat 1).
+  - Peserta aktif lagi pada hari ia melunasi tunggakan, paling banyak 24 bulan
+    (Ps. 42 ayat 3).
+  - Denda pelayanan untuk SATU KALI rawat inap tingkat lanjutan dalam 45 hari sejak
+    aktif kembali = 5% x biaya x min(bulan tertunggak, 12), paling tinggi Rp20 juta
+    (Ps. 42 ayat 5-6). "Biaya" di sini biaya klaim sintetis, bukan paket INA-CBG.
+    Angka 2,5% dan Rp30 juta hanya untuk skema transisi 2020 (ayat 6a), tidak dipakai.
+  - Unit simulasi adalah peserta. Tagihan kolektif per KK (Peraturan BPJS 5/2018
+    Ps. 12 ayat 4 dan Ps. 14 ayat 4) belum dimodelkan.
 
 Segmen laten (ground truth). Generator menyimpan label di tabel terpisah. Jangan
 pakai label itu untuk melatih model yang kamu sebut "tanpa label".
@@ -30,6 +45,7 @@ pemutakhiran. Orang yang jatuh miskin setelah tanggal itu sering masih tercatat 
 
 Pemakaian:
     python generate_data.py --n 20000 --seed 2026 --out data
+    (--n = peserta PBPU/BP mandiri; --n_lain = peserta segmen lain, bawaan 15% dari n)
 """
 import argparse
 import bisect
@@ -71,8 +87,24 @@ def ym(i):
     return f"{2021 + y}-{m + 1:02d}"
 
 
-IURAN = {1: 150_000, 2: 100_000, 3: 42_000}
+IURAN = {1: 150_000, 2: 100_000, 3: 42_000}   # Perpres 64/2020 Ps. 34 ayat (1) huruf b
 TARIF_KELAS = {1: 1.2, 2: 1.1, 3: 1.0}
+
+# Denda pelayanan, Perpres 59/2024 Ps. 42 ayat (5)-(6)
+JENDELA_DENDA = 45               # hari sejak status aktif kembali
+DENDA_PERSEN = 0.05              # per bulan tertunggak
+DENDA_MAKS_BULAN = 12
+DENDA_MAKS = 20_000_000
+
+
+def hitung_denda(biaya, bulan_tertunggak):
+    return int(min(DENDA_PERSEN * biaya * min(bulan_tertunggak, DENDA_MAKS_BULAN), DENDA_MAKS))
+
+
+# Segmen di luar cakupan (Perpres 59/2024 Ps. 42 ayat 7-8)
+SEG_LAIN = ["PPU", "PBI", "PBPU_BP_Pemda"]
+SEG_LAIN_P = [0.50, 0.35, 0.15]
+PEMBAYAR = {"PPU": "pemberi_kerja", "PBI": "pemerintah_pusat", "PBPU_BP_Pemda": "pemerintah_daerah"}
 
 SEGMEN = ["patuh", "lalai", "tidak_mampu", "reaktivasi_saat_butuh"]
 SEG_P = [0.52, 0.25, 0.13, 0.10]
@@ -120,7 +152,7 @@ def p_reaktivasi(seg, d, shock, jenis):
     return base
 
 
-def simulasi(n, seed):
+def simulasi(n, seed, n_lain=0):
     rng = np.random.default_rng(seed)
 
     n_w = 40
@@ -157,6 +189,7 @@ def simulasi(n, seed):
 
         settled = [INF] * N_MONTH            # hari lunas tiap bulan kewajiban
         reakt = []                           # (hari, bulan_tertunggak)
+        kena_denda = set()                   # reaktivasi yang dendanya sudah dipakai
         hari_bayar = []
         heap = []
         hold = [-INF]                        # reaktivasi_saat_butuh tetap bayar sampai hari ini
@@ -298,8 +331,10 @@ def simulasi(n, seed):
                 if cfg["layanan"] == "RITL":
                     for r_day, n_t in reversed(reakt):
                         if r_day <= d:
-                            if d - r_day <= 45:
-                                denda = int(min(0.05 * biaya * min(n_t, 12), 30_000_000))
+                            # hanya satu kali rawat inap per reaktivasi (Ps. 42 ayat 5)
+                            if d - r_day <= JENDELA_DENDA and r_day not in kena_denda:
+                                denda = hitung_denda(biaya, n_t)
+                                kena_denda.add(r_day)
                             break
                     los = 1 + int(rng.poisson(3 if jenis == "ritl_darurat" else 2))
                 else:
@@ -336,6 +371,96 @@ def simulasi(n, seed):
         label_rows.append((pid, seg, bool(pengakal), bool(baru),
                            None if shock == INF else int(shock)))
 
+    # ---- segmen di luar cakupan: PPU, PBI, PBPU/BP yang dibayar Pemda ----
+    # RNG terpisah supaya data PBPU/BP mandiri di atas tidak berubah.
+    seg_kepesertaan = list(np.where(np.random.default_rng([seed, 1]).random(n) < 0.85, "PBPU", "BP"))
+    pembayar = ["peserta"] * n
+    rng_l = np.random.default_rng([seed, 2])
+    tahun_win = (WIN_END - WIN_START) / 365.25
+    for k in range(n_lain):
+        pid = f"P-{n + k + 1:06d}"
+        sk = SEG_LAIN[rng_l.choice(3, p=SEG_LAIN_P)]
+        kelas = int(rng_l.choice([1, 2], p=[0.4, 0.6])) if sk == "PPU" else 3
+        iuran = None if sk == "PPU" else IURAN[3]    # PPU: persentase upah, tidak dimodelkan
+        usia = int(np.clip(rng_l.normal(40, 13), 18, 85))
+        jk = "L" if rng_l.random() < 0.5 else "P"
+        wil = kode_w[rng_l.choice(n_w, p=w_poor if sk == "PBI" else w_other)]
+        tgl_daftar = (date(2016, 1, 1) - BASE).days + int(rng_l.integers(0, 365 * 5))
+        f_usia = float(np.clip(0.6 + (usia - 18) / 40, 0.6, 2.2))
+
+        # PBI dan Pemda selalu aktif. Sebagian PPU nonaktif sementara karena pemberi kerja
+        # menunggak, lalu aktif lagi setelah pemberi kerja melunasi (bukan keputusan peserta).
+        tunggak = None
+        if sk == "PPU" and rng_l.random() < 0.10:
+            i = int(rng_l.integers(WIN_I0 + 1, N_MONTH - 6))
+            n_bln = int(rng_l.integers(1, 5))
+            tunggak = (MS[i], MS[i + n_bln] + int(rng_l.integers(0, 10)), n_bln)
+        if tunggak:
+            a, r, _ = tunggak
+            status_rows.extend([(pid, WIN_START, a - 1, "aktif"), (pid, a, r - 1, "nonaktif"),
+                                (pid, r, WIN_END, "aktif")])
+        else:
+            status_rows.append((pid, WIN_START, WIN_END, "aktif"))
+
+        if sk == "PPU":
+            for j in range(WIN_I0, N_MONTH):
+                if tunggak and tunggak[0] <= MS[j] <= tunggak[1]:
+                    continue
+                cnt["bayar"] += 1
+                bayar_rows.append((f"B-{cnt['bayar']:08d}", pid, MS[j] + int(rng_l.integers(0, 10)),
+                                   ym(j), ym(j), 1, None, "pemberi_kerja"))
+            if tunggak:
+                i_a, i_r = month_of(tunggak[0]), month_of(tunggak[1])
+                cnt["bayar"] += 1
+                bayar_rows.append((f"B-{cnt['bayar']:08d}", pid, tunggak[1], ym(i_a), ym(i_r),
+                                   i_r - i_a + 1, None, "pemberi_kerja"))
+
+        kunjungan = []
+        for jenis, cfg in JENIS.items():
+            for _ in range(rng_l.poisson(cfg["rate"] * f_usia * tahun_win)):
+                t = int(rng_l.integers(WIN_START, WIN_END + 1))
+                opsi = [g for g in cfg["kelompok"]
+                        if not (g == "persalinan_terencana" and (jk == "L" or usia > 45))]
+                kelompok = opsi[int(rng_l.integers(0, len(opsi)))]
+                cnt["episode"] += 1
+                eps = f"E-{cnt['episode']:07d}"
+                if jenis == "ritl_darurat":
+                    hari = [t]
+                elif jenis == "rjtl_biasa":
+                    hari = [t + int(rng_l.integers(0, 4))]
+                elif jenis == "ritl_elektif":
+                    hari = [t + 1 + int(round(rng_l.gamma(2.0, 12.0)))]
+                else:
+                    mulai = t + int(rng_l.integers(0, 8))
+                    hari = [mulai + 7 * v for v in range(int(rng_l.integers(12, 26)))]
+                for h in hari:
+                    biaya = int(round(cfg["biaya"] * TARIF_KELAS[kelas]
+                                      * rng_l.lognormal(-cfg["sd"] ** 2 / 2, cfg["sd"]), -3))
+                    los = 1 + int(rng_l.poisson(3 if jenis == "ritl_darurat" else 2)) \
+                        if cfg["layanan"] == "RITL" else 0
+                    kunjungan.append((h, jenis, kelompok, eps, biaya, los))
+        denda_dipakai = False
+        for h, jenis, kelompok, eps, biaya, los in sorted(kunjungan):
+            if h > WIN_END or (tunggak and tunggak[0] <= h < tunggak[1]):
+                continue                 # di luar jendela, atau sedang dihentikan sementara
+            cfg = JENIS[jenis]
+            denda = 0
+            if (cfg["layanan"] == "RITL" and tunggak and not denda_dipakai
+                    and 0 <= h - tunggak[1] <= JENDELA_DENDA):
+                denda = hitung_denda(biaya, tunggak[2])   # ditanggung pemberi kerja (ayat 7)
+                denda_dipakai = True
+            cnt["klaim"] += 1
+            klaim_rows.append((f"K-{cnt['klaim']:08d}", pid, eps, h, h + los, cfg["layanan"],
+                               cfg["masuk"], kelompok, kelas, biaya, denda))
+
+        if rng_l.random() < 0.92:
+            p15 = {"PPU": 0.10, "PBI": 0.90, "PBPU_BP_Pemda": 0.70}[sk]
+            dtsen_rows.append((pid, "1-5" if rng_l.random() < p15 else "6-10", SNAPSHOT_DTSEN))
+        peserta.append((pid, tgl_daftar, kelas, iuran, usia, jk, wil, False))
+        label_rows.append((pid, "di_luar_cakupan", False, False, None))
+        seg_kepesertaan.append(sk)
+        pembayar.append(PEMBAYAR[sk])
+
     # ---- rakit DataFrame ----
     def tgl(s):
         return pd.to_datetime(BASE) + pd.to_timedelta(s, unit="D")
@@ -343,10 +468,14 @@ def simulasi(n, seed):
     df_peserta = pd.DataFrame(peserta, columns=["id_peserta", "tgl_daftar", "kelas", "iuran_bulanan",
                                                 "usia_2023", "jenis_kelamin", "kode_wilayah", "autodebet"])
     df_peserta["tgl_daftar"] = tgl(df_peserta["tgl_daftar"]).dt.date
+    df_peserta["iuran_bulanan"] = df_peserta["iuran_bulanan"].astype("Int64")
+    df_peserta["segmen_kepesertaan"] = seg_kepesertaan
+    df_peserta["pembayar_iuran"] = pembayar
 
     df_bayar = pd.DataFrame(bayar_rows, columns=["id_bayar", "id_peserta", "tgl_bayar", "periode_awal",
                                                  "periode_akhir", "jumlah_bulan_dibayar", "nominal", "kanal"])
     df_bayar["tgl_bayar"] = tgl(df_bayar["tgl_bayar"]).dt.date
+    df_bayar["nominal"] = df_bayar["nominal"].astype("Int64")
     df_bayar = df_bayar.sort_values(["id_peserta", "tgl_bayar"]).reset_index(drop=True)
 
     df_status = pd.DataFrame(status_rows, columns=["id_peserta", "tgl_mulai", "tgl_selesai", "status"])
@@ -382,12 +511,15 @@ def simulasi(n, seed):
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--n", type=int, default=20000, help="jumlah peserta")
+    ap.add_argument("--n", type=int, default=20000, help="jumlah peserta PBPU/BP mandiri")
+    ap.add_argument("--n_lain", type=int, default=None,
+                    help="jumlah peserta PPU, PBI, dan PBPU/BP-Pemda (bawaan: 15%% dari n)")
     ap.add_argument("--seed", type=int, default=2026)
     ap.add_argument("--out", default="data", help="folder keluaran")
     a = ap.parse_args()
+    n_lain = round(0.15 * a.n) if a.n_lain is None else a.n_lain
 
-    tabel = simulasi(a.n, a.seed)
+    tabel = simulasi(a.n, a.seed, n_lain)
     os.makedirs(a.out, exist_ok=True)
     for nama, df in tabel.items():
         df.to_csv(os.path.join(a.out, f"{nama}.csv"), index=False)

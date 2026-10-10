@@ -4,8 +4,11 @@ cek_sinyal.py - TEPAT: uji sinyal pada data sintetis. Deteksi tidak memakai labe
 Skrip baru membuka label di langkah terakhir, untuk mengukur hasil.
 
 Langkah:
+  0. Saring cakupan: hanya PBPU/BP yang iurannya dibayar sendiri. PPU, PBI, dan
+     PBPU/BP-Pemda dikeluarkan (Perpres 59/2024 Ps. 42 ayat 7-8).
   1. Uji bunching rawat inap terjadwal di sekitar hari ke-45 setelah reaktivasi
-     (kontrafaktual polinomial + bootstrap), plus estimasi denda yang terhindar.
+     (kontrafaktual polinomial + bootstrap), plus estimasi denda yang terhindar
+     (satu kali rawat inap per reaktivasi, paling tinggi Rp20 juta; Ps. 42 ayat 5-6).
   2. Fitur perilaku per peserta: rasio hari aktif, jumlah reaktivasi, kaitan
      reaktivasi dengan klaim besar, rasio klaim/iuran, tunggakan akhir, dan pola
      "rutin lalu berhenti" (indikasi guncangan ekonomi).
@@ -35,6 +38,14 @@ DERAJAT = 4
 KLAIM_BESAR = 1_000_000        # RITL apa pun, atau RJTL >= Rp1 juta
 JEDA_KAIT = 90                 # reaktivasi "terkait" bila klaim besar <= 90 hari sesudahnya
 
+# Denda pelayanan, Perpres 59/2024 Ps. 42 ayat (5)-(6)
+DENDA_PERSEN = 0.05
+DENDA_MAKS_BULAN = 12
+DENDA_MAKS = 20_000_000
+
+# Cakupan: PBPU/BP mandiri. Ps. 42 ayat (7)-(8) mengatur PPU, PBI, dan PBPU/BP-Pemda berbeda.
+CAKUPAN = {"PBPU", "BP"}
+
 # warna grafik
 WARNA_AKTUAL, WARNA_CF = "#2a78d6", "#eb6834"
 PERMUKAAN, TINTA, TINTA_2, GRID = "#fcfcfb", "#0b0b0b", "#52514e", "#e4e3df"
@@ -50,6 +61,23 @@ def muat(folder):
         dtsen=baca("dtsen_flag"),
         label=baca("label_ground_truth"),
     )
+
+
+def saring_cakupan(D):
+    """Pertahankan hanya peserta PBPU/BP mandiri di semua tabel.
+
+    Data versi lama tanpa kolom segmen_kepesertaan dianggap seluruhnya mandiri.
+    """
+    ps = D["peserta"]
+    if "segmen_kepesertaan" not in ps.columns:
+        return D, pd.Series(dtype=int)
+    masuk = ps["segmen_kepesertaan"].isin(CAKUPAN)
+    keluar = ps.loc[~masuk, "segmen_kepesertaan"].value_counts()
+    ids = set(ps.loc[masuk, "id_peserta"])
+    D2 = {nama: df[df["id_peserta"].isin(ids)].copy() for nama, df in D.items()}
+    D2["peserta"]["iuran_bulanan"] = D2["peserta"]["iuran_bulanan"].astype("int64")
+    D2["bayar"]["nominal"] = D2["bayar"]["nominal"].astype("int64")
+    return D2, keluar
 
 
 def tabel_reaktivasi(status, bayar):
@@ -95,12 +123,26 @@ def analisis_bunching(klaim, re, rng, n_boot=300):
     boot = np.array([_ukur(rng.choice(hari, size=len(hari)))[2] for _ in range(n_boot)])
     ci = np.percentile(boot, [2.5, 97.5])
 
-    # estimasi denda terhindar: porsi kasus berlebih x denda hipotetis kasus di hari 46-60
+    # estimasi denda terhindar: porsi kasus berlebih x denda hipotetis kasus di hari 46-60.
+    # Denda hanya untuk satu kali rawat inap per reaktivasi (Perpres 59/2024 Ps. 42 ayat 5):
+    # reaktivasi yang sudah punya rawat inap di hari 0-45 tidak dihitung, dan per reaktivasi
+    # hanya kasus pertama yang dihitung.
+    ri = klaim[klaim["jenis_layanan"] == "RITL"].sort_values("tgl_masuk")
+    ri = pd.merge_asof(ri, re, left_on="tgl_masuk", right_on="tgl_reakt", by="id_peserta",
+                       direction="backward")
+    hari_ri = (ri["tgl_masuk"] - ri["tgl_reakt"]).dt.days
+    sudah = set(ri.loc[hari_ri.between(0, BATAS), ["id_peserta", "tgl_reakt"]]
+                .itertuples(index=False, name=None))
     lo, hi = JENDELA_LEBIH
+    n_jendela = int(m["hari"].between(lo, hi).sum())
     di_jendela = m[m["hari"].between(lo, hi)].copy()
+    di_jendela = di_jendela[[kunci not in sudah for kunci in
+                             zip(di_jendela["id_peserta"], di_jendela["tgl_reakt"])]]
+    di_jendela = di_jendela.sort_values("tgl_masuk").drop_duplicates(["id_peserta", "tgl_reakt"])
     di_jendela["denda_hipotetis"] = np.minimum(
-        0.05 * di_jendela["biaya_klaim"] * di_jendela["bulan_tertunggak"].clip(upper=12), 30_000_000)
-    porsi = max(lebih, 0) / max(len(di_jendela), 1)
+        DENDA_PERSEN * di_jendela["biaya_klaim"]
+        * di_jendela["bulan_tertunggak"].clip(upper=DENDA_MAKS_BULAN), DENDA_MAKS)
+    porsi = max(lebih, 0) / max(n_jendela, 1)
     denda_terhindar = porsi * di_jendela["denda_hipotetis"].sum()
     return dict(m=m, hitung=hitung, cf=cf, lebih=lebih, kurang=kurang, ci=ci,
                 n=len(hari), hari0=int((hari == 0).sum()), denda_terhindar=denda_terhindar)
@@ -294,21 +336,33 @@ def main():
     os.makedirs(a.out, exist_ok=True)
     rng = np.random.default_rng(a.seed)
 
-    D = muat(a.data)
+    D_semua = muat(a.data)
+    D, keluar = saring_cakupan(D_semua)
     re = tabel_reaktivasi(D["status"], D["bayar"])
     out = []
     say = out.append
 
+    say("== 0. CAKUPAN (Perpres 59/2024 Ps. 42 ayat 7-8) ==")
+    say(f"peserta PBPU/BP mandiri yang dianalisis : {len(D['peserta']):,}")
+    for seg, n_seg in keluar.items():
+        say(f"dikeluarkan, {seg:28s}: {n_seg:,}")
+    if len(keluar):
+        re_semua = tabel_reaktivasi(D_semua["status"], D_semua["bayar"])
+        n_luar = int((~re_semua["id_peserta"].isin(D["peserta"]["id_peserta"])).sum())
+        say(f"reaktivasi segmen lain yang tidak ikut dihitung : {n_luar:,} "
+            "(tunggakan pemberi kerja, bukan pola bayar peserta)")
+
     h = analisis_bunching(D["klaim"], re, rng)
     plot_bunching(h, os.path.join(a.out, "bunching_hari45.png"))
-    say("== 1. BUNCHING DI BATAS DENDA 45 HARI ==")
+    say("\n== 1. BUNCHING DI BATAS DENDA 45 HARI ==")
     say(f"kasus rawat inap terjadwal 0-{MAKS_HARI} hari setelah reaktivasi : {h['n']:,}")
     say(f"lunas tunggakan di hari masuk RS (hari 0) : {h['hari0']:,} kasus (sinyal terpisah)")
     say(f"massa berlebih hari 46-60 : {h['lebih']:.0f} kasus "
         f"(IK95% bootstrap {h['ci'][0]:.0f}-{h['ci'][1]:.0f})")
     say("catatan: kasus yang ditunda bisa berasal dari hari 0-45 mana pun. Untuk data nyata,")
     say("         pakai estimator dengan batasan integrasi (Chetty dkk. 2011).")
-    say(f"estimasi denda terhindar  : Rp{h['denda_terhindar'] / 1e6:,.0f} juta")
+    say(f"estimasi denda terhindar  : Rp{h['denda_terhindar'] / 1e6:,.0f} juta "
+        "(satu kali rawat inap per reaktivasi, paling tinggi Rp20 juta; biaya sintetis)")
 
     p = triase(fitur_peserta(D, re))
     cols = ["id_peserta", "rute", "alasan", "jeda_dtsen", "rentang_desil", "bulan_berhenti",
