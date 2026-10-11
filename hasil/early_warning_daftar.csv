@@ -1,0 +1,713 @@
+peringkat,id_peserta,bulan,skor,alasan,saran_intervensi,rentang_desil,autodebet,kelas
+1,P-008076,2025-12,0.997,melunasi 32 bulan iuran telat dalam 12 bulan terakhir; nonaktif 11 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+2,P-004871,2025-12,0.997,melunasi 31 bulan iuran telat dalam 12 bulan terakhir; nonaktif 11 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,2
+3,P-009040,2025-12,0.997,melunasi 31 bulan iuran telat dalam 12 bulan terakhir; nonaktif 11 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+4,P-007567,2025-12,0.997,melunasi 29 bulan iuran telat dalam 12 bulan terakhir; nonaktif 10 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,1,3
+5,P-006522,2025-12,0.996,melunasi 29 bulan iuran telat dalam 12 bulan terakhir; nonaktif 11 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,3
+6,P-018506,2025-12,0.996,melunasi 28 bulan iuran telat dalam 12 bulan terakhir; nonaktif 11 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,3
+7,P-013343,2025-12,0.996,melunasi 28 bulan iuran telat dalam 12 bulan terakhir; nonaktif 11 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,3
+8,P-001322,2025-12,0.996,melunasi 32 bulan iuran telat dalam 12 bulan terakhir; nonaktif 11 dari 12 bulan terakhir,pengingat_saldo_autodebet,6-10,1,1
+9,P-019284,2025-12,0.996,melunasi 29 bulan iuran telat dalam 12 bulan terakhir; nonaktif 10 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,3
+10,P-014635,2025-12,0.996,melunasi 27 bulan iuran telat dalam 12 bulan terakhir; nonaktif 10 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+11,P-017378,2025-12,0.995,melunasi 29 bulan iuran telat dalam 12 bulan terakhir; nonaktif 11 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,1
+12,P-002906,2025-12,0.994,melunasi 28 bulan iuran telat dalam 12 bulan terakhir; nonaktif 9 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+13,P-011104,2025-12,0.994,melunasi 24 bulan iuran telat dalam 12 bulan terakhir; nonaktif 11 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+14,P-006917,2025-12,0.994,melunasi 26 bulan iuran telat dalam 12 bulan terakhir; nonaktif 10 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+15,P-018105,2025-12,0.994,melunasi 25 bulan iuran telat dalam 12 bulan terakhir; nonaktif 11 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,1
+16,P-007450,2025-12,0.994,melunasi 26 bulan iuran telat dalam 12 bulan terakhir; nonaktif 11 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,3
+17,P-010386,2025-12,0.994,melunasi 25 bulan iuran telat dalam 12 bulan terakhir; nonaktif 10 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+18,P-017030,2025-12,0.993,melunasi 25 bulan iuran telat dalam 12 bulan terakhir; nonaktif 11 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+19,P-003700,2025-12,0.993,melunasi 26 bulan iuran telat dalam 12 bulan terakhir; nonaktif 9 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+20,P-008157,2025-12,0.993,melunasi 24 bulan iuran telat dalam 12 bulan terakhir; nonaktif 11 dari 12 bulan terakhir,pengingat_saldo_autodebet,tidak_padan,1,2
+21,P-007960,2025-12,0.993,melunasi 27 bulan iuran telat dalam 12 bulan terakhir; nonaktif 7 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+22,P-018922,2025-12,0.992,melunasi 28 bulan iuran telat dalam 12 bulan terakhir; nonaktif 11 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,1,1
+23,P-016610,2025-12,0.992,melunasi 24 bulan iuran telat dalam 12 bulan terakhir; nonaktif 11 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+24,P-012119,2025-12,0.992,melunasi 21 bulan iuran telat dalam 12 bulan terakhir; nonaktif 10 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,3
+25,P-013436,2025-12,0.992,melunasi 24 bulan iuran telat dalam 12 bulan terakhir; nonaktif 10 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,tidak_padan,0,3
+26,P-011777,2025-12,0.992,melunasi 25 bulan iuran telat dalam 12 bulan terakhir; nonaktif 10 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+27,P-010109,2025-12,0.992,melunasi 24 bulan iuran telat dalam 12 bulan terakhir; nonaktif 11 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,3
+28,P-000443,2025-12,0.991,melunasi 24 bulan iuran telat dalam 12 bulan terakhir; nonaktif 10 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,3
+29,P-005956,2025-12,0.991,melunasi 27 bulan iuran telat dalam 12 bulan terakhir; nonaktif 9 dari 12 bulan terakhir,pengingat_saldo_autodebet,6-10,1,2
+30,P-009365,2025-12,0.991,melunasi 24 bulan iuran telat dalam 12 bulan terakhir; nonaktif 9 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+31,P-017082,2025-12,0.991,melunasi 26 bulan iuran telat dalam 12 bulan terakhir; nonaktif 7 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+32,P-017609,2025-12,0.991,melunasi 23 bulan iuran telat dalam 12 bulan terakhir; nonaktif 12 dari 12 bulan terakhir,pengingat_saldo_autodebet,tidak_padan,1,3
+33,P-013412,2025-12,0.991,melunasi 24 bulan iuran telat dalam 12 bulan terakhir; nonaktif 10 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+34,P-001557,2025-12,0.991,melunasi 24 bulan iuran telat dalam 12 bulan terakhir; nonaktif 11 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+35,P-017083,2025-12,0.991,melunasi 23 bulan iuran telat dalam 12 bulan terakhir; nonaktif 12 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+36,P-000806,2025-12,0.991,melunasi 24 bulan iuran telat dalam 12 bulan terakhir; nonaktif 11 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+37,P-018808,2025-12,0.991,melunasi 26 bulan iuran telat dalam 12 bulan terakhir; nonaktif 10 dari 12 bulan terakhir,pengingat_saldo_autodebet,6-10,1,3
+38,P-013304,2025-12,0.991,melunasi 25 bulan iuran telat dalam 12 bulan terakhir; nonaktif 11 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,1,3
+39,P-014819,2025-12,0.991,melunasi 23 bulan iuran telat dalam 12 bulan terakhir; nonaktif 10 dari 12 bulan terakhir,pengingat_saldo_autodebet,6-10,1,3
+40,P-002949,2025-12,0.991,melunasi 23 bulan iuran telat dalam 12 bulan terakhir; nonaktif 12 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,3
+41,P-004914,2025-12,0.99,melunasi 23 bulan iuran telat dalam 12 bulan terakhir; nonaktif 12 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+42,P-018202,2025-12,0.99,melunasi 23 bulan iuran telat dalam 12 bulan terakhir; nonaktif 12 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,3
+43,P-011415,2025-12,0.99,melunasi 24 bulan iuran telat dalam 12 bulan terakhir; nonaktif 12 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,tidak_padan,0,3
+44,P-014675,2025-12,0.99,melunasi 24 bulan iuran telat dalam 12 bulan terakhir; nonaktif 10 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,3
+45,P-001194,2025-12,0.99,melunasi 23 bulan iuran telat dalam 12 bulan terakhir; nonaktif 12 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,3
+46,P-009911,2025-12,0.99,melunasi 23 bulan iuran telat dalam 12 bulan terakhir; nonaktif 12 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,tidak_padan,0,1
+47,P-004262,2025-12,0.99,melunasi 22 bulan iuran telat dalam 12 bulan terakhir; nonaktif 12 dari 12 bulan terakhir,pengingat_saldo_autodebet,tidak_padan,1,3
+48,P-001707,2025-12,0.99,melunasi 23 bulan iuran telat dalam 12 bulan terakhir; nonaktif 12 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+49,P-019550,2025-12,0.989,melunasi 23 bulan iuran telat dalam 12 bulan terakhir; nonaktif 12 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,3
+50,P-007587,2025-12,0.989,melunasi 23 bulan iuran telat dalam 12 bulan terakhir; nonaktif 12 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,1
+51,P-004363,2025-12,0.989,melunasi 24 bulan iuran telat dalam 12 bulan terakhir; nonaktif 12 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,1,1
+52,P-008647,2025-12,0.989,melunasi 21 bulan iuran telat dalam 12 bulan terakhir; nonaktif 11 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+53,P-009651,2025-12,0.989,melunasi 23 bulan iuran telat dalam 12 bulan terakhir; nonaktif 12 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,3
+54,P-014939,2025-12,0.989,melunasi 25 bulan iuran telat dalam 12 bulan terakhir; nonaktif 8 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,1,3
+55,P-008627,2025-12,0.989,melunasi 23 bulan iuran telat dalam 12 bulan terakhir; nonaktif 12 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+56,P-000014,2025-12,0.989,melunasi 21 bulan iuran telat dalam 12 bulan terakhir; nonaktif 11 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+57,P-014311,2025-12,0.989,melunasi 23 bulan iuran telat dalam 12 bulan terakhir; nonaktif 12 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,3
+58,P-004046,2025-12,0.989,melunasi 24 bulan iuran telat dalam 12 bulan terakhir; nonaktif 12 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+59,P-018807,2025-12,0.989,melunasi 21 bulan iuran telat dalam 12 bulan terakhir; nonaktif 10 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,1,3
+60,P-006786,2025-12,0.989,melunasi 23 bulan iuran telat dalam 12 bulan terakhir; nonaktif 12 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+61,P-017063,2025-12,0.989,melunasi 24 bulan iuran telat dalam 12 bulan terakhir; nonaktif 12 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+62,P-016462,2025-12,0.989,melunasi 24 bulan iuran telat dalam 12 bulan terakhir; nonaktif 11 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,1
+63,P-008807,2025-12,0.988,melunasi 25 bulan iuran telat dalam 12 bulan terakhir; nonaktif 11 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,1,2
+64,P-001297,2025-12,0.988,melunasi 23 bulan iuran telat dalam 12 bulan terakhir; nonaktif 12 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,1,3
+65,P-017028,2025-12,0.988,melunasi 23 bulan iuran telat dalam 12 bulan terakhir; nonaktif 12 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,tidak_padan,0,3
+66,P-018585,2025-12,0.988,melunasi 24 bulan iuran telat dalam 12 bulan terakhir; nonaktif 12 dari 12 bulan terakhir,pengingat_saldo_autodebet,6-10,1,3
+67,P-010978,2025-12,0.988,melunasi 24 bulan iuran telat dalam 12 bulan terakhir; nonaktif 11 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,tidak_padan,0,3
+68,P-003793,2025-12,0.988,melunasi 23 bulan iuran telat dalam 12 bulan terakhir; nonaktif 12 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+69,P-017732,2025-12,0.988,melunasi 21 bulan iuran telat dalam 12 bulan terakhir; nonaktif 11 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,3
+70,P-009280,2025-12,0.988,melunasi 22 bulan iuran telat dalam 12 bulan terakhir; nonaktif 11 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,tidak_padan,0,3
+71,P-013061,2025-12,0.987,melunasi 20 bulan iuran telat dalam 12 bulan terakhir; nonaktif 10 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+72,P-010928,2025-12,0.987,melunasi 23 bulan iuran telat dalam 12 bulan terakhir; nonaktif 12 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,1
+73,P-001656,2025-12,0.987,melunasi 24 bulan iuran telat dalam 12 bulan terakhir; nonaktif 12 dari 12 bulan terakhir,pengingat_saldo_autodebet,6-10,1,2
+74,P-012074,2025-12,0.987,melunasi 23 bulan iuran telat dalam 12 bulan terakhir; nonaktif 12 dari 12 bulan terakhir,pengingat_saldo_autodebet,6-10,1,3
+75,P-015299,2025-12,0.987,melunasi 28 bulan iuran telat dalam 12 bulan terakhir; 3 kali aktif kembali dalam 12 bulan,pengingat_H-5_dan_tawaran_autodebet,6-10,0,1
+76,P-011324,2025-12,0.987,melunasi 24 bulan iuran telat dalam 12 bulan terakhir; nonaktif 11 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,2
+77,P-014070,2025-12,0.987,melunasi 22 bulan iuran telat dalam 12 bulan terakhir; nonaktif 12 dari 12 bulan terakhir,pengingat_saldo_autodebet,tidak_padan,1,1
+78,P-013510,2025-12,0.987,melunasi 23 bulan iuran telat dalam 12 bulan terakhir; nonaktif 11 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,3
+79,P-005283,2025-12,0.987,melunasi 21 bulan iuran telat dalam 12 bulan terakhir; nonaktif 10 dari 12 bulan terakhir,pengingat_saldo_autodebet,6-10,1,3
+80,P-009332,2025-12,0.987,melunasi 22 bulan iuran telat dalam 12 bulan terakhir; nonaktif 9 dari 12 bulan terakhir,pengingat_saldo_autodebet,6-10,1,3
+81,P-018543,2025-12,0.987,melunasi 22 bulan iuran telat dalam 12 bulan terakhir; nonaktif 12 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+82,P-007748,2025-12,0.987,melunasi 21 bulan iuran telat dalam 12 bulan terakhir; nonaktif 11 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,3
+83,P-001733,2025-12,0.987,melunasi 22 bulan iuran telat dalam 12 bulan terakhir; nonaktif 9 dari 12 bulan terakhir,pengingat_saldo_autodebet,6-10,1,3
+84,P-014028,2025-12,0.987,melunasi 23 bulan iuran telat dalam 12 bulan terakhir; nonaktif 12 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,2
+85,P-016335,2025-12,0.987,melunasi 20 bulan iuran telat dalam 12 bulan terakhir; nonaktif 9 dari 12 bulan terakhir,pengingat_saldo_autodebet,6-10,1,2
+86,P-013719,2025-12,0.987,melunasi 23 bulan iuran telat dalam 12 bulan terakhir; nonaktif 11 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,1
+87,P-005614,2025-12,0.986,melunasi 23 bulan iuran telat dalam 12 bulan terakhir; nonaktif 12 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,2
+88,P-016643,2025-12,0.986,melunasi 23 bulan iuran telat dalam 12 bulan terakhir; nonaktif 12 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,1,3
+89,P-019676,2025-12,0.986,melunasi 23 bulan iuran telat dalam 12 bulan terakhir; nonaktif 12 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,1,2
+90,P-000164,2025-12,0.986,melunasi 22 bulan iuran telat dalam 12 bulan terakhir; nonaktif 11 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+91,P-002050,2025-12,0.986,melunasi 21 bulan iuran telat dalam 12 bulan terakhir; nonaktif 11 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,2
+92,P-000785,2025-12,0.986,melunasi 23 bulan iuran telat dalam 12 bulan terakhir; nonaktif 10 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+93,P-012682,2025-12,0.986,melunasi 17 bulan iuran telat dalam 12 bulan terakhir; nonaktif 12 dari 12 bulan terakhir,pengingat_saldo_autodebet,6-10,1,3
+94,P-005999,2025-12,0.985,melunasi 23 bulan iuran telat dalam 12 bulan terakhir; nonaktif 8 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+95,P-003763,2025-12,0.985,melunasi 23 bulan iuran telat dalam 12 bulan terakhir; nonaktif 12 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,1
+96,P-002126,2025-12,0.985,melunasi 21 bulan iuran telat dalam 12 bulan terakhir; nonaktif 12 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,3
+97,P-009338,2025-12,0.985,melunasi 22 bulan iuran telat dalam 12 bulan terakhir; nonaktif 12 dari 12 bulan terakhir,pengingat_saldo_autodebet,6-10,1,3
+98,P-008968,2025-12,0.984,melunasi 15 bulan iuran telat dalam 12 bulan terakhir; nonaktif 11 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,1,3
+99,P-002462,2025-12,0.984,melunasi 26 bulan iuran telat dalam 12 bulan terakhir; nonaktif 6 dari 12 bulan terakhir,pengingat_saldo_autodebet,6-10,1,3
+100,P-003827,2025-12,0.984,melunasi 22 bulan iuran telat dalam 12 bulan terakhir; nonaktif 12 dari 12 bulan terakhir,pengingat_saldo_autodebet,6-10,1,3
+101,P-005047,2025-12,0.983,melunasi 19 bulan iuran telat dalam 12 bulan terakhir; nonaktif 10 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,3
+102,P-006419,2025-12,0.983,melunasi 23 bulan iuran telat dalam 12 bulan terakhir; nonaktif 8 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+103,P-002118,2025-12,0.983,melunasi 23 bulan iuran telat dalam 12 bulan terakhir; nonaktif 12 dari 12 bulan terakhir,pengingat_saldo_autodebet,6-10,1,2
+104,P-010402,2025-12,0.983,melunasi 20 bulan iuran telat dalam 12 bulan terakhir; nonaktif 12 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,3
+105,P-001661,2025-12,0.983,melunasi 19 bulan iuran telat dalam 12 bulan terakhir; nonaktif 12 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,1,3
+106,P-012482,2025-12,0.982,melunasi 23 bulan iuran telat dalam 12 bulan terakhir; nonaktif 9 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+107,P-007383,2025-12,0.982,melunasi 23 bulan iuran telat dalam 12 bulan terakhir; nonaktif 9 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,1,3
+108,P-008548,2025-12,0.981,melunasi 20 bulan iuran telat dalam 12 bulan terakhir; nonaktif 12 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+109,P-018219,2025-12,0.981,melunasi 21 bulan iuran telat dalam 12 bulan terakhir; nonaktif 12 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,1,3
+110,P-012728,2025-12,0.981,melunasi 20 bulan iuran telat dalam 12 bulan terakhir; nonaktif 9 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,1,3
+111,P-005682,2025-12,0.981,melunasi 23 bulan iuran telat dalam 12 bulan terakhir; nonaktif 10 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,1,2
+112,P-018955,2025-12,0.981,melunasi 21 bulan iuran telat dalam 12 bulan terakhir; nonaktif 7 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+113,P-018104,2025-12,0.98,melunasi 18 bulan iuran telat dalam 12 bulan terakhir; nonaktif 11 dari 12 bulan terakhir,pengingat_saldo_autodebet,6-10,1,1
+114,P-007472,2025-12,0.98,melunasi 18 bulan iuran telat dalam 12 bulan terakhir; nonaktif 12 dari 12 bulan terakhir,pengingat_saldo_autodebet,6-10,1,2
+115,P-015620,2025-12,0.98,melunasi 18 bulan iuran telat dalam 12 bulan terakhir; nonaktif 12 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+116,P-000619,2025-12,0.979,melunasi 18 bulan iuran telat dalam 12 bulan terakhir; nonaktif 12 dari 12 bulan terakhir,pengingat_saldo_autodebet,6-10,1,3
+117,P-008718,2025-12,0.979,melunasi 18 bulan iuran telat dalam 12 bulan terakhir; nonaktif 12 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,tidak_padan,0,3
+118,P-008198,2025-12,0.979,melunasi 17 bulan iuran telat dalam 12 bulan terakhir; nonaktif 10 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,3
+119,P-002693,2025-12,0.978,melunasi 18 bulan iuran telat dalam 12 bulan terakhir; nonaktif 10 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,1,3
+120,P-014859,2025-12,0.978,melunasi 18 bulan iuran telat dalam 12 bulan terakhir; nonaktif 12 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+121,P-001487,2025-12,0.977,melunasi 23 bulan iuran telat dalam 12 bulan terakhir; nonaktif 9 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,1,1
+122,P-018002,2025-12,0.977,melunasi 17 bulan iuran telat dalam 12 bulan terakhir; nonaktif 12 dari 12 bulan terakhir,pengingat_saldo_autodebet,6-10,1,3
+123,P-000220,2025-12,0.977,melunasi 17 bulan iuran telat dalam 12 bulan terakhir; nonaktif 11 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+124,P-005086,2025-12,0.977,melunasi 24 bulan iuran telat dalam 12 bulan terakhir; nonaktif 9 dari 12 bulan terakhir,pengingat_saldo_autodebet,6-10,1,1
+125,P-003468,2025-12,0.977,melunasi 18 bulan iuran telat dalam 12 bulan terakhir; nonaktif 12 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,tidak_padan,0,3
+126,P-003225,2025-12,0.977,melunasi 21 bulan iuran telat dalam 12 bulan terakhir; nonaktif 9 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+127,P-015566,2025-12,0.975,melunasi 22 bulan iuran telat dalam 12 bulan terakhir; nonaktif 9 dari 12 bulan terakhir,pengingat_saldo_autodebet,6-10,1,1
+128,P-010891,2025-12,0.975,melunasi 17 bulan iuran telat dalam 12 bulan terakhir; nonaktif 11 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,3
+129,P-017862,2025-12,0.975,melunasi 18 bulan iuran telat dalam 12 bulan terakhir; nonaktif 11 dari 12 bulan terakhir,pengingat_saldo_autodebet,6-10,1,2
+130,P-009401,2025-12,0.975,melunasi 18 bulan iuran telat dalam 12 bulan terakhir; nonaktif 11 dari 12 bulan terakhir,pengingat_saldo_autodebet,6-10,1,2
+131,P-005601,2025-12,0.975,melunasi 19 bulan iuran telat dalam 12 bulan terakhir; nonaktif 8 dari 12 bulan terakhir,pengingat_saldo_autodebet,6-10,1,3
+132,P-001492,2025-12,0.974,melunasi 19 bulan iuran telat dalam 12 bulan terakhir; nonaktif 11 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,3
+133,P-005858,2025-12,0.974,melunasi 18 bulan iuran telat dalam 12 bulan terakhir; nonaktif 9 dari 12 bulan terakhir,pengingat_saldo_autodebet,6-10,1,3
+134,P-004840,2025-12,0.974,melunasi 21 bulan iuran telat dalam 12 bulan terakhir; nonaktif 12 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,1,1
+135,P-016013,2025-12,0.973,melunasi 14 bulan iuran telat dalam 12 bulan terakhir; nonaktif 11 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,3
+136,P-014248,2025-12,0.973,melunasi 19 bulan iuran telat dalam 12 bulan terakhir; nonaktif 9 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,2
+137,P-017840,2025-12,0.973,melunasi 19 bulan iuran telat dalam 12 bulan terakhir; nonaktif 12 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,1,3
+138,P-015367,2025-12,0.973,melunasi 16 bulan iuran telat dalam 12 bulan terakhir; nonaktif 11 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,3
+139,P-010387,2025-12,0.973,melunasi 17 bulan iuran telat dalam 12 bulan terakhir; nonaktif 11 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,3
+140,P-018297,2025-12,0.972,melunasi 15 bulan iuran telat dalam 12 bulan terakhir; nonaktif 10 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+141,P-019294,2025-12,0.972,melunasi 16 bulan iuran telat dalam 12 bulan terakhir; nonaktif 12 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,3
+142,P-002369,2025-12,0.971,melunasi 17 bulan iuran telat dalam 12 bulan terakhir; nonaktif 12 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,3
+143,P-006402,2025-12,0.971,melunasi 15 bulan iuran telat dalam 12 bulan terakhir; nonaktif 12 dari 12 bulan terakhir,pengingat_saldo_autodebet,6-10,1,3
+144,P-000027,2025-12,0.971,melunasi 18 bulan iuran telat dalam 12 bulan terakhir; nonaktif 12 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+145,P-017539,2025-12,0.97,melunasi 16 bulan iuran telat dalam 12 bulan terakhir; nonaktif 12 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,3
+146,P-011684,2025-12,0.97,melunasi 17 bulan iuran telat dalam 12 bulan terakhir; nonaktif 12 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,3
+147,P-017441,2025-12,0.97,melunasi 16 bulan iuran telat dalam 12 bulan terakhir; nonaktif 12 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,3
+148,P-009289,2025-12,0.969,melunasi 16 bulan iuran telat dalam 12 bulan terakhir; nonaktif 9 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+149,P-013181,2025-12,0.969,melunasi 18 bulan iuran telat dalam 12 bulan terakhir; nonaktif 11 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,tidak_padan,0,3
+150,P-000740,2025-12,0.969,nonaktif 12 dari 12 bulan terakhir; melunasi 13 bulan iuran telat dalam 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,3
+151,P-005584,2025-12,0.969,melunasi 18 bulan iuran telat dalam 12 bulan terakhir; nonaktif 12 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,1
+152,P-004056,2025-12,0.968,melunasi 17 bulan iuran telat dalam 12 bulan terakhir; nonaktif 11 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,1,3
+153,P-012645,2025-12,0.968,nonaktif 11 dari 12 bulan terakhir; melunasi 12 bulan iuran telat dalam 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,3
+154,P-012120,2025-12,0.968,melunasi 13 bulan iuran telat dalam 12 bulan terakhir; nonaktif 10 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,1,3
+155,P-010520,2025-12,0.968,melunasi 15 bulan iuran telat dalam 12 bulan terakhir; nonaktif 11 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,3
+156,P-014959,2025-12,0.967,melunasi 18 bulan iuran telat dalam 12 bulan terakhir; nonaktif 11 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,2
+157,P-011176,2025-12,0.967,melunasi 15 bulan iuran telat dalam 12 bulan terakhir; nonaktif 11 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,3
+158,P-005012,2025-12,0.966,melunasi 19 bulan iuran telat dalam 12 bulan terakhir; nonaktif 10 dari 12 bulan terakhir,pengingat_saldo_autodebet,6-10,1,2
+159,P-000006,2025-12,0.966,melunasi 15 bulan iuran telat dalam 12 bulan terakhir; nonaktif 12 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,3
+160,P-013006,2025-12,0.966,melunasi 16 bulan iuran telat dalam 12 bulan terakhir; nonaktif 12 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,tidak_padan,0,3
+161,P-010287,2025-12,0.965,melunasi 19 bulan iuran telat dalam 12 bulan terakhir; nonaktif 8 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+162,P-016865,2025-12,0.965,nonaktif 12 dari 12 bulan terakhir; melunasi 13 bulan iuran telat dalam 12 bulan terakhir,pengingat_saldo_autodebet,6-10,1,1
+163,P-005247,2025-12,0.965,melunasi 17 bulan iuran telat dalam 12 bulan terakhir; nonaktif 12 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,1,2
+164,P-003679,2025-12,0.964,melunasi 16 bulan iuran telat dalam 12 bulan terakhir; nonaktif 10 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,1,3
+165,P-010961,2025-12,0.963,melunasi 15 bulan iuran telat dalam 12 bulan terakhir; nonaktif 12 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,3
+166,P-015580,2025-12,0.962,melunasi 15 bulan iuran telat dalam 12 bulan terakhir; nonaktif 12 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,3
+167,P-003841,2025-12,0.962,melunasi 17 bulan iuran telat dalam 12 bulan terakhir; nonaktif 9 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,1
+168,P-009851,2025-12,0.961,nonaktif 12 dari 12 bulan terakhir; melunasi 14 bulan iuran telat dalam 12 bulan terakhir,cek_kelayakan_PBI,1-5,1,3
+169,P-002238,2025-12,0.961,melunasi 15 bulan iuran telat dalam 12 bulan terakhir; nonaktif 12 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,3
+170,P-006185,2025-12,0.96,melunasi 14 bulan iuran telat dalam 12 bulan terakhir; nonaktif 11 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,tidak_padan,0,3
+171,P-000453,2025-12,0.96,melunasi 13 bulan iuran telat dalam 12 bulan terakhir; nonaktif 11 dari 12 bulan terakhir,pengingat_saldo_autodebet,6-10,1,3
+172,P-004455,2025-12,0.959,melunasi 13 bulan iuran telat dalam 12 bulan terakhir; nonaktif 11 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,1,1
+173,P-019241,2025-12,0.957,melunasi 14 bulan iuran telat dalam 12 bulan terakhir; nonaktif 11 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,2
+174,P-007998,2025-12,0.957,melunasi 15 bulan iuran telat dalam 12 bulan terakhir; nonaktif 11 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,3
+175,P-013552,2025-12,0.957,nonaktif 12 dari 12 bulan terakhir; melunasi 13 bulan iuran telat dalam 12 bulan terakhir,cek_kelayakan_PBI,1-5,1,3
+176,P-003713,2025-12,0.956,melunasi 11 bulan iuran telat dalam 12 bulan terakhir; 6 kali aktif kembali dalam 12 bulan,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+177,P-013272,2025-12,0.955,nonaktif 11 dari 12 bulan terakhir; melunasi 12 bulan iuran telat dalam 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,3
+178,P-007671,2025-12,0.955,nonaktif 12 dari 12 bulan terakhir; melunasi 13 bulan iuran telat dalam 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,3
+179,P-002972,2025-12,0.955,nonaktif 12 dari 12 bulan terakhir; melunasi 14 bulan iuran telat dalam 12 bulan terakhir,cek_kelayakan_PBI,1-5,1,3
+180,P-006932,2025-12,0.954,melunasi 14 bulan iuran telat dalam 12 bulan terakhir; nonaktif 11 dari 12 bulan terakhir,pengingat_saldo_autodebet,6-10,1,2
+181,P-000347,2025-12,0.954,melunasi 15 bulan iuran telat dalam 12 bulan terakhir; nonaktif 12 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,1
+182,P-017522,2025-12,0.954,melunasi 17 bulan iuran telat dalam 12 bulan terakhir; nonaktif 10 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,1,1
+183,P-011015,2025-12,0.953,melunasi 16 bulan iuran telat dalam 12 bulan terakhir; nonaktif 9 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,3
+184,P-001762,2025-12,0.952,nonaktif 10 dari 12 bulan terakhir; melunasi 10 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+185,P-016916,2025-12,0.952,nonaktif 12 dari 12 bulan terakhir; melunasi 13 bulan iuran telat dalam 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,3
+186,P-013388,2025-12,0.951,melunasi 14 bulan iuran telat dalam 12 bulan terakhir; nonaktif 9 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+187,P-006570,2025-12,0.951,nonaktif 12 dari 12 bulan terakhir; melunasi 13 bulan iuran telat dalam 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,3
+188,P-008610,2025-12,0.951,melunasi 16 bulan iuran telat dalam 12 bulan terakhir; nonaktif 9 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,1
+189,P-019329,2025-12,0.95,melunasi 17 bulan iuran telat dalam 12 bulan terakhir; nonaktif 9 dari 12 bulan terakhir,pengingat_saldo_autodebet,6-10,1,2
+190,P-016396,2025-12,0.95,nonaktif 12 dari 12 bulan terakhir; melunasi 13 bulan iuran telat dalam 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,3
+191,P-016662,2025-12,0.949,melunasi 14 bulan iuran telat dalam 12 bulan terakhir; nonaktif 11 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,1
+192,P-005305,2025-12,0.948,melunasi 13 bulan iuran telat dalam 12 bulan terakhir; nonaktif 11 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,1
+193,P-018958,2025-12,0.948,melunasi 12 bulan iuran telat dalam 12 bulan terakhir; nonaktif 10 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,1,3
+194,P-007733,2025-12,0.948,nonaktif 11 dari 12 bulan terakhir; melunasi 12 bulan iuran telat dalam 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,3
+195,P-011269,2025-12,0.947,melunasi 13 bulan iuran telat dalam 12 bulan terakhir; nonaktif 9 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,tidak_padan,0,3
+196,P-001218,2025-12,0.947,nonaktif 11 dari 12 bulan terakhir; melunasi 11 bulan iuran telat dalam 12 bulan terakhir,pengingat_saldo_autodebet,6-10,1,3
+197,P-002874,2025-12,0.946,melunasi 14 bulan iuran telat dalam 12 bulan terakhir; nonaktif 10 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+198,P-009247,2025-12,0.946,melunasi 15 bulan iuran telat dalam 12 bulan terakhir; nonaktif 9 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,3
+199,P-000354,2025-12,0.945,nonaktif 11 dari 12 bulan terakhir; melunasi 11 bulan iuran telat dalam 12 bulan terakhir,pengingat_saldo_autodebet,6-10,1,3
+200,P-017465,2025-12,0.945,melunasi 13 bulan iuran telat dalam 12 bulan terakhir; nonaktif 8 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+201,P-009579,2025-12,0.945,nonaktif 12 dari 12 bulan terakhir; melunasi 14 bulan iuran telat dalam 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,2
+202,P-007935,2025-12,0.944,melunasi 14 bulan iuran telat dalam 12 bulan terakhir; nonaktif 11 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,3
+203,P-001251,2025-12,0.944,nonaktif 12 dari 12 bulan terakhir; melunasi 12 bulan iuran telat dalam 12 bulan terakhir,pengingat_saldo_autodebet,tidak_padan,1,2
+204,P-001075,2025-12,0.944,nonaktif 10 dari 12 bulan terakhir; melunasi 10 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+205,P-010050,2025-12,0.943,nonaktif 12 dari 12 bulan terakhir; melunasi 12 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+206,P-017591,2025-12,0.942,melunasi 10 bulan iuran telat dalam 12 bulan terakhir; nonaktif 8 dari 12 bulan terakhir,pengingat_saldo_autodebet,6-10,1,3
+207,P-009270,2025-12,0.942,nonaktif 11 dari 12 bulan terakhir; melunasi 12 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+208,P-000252,2025-12,0.94,nonaktif 10 dari 12 bulan terakhir; melunasi 11 bulan iuran telat dalam 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,2
+209,P-009821,2025-12,0.94,melunasi 15 bulan iuran telat dalam 12 bulan terakhir; nonaktif 10 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,1
+210,P-012874,2025-12,0.938,nonaktif 12 dari 12 bulan terakhir; melunasi 13 bulan iuran telat dalam 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,2
+211,P-001397,2025-12,0.938,nonaktif 11 dari 12 bulan terakhir; melunasi 11 bulan iuran telat dalam 12 bulan terakhir,pengingat_saldo_autodebet,6-10,1,3
+212,P-001170,2025-12,0.938,melunasi 14 bulan iuran telat dalam 12 bulan terakhir; nonaktif 10 dari 12 bulan terakhir,pengingat_saldo_autodebet,tidak_padan,1,3
+213,P-007206,2025-12,0.938,nonaktif 12 dari 12 bulan terakhir; melunasi 12 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+214,P-013075,2025-12,0.937,melunasi 18 bulan iuran telat dalam 12 bulan terakhir; nonaktif 6 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,1
+215,P-009233,2025-12,0.937,melunasi 11 bulan iuran telat dalam 12 bulan terakhir; nonaktif 9 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,3
+216,P-013751,2025-12,0.936,nonaktif 11 dari 12 bulan terakhir; melunasi 12 bulan iuran telat dalam 12 bulan terakhir,pengingat_saldo_autodebet,6-10,1,3
+217,P-007688,2025-12,0.934,melunasi 13 bulan iuran telat dalam 12 bulan terakhir; nonaktif 10 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,1
+218,P-004179,2025-12,0.934,melunasi 16 bulan iuran telat dalam 12 bulan terakhir; nonaktif 8 dari 12 bulan terakhir,pengingat_saldo_autodebet,6-10,1,3
+219,P-000146,2025-12,0.934,nonaktif 11 dari 12 bulan terakhir; melunasi 12 bulan iuran telat dalam 12 bulan terakhir,pengingat_saldo_autodebet,6-10,1,3
+220,P-010733,2025-12,0.933,melunasi 14 bulan iuran telat dalam 12 bulan terakhir; nonaktif 6 dari 12 bulan terakhir,pengingat_saldo_autodebet,6-10,1,2
+221,P-016744,2025-12,0.933,nonaktif 9 dari 12 bulan terakhir; melunasi 9 bulan iuran telat dalam 12 bulan terakhir,pengingat_saldo_autodebet,6-10,1,3
+222,P-008051,2025-12,0.931,melunasi 11 bulan iuran telat dalam 12 bulan terakhir; nonaktif 8 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+223,P-003144,2025-12,0.93,melunasi 14 bulan iuran telat dalam 12 bulan terakhir; nonaktif 9 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,1
+224,P-019227,2025-12,0.93,nonaktif 9 dari 12 bulan terakhir; melunasi 10 bulan iuran telat dalam 12 bulan terakhir,pengingat_saldo_autodebet,6-10,1,3
+225,P-004694,2025-12,0.929,nonaktif 12 dari 12 bulan terakhir; melunasi 12 bulan iuran telat dalam 12 bulan terakhir,cek_kelayakan_PBI,1-5,1,3
+226,P-011564,2025-12,0.929,melunasi 10 bulan iuran telat dalam 12 bulan terakhir; nonaktif 8 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,1
+227,P-003690,2025-12,0.928,nonaktif 11 dari 12 bulan terakhir; melunasi 11 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,1
+228,P-012875,2025-12,0.928,melunasi 11 bulan iuran telat dalam 12 bulan terakhir; nonaktif 9 dari 12 bulan terakhir,pengingat_saldo_autodebet,6-10,1,3
+229,P-002744,2025-12,0.928,nonaktif 8 dari 12 bulan terakhir; melunasi 9 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+230,P-010427,2025-12,0.928,nonaktif 10 dari 12 bulan terakhir; melunasi 11 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+231,P-007661,2025-12,0.927,nonaktif 10 dari 12 bulan terakhir; melunasi 11 bulan iuran telat dalam 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,3
+232,P-007380,2025-12,0.926,melunasi 10 bulan iuran telat dalam 12 bulan terakhir; nonaktif 8 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+233,P-002077,2025-12,0.926,nonaktif 10 dari 12 bulan terakhir; melunasi 10 bulan iuran telat dalam 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,3
+234,P-007889,2025-12,0.925,nonaktif 12 dari 12 bulan terakhir; melunasi 12 bulan iuran telat dalam 12 bulan terakhir,pengingat_saldo_autodebet,6-10,1,3
+235,P-007683,2025-12,0.925,nonaktif 11 dari 12 bulan terakhir; melunasi 11 bulan iuran telat dalam 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,3
+236,P-001859,2025-12,0.925,nonaktif 7 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+237,P-006959,2025-12,0.923,nonaktif 10 dari 12 bulan terakhir; melunasi 11 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+238,P-017925,2025-12,0.922,melunasi 11 bulan iuran telat dalam 12 bulan terakhir; nonaktif 9 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+239,P-007471,2025-12,0.921,nonaktif 9 dari 12 bulan terakhir; melunasi 9 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+240,P-012506,2025-12,0.921,nonaktif 9 dari 12 bulan terakhir; melunasi 10 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,tidak_padan,0,3
+241,P-009989,2025-12,0.921,nonaktif 10 dari 12 bulan terakhir; melunasi 10 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+242,P-002043,2025-12,0.921,nonaktif 9 dari 12 bulan terakhir; melunasi 10 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+243,P-013660,2025-12,0.92,nonaktif 7 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+244,P-011995,2025-12,0.92,nonaktif 8 dari 12 bulan terakhir; 5 kali aktif kembali dalam 12 bulan,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+245,P-002059,2025-12,0.919,nonaktif 12 dari 12 bulan terakhir; melunasi 12 bulan iuran telat dalam 12 bulan terakhir,pengingat_saldo_autodebet,6-10,1,3
+246,P-007046,2025-12,0.919,nonaktif 11 dari 12 bulan terakhir; melunasi 11 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+247,P-013132,2025-12,0.918,melunasi 9 bulan iuran telat dalam 12 bulan terakhir; nonaktif 7 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+248,P-007433,2025-12,0.918,nonaktif 8 dari 12 bulan terakhir; melunasi 9 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+249,P-003425,2025-12,0.918,melunasi 9 bulan iuran telat dalam 12 bulan terakhir; nonaktif 7 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,3
+250,P-009004,2025-12,0.917,nonaktif 8 dari 12 bulan terakhir; 5 kali aktif kembali dalam 12 bulan,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+251,P-001189,2025-12,0.916,nonaktif 9 dari 12 bulan terakhir; melunasi 9 bulan iuran telat dalam 12 bulan terakhir,cek_kelayakan_PBI,1-5,1,3
+252,P-006624,2025-12,0.916,melunasi 10 bulan iuran telat dalam 12 bulan terakhir; nonaktif 8 dari 10 bulan terakhir,cek_kelayakan_PBI,1-5,1,3
+253,P-013981,2025-12,0.916,melunasi 9 bulan iuran telat dalam 12 bulan terakhir; nonaktif 7 dari 12 bulan terakhir,pengingat_saldo_autodebet,tidak_padan,1,2
+254,P-009111,2025-12,0.915,nonaktif 11 dari 12 bulan terakhir; melunasi 11 bulan iuran telat dalam 12 bulan terakhir,cek_kelayakan_PBI,1-5,1,3
+255,P-006856,2025-12,0.915,nonaktif 7 dari 12 bulan terakhir; melunasi 8 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+256,P-015446,2025-12,0.915,nonaktif 10 dari 12 bulan terakhir; melunasi 10 bulan iuran telat dalam 12 bulan terakhir,pengingat_saldo_autodebet,6-10,1,3
+257,P-019384,2025-12,0.913,nonaktif 8 dari 12 bulan terakhir; melunasi 9 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+258,P-018773,2025-12,0.912,melunasi 11 bulan iuran telat dalam 12 bulan terakhir; nonaktif 9 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,3
+259,P-015765,2025-12,0.912,nonaktif 10 dari 12 bulan terakhir; melunasi 10 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+260,P-005869,2025-12,0.912,nonaktif 7 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+261,P-011926,2025-12,0.911,melunasi 11 bulan iuran telat dalam 12 bulan terakhir; nonaktif 6 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+262,P-005493,2025-12,0.911,nonaktif 11 dari 12 bulan terakhir; melunasi 11 bulan iuran telat dalam 12 bulan terakhir,cek_kelayakan_PBI,1-5,1,3
+263,P-004854,2025-12,0.911,nonaktif 9 dari 12 bulan terakhir; melunasi 10 bulan iuran telat dalam 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,3
+264,P-001729,2025-12,0.91,melunasi 9 bulan iuran telat dalam 12 bulan terakhir; nonaktif 7 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,2
+265,P-001373,2025-12,0.91,nonaktif 8 dari 12 bulan terakhir; melunasi 8 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+266,P-000491,2025-12,0.91,nonaktif 10 dari 12 bulan terakhir; melunasi 10 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+267,P-006101,2025-12,0.908,nonaktif 8 dari 12 bulan terakhir; melunasi 8 bulan iuran telat dalam 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,1
+268,P-017865,2025-12,0.908,nonaktif 9 dari 12 bulan terakhir; melunasi 9 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+269,P-006135,2025-12,0.907,nonaktif 9 dari 12 bulan terakhir; melunasi 9 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,tidak_padan,0,3
+270,P-016558,2025-12,0.906,5 kali aktif kembali dalam 12 bulan; melunasi 8 bulan iuran telat dalam 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,3
+271,P-009966,2025-12,0.906,nonaktif 11 dari 12 bulan terakhir; melunasi 11 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,tidak_padan,0,1
+272,P-000098,2025-12,0.906,melunasi 9 bulan iuran telat dalam 12 bulan terakhir; 5 kali aktif kembali dalam 12 bulan,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+273,P-018165,2025-12,0.905,nonaktif 9 dari 12 bulan terakhir; melunasi 9 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+274,P-000533,2025-12,0.905,nonaktif 10 dari 12 bulan terakhir; melunasi 10 bulan iuran telat dalam 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,3
+275,P-004018,2025-12,0.905,nonaktif 9 dari 12 bulan terakhir; melunasi 9 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,tidak_padan,0,2
+276,P-002987,2025-12,0.904,melunasi 7 bulan iuran telat dalam 12 bulan terakhir; 4 kali aktif kembali dalam 12 bulan,pengingat_H-5_dan_tawaran_autodebet,tidak_padan,0,3
+277,P-017666,2025-12,0.903,nonaktif 11 dari 12 bulan terakhir; melunasi 11 bulan iuran telat dalam 12 bulan terakhir,pengingat_saldo_autodebet,6-10,1,2
+278,P-009226,2025-12,0.903,melunasi 9 bulan iuran telat dalam 12 bulan terakhir; nonaktif 7 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+279,P-015371,2025-12,0.902,nonaktif 8 dari 12 bulan terakhir; melunasi 8 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+280,P-016461,2025-12,0.902,nonaktif 11 dari 12 bulan terakhir; melunasi 11 bulan iuran telat dalam 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,2
+281,P-000747,2025-12,0.901,5 kali aktif kembali dalam 12 bulan; melunasi 8 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,tidak_padan,0,3
+282,P-003918,2025-12,0.901,nonaktif 9 dari 12 bulan terakhir; melunasi 9 bulan iuran telat dalam 12 bulan terakhir,pengingat_saldo_autodebet,6-10,1,1
+283,P-009460,2025-12,0.901,nonaktif 8 dari 12 bulan terakhir; melunasi 9 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+284,P-005378,2025-12,0.9,nonaktif 11 dari 12 bulan terakhir; melunasi 11 bulan iuran telat dalam 12 bulan terakhir,pengingat_saldo_autodebet,6-10,1,3
+285,P-006050,2025-12,0.9,nonaktif 7 dari 12 bulan terakhir; 5 kali aktif kembali dalam 12 bulan,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+286,P-019392,2025-12,0.899,nonaktif 8 dari 12 bulan terakhir; melunasi 8 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+287,P-009391,2025-12,0.899,nonaktif 9 dari 12 bulan terakhir; melunasi 9 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+288,P-006784,2025-12,0.899,nonaktif 8 dari 12 bulan terakhir; melunasi 9 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+289,P-008856,2025-12,0.898,nonaktif 7 dari 12 bulan terakhir; 5 kali aktif kembali dalam 12 bulan,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+290,P-015500,2025-12,0.896,nonaktif 8 dari 12 bulan terakhir; melunasi 8 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+291,P-013504,2025-12,0.895,nonaktif 10 dari 12 bulan terakhir; melunasi 10 bulan iuran telat dalam 12 bulan terakhir,cek_kelayakan_PBI,1-5,1,3
+292,P-008791,2025-12,0.894,nonaktif 7 dari 12 bulan terakhir; melunasi 8 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+293,P-012229,2025-12,0.893,nonaktif 7 dari 12 bulan terakhir; 5 kali aktif kembali dalam 12 bulan,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+294,P-006825,2025-12,0.893,nonaktif 7 dari 12 bulan terakhir; 5 kali aktif kembali dalam 12 bulan,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+295,P-008009,2025-12,0.892,melunasi 10 bulan iuran telat dalam 12 bulan terakhir; nonaktif 7 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+296,P-009021,2025-12,0.891,nonaktif 7 dari 12 bulan terakhir; 5 kali aktif kembali dalam 12 bulan,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+297,P-001970,2025-12,0.89,nonaktif 8 dari 12 bulan terakhir; melunasi 9 bulan iuran telat dalam 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,2
+298,P-017659,2025-12,0.89,nonaktif 8 dari 12 bulan terakhir; melunasi 8 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+299,P-010272,2025-12,0.89,melunasi 10 bulan iuran telat dalam 12 bulan terakhir; nonaktif 8 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+300,P-003412,2025-12,0.889,nonaktif 9 dari 12 bulan terakhir; melunasi 10 bulan iuran telat dalam 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,3
+301,P-002227,2025-12,0.889,nonaktif 8 dari 12 bulan terakhir; melunasi 8 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+302,P-006762,2025-12,0.889,nonaktif 7 dari 12 bulan terakhir; melunasi 8 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+303,P-009022,2025-12,0.889,melunasi 13 bulan iuran telat dalam 12 bulan terakhir; pernah nonaktif sejak 2023,pengingat_saldo_autodebet,6-10,1,2
+304,P-005280,2025-12,0.888,nonaktif 9 dari 12 bulan terakhir; melunasi 9 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+305,P-002054,2025-12,0.885,5 kali aktif kembali dalam 12 bulan; nonaktif 6 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,tidak_padan,0,3
+306,P-012992,2025-12,0.885,nonaktif 8 dari 12 bulan terakhir; melunasi 8 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+307,P-002740,2025-12,0.885,nonaktif 8 dari 12 bulan terakhir; melunasi 9 bulan iuran telat dalam 12 bulan terakhir,pengingat_saldo_autodebet,6-10,1,2
+308,P-008085,2025-12,0.884,nonaktif 7 dari 12 bulan terakhir; 5 kali aktif kembali dalam 12 bulan,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+309,P-011861,2025-12,0.883,nonaktif 8 dari 12 bulan terakhir; melunasi 9 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+310,P-009334,2025-12,0.883,nonaktif 7 dari 12 bulan terakhir; melunasi 8 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+311,P-001691,2025-12,0.883,nonaktif 7 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,3
+312,P-012916,2025-12,0.883,melunasi 10 bulan iuran telat dalam 12 bulan terakhir; nonaktif 8 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+313,P-004608,2025-12,0.883,nonaktif 8 dari 12 bulan terakhir; melunasi 9 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,1
+314,P-005731,2025-12,0.882,5 kali aktif kembali dalam 12 bulan; nonaktif 6 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+315,P-013807,2025-12,0.882,nonaktif 8 dari 12 bulan terakhir; melunasi 8 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,tidak_padan,0,3
+316,P-018192,2025-12,0.882,nonaktif 8 dari 12 bulan terakhir; melunasi 8 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,tidak_padan,0,2
+317,P-010307,2025-12,0.881,melunasi 10 bulan iuran telat dalam 12 bulan terakhir; nonaktif 7 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+318,P-008919,2025-12,0.881,nonaktif 6 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,tidak_padan,0,3
+319,P-001363,2025-12,0.881,melunasi 11 bulan iuran telat dalam 12 bulan terakhir; nonaktif 7 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,tidak_padan,0,1
+320,P-006722,2025-12,0.88,nonaktif 8 dari 12 bulan terakhir; melunasi 8 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,1
+321,P-005887,2025-12,0.879,nonaktif 7 dari 12 bulan terakhir; melunasi 8 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+322,P-014310,2025-12,0.879,nonaktif 7 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+323,P-014510,2025-12,0.878,nonaktif 9 dari 12 bulan terakhir; melunasi 9 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,1
+324,P-001901,2025-12,0.878,melunasi 8 bulan iuran telat dalam 12 bulan terakhir; nonaktif 6 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+325,P-001461,2025-12,0.877,nonaktif 9 dari 12 bulan terakhir; melunasi 9 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+326,P-009465,2025-12,0.877,nonaktif 7 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+327,P-010973,2025-12,0.877,nonaktif 7 dari 12 bulan terakhir; 5 kali aktif kembali dalam 12 bulan,pengingat_H-5_dan_tawaran_autodebet,6-10,0,1
+328,P-012018,2025-12,0.877,melunasi 11 bulan iuran telat dalam 12 bulan terakhir; nonaktif 9 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,1
+329,P-018135,2025-12,0.876,nonaktif 7 dari 12 bulan terakhir; melunasi 8 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+330,P-006198,2025-12,0.875,melunasi 9 bulan iuran telat dalam 12 bulan terakhir; nonaktif 6 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+331,P-007298,2025-12,0.875,melunasi 9 bulan iuran telat dalam 12 bulan terakhir; nonaktif 7 dari 12 bulan terakhir,pengingat_saldo_autodebet,6-10,1,1
+332,P-016006,2025-12,0.875,nonaktif 7 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+333,P-014987,2025-12,0.875,nonaktif 8 dari 12 bulan terakhir; melunasi 8 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+334,P-003656,2025-12,0.874,nonaktif 7 dari 12 bulan terakhir; melunasi 8 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+335,P-004704,2025-12,0.874,6 kali aktif kembali dalam 12 bulan; nonaktif 6 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+336,P-008684,2025-12,0.874,nonaktif 8 dari 12 bulan terakhir; melunasi 9 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+337,P-010012,2025-12,0.874,nonaktif 7 dari 12 bulan terakhir; melunasi 8 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+338,P-017744,2025-12,0.874,nonaktif 8 dari 12 bulan terakhir; melunasi 8 bulan iuran telat dalam 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,3
+339,P-004121,2025-12,0.874,melunasi 9 bulan iuran telat dalam 12 bulan terakhir; nonaktif 7 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+340,P-013223,2025-12,0.873,nonaktif 7 dari 12 bulan terakhir; melunasi 8 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+341,P-011706,2025-12,0.873,nonaktif 10 dari 12 bulan terakhir; melunasi 11 bulan iuran telat dalam 12 bulan terakhir,cek_kelayakan_PBI,1-5,1,2
+342,P-018545,2025-12,0.872,nonaktif 7 dari 12 bulan terakhir; melunasi 8 bulan iuran telat dalam 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,2
+343,P-007917,2025-12,0.871,nonaktif 8 dari 12 bulan terakhir; melunasi 8 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+344,P-010027,2025-12,0.871,nonaktif 7 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+345,P-001765,2025-12,0.871,nonaktif 7 dari 12 bulan terakhir; melunasi 8 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+346,P-015674,2025-12,0.87,5 kali aktif kembali dalam 12 bulan; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+347,P-019917,2025-12,0.87,melunasi 9 bulan iuran telat dalam 12 bulan terakhir; nonaktif 6 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+348,P-009960,2025-12,0.87,nonaktif 7 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+349,P-017616,2025-12,0.87,nonaktif 8 dari 12 bulan terakhir; melunasi 8 bulan iuran telat dalam 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,3
+350,P-012160,2025-12,0.87,nonaktif 7 dari 12 bulan terakhir; 5 kali aktif kembali dalam 12 bulan,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+351,P-011437,2025-12,0.869,melunasi 9 bulan iuran telat dalam 12 bulan terakhir; nonaktif 7 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,2
+352,P-014565,2025-12,0.869,nonaktif 7 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+353,P-002314,2025-12,0.868,nonaktif 8 dari 12 bulan terakhir; melunasi 8 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+354,P-010117,2025-12,0.868,melunasi 11 bulan iuran telat dalam 12 bulan terakhir; nonaktif 6 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,1,2
+355,P-012223,2025-12,0.868,5 kali aktif kembali dalam 12 bulan; nonaktif 6 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,tidak_padan,0,3
+356,P-005693,2025-12,0.868,nonaktif 8 dari 12 bulan terakhir; melunasi 8 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+357,P-006804,2025-12,0.867,nonaktif 8 dari 12 bulan terakhir; melunasi 8 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+358,P-007873,2025-12,0.866,nonaktif 9 dari 12 bulan terakhir; melunasi 9 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+359,P-018736,2025-12,0.866,melunasi 7 bulan iuran telat dalam 12 bulan terakhir; nonaktif 5 dari 11 bulan terakhir,cek_kelayakan_PBI,1-5,1,3
+360,P-008386,2025-12,0.866,melunasi 11 bulan iuran telat dalam 12 bulan terakhir; nonaktif 6 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,2
+361,P-019122,2025-12,0.866,nonaktif 7 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+362,P-001291,2025-12,0.866,nonaktif 7 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+363,P-003235,2025-12,0.865,nonaktif 6 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+364,P-002274,2025-12,0.865,nonaktif 7 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+365,P-005496,2025-12,0.865,nonaktif 7 dari 12 bulan terakhir; melunasi 8 bulan iuran telat dalam 12 bulan terakhir,pengingat_saldo_autodebet,6-10,1,2
+366,P-015194,2025-12,0.865,nonaktif 6 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,tidak_padan,0,3
+367,P-017500,2025-12,0.864,nonaktif 10 dari 12 bulan terakhir; melunasi 10 bulan iuran telat dalam 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,1
+368,P-019247,2025-12,0.864,nonaktif 7 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+369,P-014149,2025-12,0.864,6 kali aktif kembali dalam 12 bulan; nonaktif 6 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+370,P-010231,2025-12,0.863,melunasi 9 bulan iuran telat dalam 12 bulan terakhir; nonaktif 6 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+371,P-013992,2025-12,0.863,nonaktif 7 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+372,P-017615,2025-12,0.863,nonaktif 7 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+373,P-004422,2025-12,0.863,nonaktif 7 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,tidak_padan,0,3
+374,P-001830,2025-12,0.862,nonaktif 7 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+375,P-004222,2025-12,0.862,5 kali aktif kembali dalam 12 bulan; nonaktif 6 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,1
+376,P-019797,2025-12,0.861,nonaktif 8 dari 12 bulan terakhir; melunasi 8 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+377,P-007095,2025-12,0.861,5 kali aktif kembali dalam 12 bulan; nonaktif 6 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+378,P-009061,2025-12,0.861,nonaktif 7 dari 12 bulan terakhir; melunasi 8 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+379,P-018328,2025-12,0.86,nonaktif 7 dari 12 bulan terakhir; melunasi 8 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,1
+380,P-003219,2025-12,0.86,nonaktif 9 dari 12 bulan terakhir; melunasi 9 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+381,P-015077,2025-12,0.859,5 kali aktif kembali dalam 12 bulan; nonaktif 6 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+382,P-010489,2025-12,0.858,melunasi 9 bulan iuran telat dalam 12 bulan terakhir; nonaktif 6 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,1
+383,P-008498,2025-12,0.858,melunasi 10 bulan iuran telat dalam 12 bulan terakhir; nonaktif 7 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,1
+384,P-004276,2025-12,0.858,4 kali aktif kembali dalam 12 bulan; melunasi 6 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+385,P-013700,2025-12,0.858,nonaktif 7 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+386,P-017496,2025-12,0.857,melunasi 9 bulan iuran telat dalam 12 bulan terakhir; nonaktif 7 dari 12 bulan terakhir,pengingat_saldo_autodebet,6-10,1,1
+387,P-003449,2025-12,0.856,nonaktif 8 dari 12 bulan terakhir; melunasi 8 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+388,P-009055,2025-12,0.855,nonaktif 7 dari 12 bulan terakhir; melunasi 8 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+389,P-013288,2025-12,0.855,nonaktif 8 dari 12 bulan terakhir; melunasi 8 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+390,P-014448,2025-12,0.855,nonaktif 7 dari 12 bulan terakhir; melunasi 8 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+391,P-019659,2025-12,0.855,nonaktif 6 dari 12 bulan terakhir; 4 kali aktif kembali dalam 12 bulan,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+392,P-005911,2025-12,0.855,nonaktif 8 dari 12 bulan terakhir; melunasi 8 bulan iuran telat dalam 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,2
+393,P-017516,2025-12,0.854,nonaktif 7 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+394,P-009731,2025-12,0.854,5 kali aktif kembali dalam 12 bulan; nonaktif 6 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,3
+395,P-009950,2025-12,0.854,nonaktif 7 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+396,P-001138,2025-12,0.853,nonaktif 6 dari 12 bulan terakhir; 4 kali aktif kembali dalam 12 bulan,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+397,P-004377,2025-12,0.853,nonaktif 7 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+398,P-016063,2025-12,0.852,5 kali aktif kembali dalam 12 bulan; nonaktif 5 dari 12 bulan terakhir,pengingat_saldo_autodebet,6-10,1,3
+399,P-015693,2025-12,0.851,nonaktif 8 dari 12 bulan terakhir; melunasi 8 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,1
+400,P-013339,2025-12,0.851,5 kali aktif kembali dalam 12 bulan; melunasi 8 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,tidak_padan,0,3
+401,P-003388,2025-12,0.851,nonaktif 7 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+402,P-014168,2025-12,0.851,melunasi 8 bulan iuran telat dalam 12 bulan terakhir; nonaktif 6 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,3
+403,P-017604,2025-12,0.849,4 kali aktif kembali dalam 12 bulan; melunasi 6 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+404,P-004955,2025-12,0.849,nonaktif 7 dari 12 bulan terakhir; melunasi 8 bulan iuran telat dalam 12 bulan terakhir,pengingat_saldo_autodebet,6-10,1,3
+405,P-003318,2025-12,0.849,nonaktif 7 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+406,P-015442,2025-12,0.849,nonaktif 11 dari 12 bulan terakhir; melunasi 6 bulan iuran telat dalam 12 bulan terakhir,pengingat_saldo_autodebet,6-10,1,3
+407,P-004310,2025-12,0.849,nonaktif 7 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,2
+408,P-003153,2025-12,0.848,nonaktif 8 dari 12 bulan terakhir; melunasi 9 bulan iuran telat dalam 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,2
+409,P-010894,2025-12,0.848,nonaktif 6 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+410,P-019145,2025-12,0.848,melunasi 8 bulan iuran telat dalam 12 bulan terakhir; nonaktif 6 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+411,P-011230,2025-12,0.848,nonaktif 7 dari 12 bulan terakhir; melunasi 8 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,1
+412,P-007000,2025-12,0.847,nonaktif 8 dari 12 bulan terakhir; melunasi 8 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,1
+413,P-009191,2025-12,0.847,nonaktif 7 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+414,P-016753,2025-12,0.847,melunasi 9 bulan iuran telat dalam 12 bulan terakhir; nonaktif 6 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+415,P-012685,2025-12,0.846,nonaktif 7 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+416,P-019528,2025-12,0.846,melunasi 8 bulan iuran telat dalam 12 bulan terakhir; 4 kali aktif kembali dalam 12 bulan,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+417,P-016016,2025-12,0.846,nonaktif 6 dari 12 bulan terakhir; 4 kali aktif kembali dalam 12 bulan,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+418,P-007806,2025-12,0.846,nonaktif 7 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+419,P-006468,2025-12,0.846,nonaktif 6 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,3
+420,P-003528,2025-12,0.846,4 kali aktif kembali dalam 12 bulan; melunasi 6 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+421,P-010285,2025-12,0.846,nonaktif 7 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+422,P-007705,2025-12,0.846,nonaktif 8 dari 12 bulan terakhir; melunasi 9 bulan iuran telat dalam 12 bulan terakhir,pengingat_saldo_autodebet,6-10,1,3
+423,P-016818,2025-12,0.845,nonaktif 7 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+424,P-007394,2025-12,0.845,melunasi 8 bulan iuran telat dalam 12 bulan terakhir; 4 kali aktif kembali dalam 12 bulan,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+425,P-016705,2025-12,0.843,nonaktif 7 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+426,P-006345,2025-12,0.843,melunasi 8 bulan iuran telat dalam 12 bulan terakhir; nonaktif 6 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,3
+427,P-017364,2025-12,0.843,melunasi 6 bulan iuran telat dalam 12 bulan terakhir; nonaktif 5 dari 9 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+428,P-017811,2025-12,0.842,5 kali aktif kembali dalam 12 bulan; melunasi 6 bulan iuran telat dalam 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,3
+429,P-014668,2025-12,0.842,nonaktif 7 dari 12 bulan terakhir; melunasi 8 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+430,P-006807,2025-12,0.841,nonaktif 8 dari 12 bulan terakhir; melunasi 9 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+431,P-001956,2025-12,0.841,nonaktif 7 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+432,P-000977,2025-12,0.841,nonaktif 6 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+433,P-013998,2025-12,0.841,nonaktif 7 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+434,P-016334,2025-12,0.841,nonaktif 7 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,1
+435,P-010619,2025-12,0.84,nonaktif 7 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+436,P-001655,2025-12,0.84,melunasi 11 bulan iuran telat dalam 12 bulan terakhir; pernah nonaktif sejak 2023,pengingat_H-5_dan_tawaran_autodebet,tidak_padan,0,2
+437,P-006497,2025-12,0.84,nonaktif 8 dari 12 bulan terakhir; melunasi 8 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,1
+438,P-005097,2025-12,0.84,nonaktif 7 dari 12 bulan terakhir; melunasi 8 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+439,P-009310,2025-12,0.839,melunasi 6 bulan iuran telat dalam 12 bulan terakhir; nonaktif 5 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+440,P-013076,2025-12,0.839,nonaktif 8 dari 12 bulan terakhir; melunasi 9 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+441,P-012483,2025-12,0.839,nonaktif 7 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+442,P-007356,2025-12,0.839,5 kali aktif kembali dalam 12 bulan; nonaktif 6 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,2
+443,P-016467,2025-12,0.839,melunasi 9 bulan iuran telat dalam 12 bulan terakhir; nonaktif 7 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,1
+444,P-000470,2025-12,0.838,nonaktif 7 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+445,P-018990,2025-12,0.838,nonaktif 7 dari 12 bulan terakhir; melunasi 8 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,1
+446,P-007821,2025-12,0.837,nonaktif 7 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+447,P-018830,2025-12,0.837,nonaktif 7 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_saldo_autodebet,6-10,1,3
+448,P-018614,2025-12,0.837,melunasi 6 bulan iuran telat dalam 12 bulan terakhir; nonaktif 5 dari 10 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+449,P-001763,2025-12,0.837,nonaktif 8 dari 12 bulan terakhir; melunasi 8 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+450,P-017772,2025-12,0.837,nonaktif 8 dari 12 bulan terakhir; melunasi 8 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+451,P-001044,2025-12,0.836,nonaktif 6 dari 12 bulan terakhir; 4 kali aktif kembali dalam 12 bulan,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+452,P-002421,2025-12,0.836,nonaktif 7 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,cek_kelayakan_PBI,1-5,1,3
+453,P-004170,2025-12,0.836,nonaktif 6 dari 12 bulan terakhir; 4 kali aktif kembali dalam 12 bulan,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+454,P-017582,2025-12,0.836,5 kali aktif kembali dalam 12 bulan; nonaktif 6 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+455,P-011119,2025-12,0.836,nonaktif 6 dari 12 bulan terakhir; 4 kali aktif kembali dalam 12 bulan,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+456,P-002343,2025-12,0.836,nonaktif 7 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_saldo_autodebet,6-10,1,2
+457,P-006416,2025-12,0.836,nonaktif 7 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,1
+458,P-009723,2025-12,0.836,nonaktif 6 dari 12 bulan terakhir; melunasi 6 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+459,P-014576,2025-12,0.836,nonaktif 6 dari 12 bulan terakhir; melunasi 6 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,tidak_padan,0,3
+460,P-007231,2025-12,0.835,5 kali aktif kembali dalam 12 bulan; nonaktif 6 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+461,P-012919,2025-12,0.835,nonaktif 7 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_saldo_autodebet,6-10,1,3
+462,P-002608,2025-12,0.835,nonaktif 11 dari 12 bulan terakhir; melunasi 5 bulan iuran telat dalam 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,3
+463,P-001018,2025-12,0.835,nonaktif 8 dari 12 bulan terakhir; melunasi 9 bulan iuran telat dalam 12 bulan terakhir,pengingat_saldo_autodebet,6-10,1,3
+464,P-005401,2025-12,0.835,nonaktif 6 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+465,P-010996,2025-12,0.835,melunasi 7 bulan iuran telat dalam 12 bulan terakhir; 4 kali aktif kembali dalam 12 bulan,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+466,P-008502,2025-12,0.835,melunasi 7 bulan iuran telat dalam 12 bulan terakhir; nonaktif 5 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+467,P-011276,2025-12,0.834,nonaktif 7 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,2
+468,P-007469,2025-12,0.834,nonaktif 7 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+469,P-019010,2025-12,0.834,nonaktif 7 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,3
+470,P-019074,2025-12,0.833,5 kali aktif kembali dalam 12 bulan; nonaktif 6 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+471,P-010208,2025-12,0.833,melunasi 10 bulan iuran telat dalam 12 bulan terakhir; nonaktif 8 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,1
+472,P-000696,2025-12,0.833,melunasi 7 bulan iuran telat dalam 12 bulan terakhir; 4 kali aktif kembali dalam 12 bulan,cek_kelayakan_PBI,1-5,0,3
+473,P-005965,2025-12,0.833,5 kali aktif kembali dalam 12 bulan; nonaktif 6 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+474,P-002692,2025-12,0.833,nonaktif 6 dari 12 bulan terakhir; 4 kali aktif kembali dalam 12 bulan,pengingat_H-5_dan_tawaran_autodebet,tidak_padan,0,3
+475,P-019813,2025-12,0.832,melunasi 7 bulan iuran telat dalam 12 bulan terakhir; 4 kali aktif kembali dalam 12 bulan,cek_kelayakan_PBI,1-5,0,1
+476,P-007662,2025-12,0.832,5 kali aktif kembali dalam 12 bulan; nonaktif 5 dari 12 bulan terakhir,pengingat_saldo_autodebet,6-10,1,3
+477,P-007919,2025-12,0.832,nonaktif 5 dari 12 bulan terakhir; melunasi 5 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+478,P-016215,2025-12,0.832,nonaktif 9 dari 12 bulan terakhir; melunasi 9 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,1
+479,P-011010,2025-12,0.832,nonaktif 6 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+480,P-007462,2025-12,0.832,melunasi 8 bulan iuran telat dalam 12 bulan terakhir; nonaktif 6 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,2
+481,P-008307,2025-12,0.832,5 kali aktif kembali dalam 12 bulan; nonaktif 5 dari 12 bulan terakhir,pengingat_saldo_autodebet,6-10,1,2
+482,P-004435,2025-12,0.832,nonaktif 9 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+483,P-010474,2025-12,0.832,5 kali aktif kembali dalam 12 bulan; nonaktif 6 dari 12 bulan terakhir,pengingat_saldo_autodebet,6-10,1,3
+484,P-001017,2025-12,0.831,4 kali aktif kembali dalam 12 bulan; melunasi 6 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+485,P-009425,2025-12,0.831,nonaktif 6 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+486,P-002206,2025-12,0.831,nonaktif 6 dari 12 bulan terakhir; melunasi 6 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+487,P-018249,2025-12,0.831,nonaktif 6 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+488,P-001356,2025-12,0.831,5 kali aktif kembali dalam 12 bulan; nonaktif 6 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,1
+489,P-005646,2025-12,0.83,nonaktif 6 dari 12 bulan terakhir; 4 kali aktif kembali dalam 12 bulan,pengingat_H-5_dan_tawaran_autodebet,tidak_padan,0,3
+490,P-016140,2025-12,0.829,nonaktif 7 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+491,P-000992,2025-12,0.829,nonaktif 6 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+492,P-017944,2025-12,0.828,melunasi 9 bulan iuran telat dalam 12 bulan terakhir; nonaktif 7 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,1
+493,P-019004,2025-12,0.828,4 kali aktif kembali dalam 12 bulan; nonaktif 5 dari 12 bulan terakhir,pengingat_saldo_autodebet,tidak_padan,1,3
+494,P-004703,2025-12,0.828,nonaktif 6 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+495,P-006603,2025-12,0.827,nonaktif 7 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+496,P-016539,2025-12,0.827,4 kali aktif kembali dalam 12 bulan; nonaktif 5 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+497,P-014018,2025-12,0.827,nonaktif 8 dari 12 bulan terakhir; melunasi 9 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,1
+498,P-008491,2025-12,0.826,melunasi 8 bulan iuran telat dalam 12 bulan terakhir; 4 kali aktif kembali dalam 12 bulan,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+499,P-018515,2025-12,0.826,4 kali aktif kembali dalam 12 bulan; nonaktif 5 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+500,P-003417,2025-12,0.826,melunasi 8 bulan iuran telat dalam 12 bulan terakhir; nonaktif 6 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+501,P-014235,2025-12,0.826,5 kali aktif kembali dalam 12 bulan; nonaktif 6 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+502,P-018535,2025-12,0.826,nonaktif 6 dari 12 bulan terakhir; 4 kali aktif kembali dalam 12 bulan,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+503,P-013973,2025-12,0.826,nonaktif 7 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+504,P-005591,2025-12,0.825,nonaktif 6 dari 12 bulan terakhir; 4 kali aktif kembali dalam 12 bulan,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+505,P-010655,2025-12,0.825,nonaktif 6 dari 12 bulan terakhir; 4 kali aktif kembali dalam 12 bulan,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+506,P-006205,2025-12,0.825,nonaktif 7 dari 12 bulan terakhir; melunasi 8 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,1
+507,P-005051,2025-12,0.825,nonaktif 7 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,1
+508,P-016456,2025-12,0.825,4 kali aktif kembali dalam 12 bulan; nonaktif 5 dari 12 bulan terakhir,pengingat_saldo_autodebet,6-10,1,3
+509,P-018388,2025-12,0.824,5 kali aktif kembali dalam 12 bulan; nonaktif 5 dari 12 bulan terakhir,pengingat_saldo_autodebet,6-10,1,2
+510,P-000051,2025-12,0.824,melunasi 6 bulan iuran telat dalam 12 bulan terakhir; nonaktif 5 dari 7 bulan terakhir,pengingat_saldo_autodebet,6-10,1,3
+511,P-014435,2025-12,0.824,nonaktif 6 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+512,P-002629,2025-12,0.824,nonaktif 7 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,tidak_padan,0,3
+513,P-003876,2025-12,0.823,nonaktif 6 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+514,P-007204,2025-12,0.822,nonaktif 6 dari 12 bulan terakhir; melunasi 6 bulan iuran telat dalam 12 bulan terakhir,cek_kelayakan_PBI,1-5,1,3
+515,P-008078,2025-12,0.822,4 kali aktif kembali dalam 12 bulan; nonaktif 5 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+516,P-011937,2025-12,0.822,5 kali aktif kembali dalam 12 bulan; nonaktif 6 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,1
+517,P-019947,2025-12,0.822,nonaktif 7 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,1
+518,P-009650,2025-12,0.822,4 kali aktif kembali dalam 12 bulan; nonaktif 5 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+519,P-003422,2025-12,0.821,nonaktif 6 dari 12 bulan terakhir; 4 kali aktif kembali dalam 12 bulan,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+520,P-003685,2025-12,0.821,5 kali aktif kembali dalam 12 bulan; melunasi 6 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+521,P-007058,2025-12,0.821,nonaktif 6 dari 12 bulan terakhir; 4 kali aktif kembali dalam 12 bulan,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+522,P-007772,2025-12,0.821,nonaktif 7 dari 12 bulan terakhir; melunasi 8 bulan iuran telat dalam 12 bulan terakhir,pengingat_saldo_autodebet,tidak_padan,1,1
+523,P-007431,2025-12,0.821,nonaktif 6 dari 12 bulan terakhir; 4 kali aktif kembali dalam 12 bulan,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+524,P-017691,2025-12,0.821,5 kali aktif kembali dalam 12 bulan; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,1
+525,P-009866,2025-12,0.82,nonaktif 7 dari 12 bulan terakhir; melunasi 8 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+526,P-003018,2025-12,0.82,5 kali aktif kembali dalam 12 bulan; nonaktif 5 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+527,P-019965,2025-12,0.82,nonaktif 7 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+528,P-001884,2025-12,0.82,nonaktif 6 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+529,P-007672,2025-12,0.819,nonaktif 7 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,3
+530,P-016497,2025-12,0.819,nonaktif 7 dari 12 bulan terakhir; melunasi 8 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+531,P-005500,2025-12,0.819,nonaktif 7 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+532,P-004221,2025-12,0.819,nonaktif 7 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+533,P-019288,2025-12,0.819,nonaktif 6 dari 12 bulan terakhir; 4 kali aktif kembali dalam 12 bulan,cek_kelayakan_PBI,1-5,0,3
+534,P-004747,2025-12,0.819,nonaktif 6 dari 12 bulan terakhir; 4 kali aktif kembali dalam 12 bulan,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+535,P-006020,2025-12,0.818,nonaktif 7 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+536,P-008388,2025-12,0.818,nonaktif 7 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,3
+537,P-017643,2025-12,0.818,melunasi 5 bulan iuran telat dalam 12 bulan terakhir; 3 kali aktif kembali dalam 12 bulan,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+538,P-009658,2025-12,0.817,nonaktif 6 dari 12 bulan terakhir; 4 kali aktif kembali dalam 12 bulan,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+539,P-018063,2025-12,0.817,5 kali aktif kembali dalam 12 bulan; nonaktif 5 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,tidak_padan,0,3
+540,P-011630,2025-12,0.817,nonaktif 7 dari 12 bulan terakhir; melunasi 8 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+541,P-005299,2025-12,0.817,nonaktif 6 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+542,P-019896,2025-12,0.817,nonaktif 6 dari 12 bulan terakhir; 4 kali aktif kembali dalam 12 bulan,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+543,P-002083,2025-12,0.817,nonaktif 6 dari 12 bulan terakhir; 4 kali aktif kembali dalam 12 bulan,pengingat_H-5_dan_tawaran_autodebet,tidak_padan,0,3
+544,P-019314,2025-12,0.817,nonaktif 6 dari 12 bulan terakhir; 4 kali aktif kembali dalam 12 bulan,pengingat_H-5_dan_tawaran_autodebet,tidak_padan,0,3
+545,P-009971,2025-12,0.816,nonaktif 7 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+546,P-010235,2025-12,0.816,nonaktif 6 dari 12 bulan terakhir; 4 kali aktif kembali dalam 12 bulan,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+547,P-019082,2025-12,0.815,nonaktif 7 dari 12 bulan terakhir; melunasi 8 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,1
+548,P-000228,2025-12,0.815,nonaktif 7 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+549,P-014933,2025-12,0.815,melunasi 8 bulan iuran telat dalam 12 bulan terakhir; nonaktif 6 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,tidak_padan,0,1
+550,P-018689,2025-12,0.815,nonaktif 6 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,3
+551,P-004395,2025-12,0.815,nonaktif 5 dari 12 bulan terakhir; melunasi 5 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+552,P-002408,2025-12,0.814,nonaktif 6 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+553,P-008876,2025-12,0.814,nonaktif 7 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,tidak_padan,0,3
+554,P-013623,2025-12,0.813,4 kali aktif kembali dalam 12 bulan; melunasi 5 bulan iuran telat dalam 12 bulan terakhir,cek_kelayakan_PBI,1-5,1,3
+555,P-017094,2025-12,0.813,melunasi 6 bulan iuran telat dalam 12 bulan terakhir; nonaktif 5 dari 12 bulan terakhir,pengingat_saldo_autodebet,6-10,1,3
+556,P-014133,2025-12,0.813,4 kali aktif kembali dalam 12 bulan; melunasi 6 bulan iuran telat dalam 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,3
+557,P-008926,2025-12,0.813,5 kali aktif kembali dalam 12 bulan; melunasi 6 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+558,P-008117,2025-12,0.812,4 kali aktif kembali dalam 12 bulan; pernah nonaktif sejak 2023,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+559,P-019276,2025-12,0.812,peserta 10 bulan; melunasi 5 bulan iuran telat dalam 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,3
+560,P-006411,2025-12,0.812,5 kali aktif kembali dalam 12 bulan; nonaktif 6 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+561,P-007920,2025-12,0.812,melunasi 7 bulan iuran telat dalam 12 bulan terakhir; nonaktif 5 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+562,P-016036,2025-12,0.811,nonaktif 6 dari 12 bulan terakhir; melunasi 6 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+563,P-002281,2025-12,0.811,nonaktif 6 dari 12 bulan terakhir; melunasi 6 bulan iuran telat dalam 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,2
+564,P-010352,2025-12,0.811,nonaktif 6 dari 12 bulan terakhir; 4 kali aktif kembali dalam 12 bulan,pengingat_H-5_dan_tawaran_autodebet,tidak_padan,0,3
+565,P-010691,2025-12,0.811,melunasi 8 bulan iuran telat dalam 12 bulan terakhir; 4 kali aktif kembali dalam 12 bulan,pengingat_H-5_dan_tawaran_autodebet,6-10,0,1
+566,P-018521,2025-12,0.811,5 kali aktif kembali dalam 12 bulan; nonaktif 6 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+567,P-007948,2025-12,0.81,nonaktif 6 dari 12 bulan terakhir; 4 kali aktif kembali dalam 12 bulan,pengingat_saldo_autodebet,6-10,1,1
+568,P-012832,2025-12,0.81,nonaktif 6 dari 12 bulan terakhir; melunasi 6 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+569,P-015806,2025-12,0.81,nonaktif 7 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+570,P-011033,2025-12,0.81,nonaktif 7 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,1
+571,P-012051,2025-12,0.81,nonaktif 6 dari 12 bulan terakhir; 4 kali aktif kembali dalam 12 bulan,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+572,P-012824,2025-12,0.809,nonaktif 7 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,1
+573,P-018716,2025-12,0.809,nonaktif 6 dari 12 bulan terakhir; 4 kali aktif kembali dalam 12 bulan,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+574,P-008060,2025-12,0.809,nonaktif 7 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,1
+575,P-008504,2025-12,0.809,3 kali aktif kembali dalam 12 bulan; pernah nonaktif sejak 2023,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+576,P-018873,2025-12,0.809,nonaktif 5 dari 10 bulan terakhir; melunasi 5 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,1
+577,P-017846,2025-12,0.809,nonaktif 5 dari 12 bulan terakhir; melunasi 5 bulan iuran telat dalam 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,3
+578,P-013554,2025-12,0.809,nonaktif 6 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,tidak_padan,0,2
+579,P-003683,2025-12,0.808,nonaktif 6 dari 12 bulan terakhir; melunasi 6 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,1
+580,P-001090,2025-12,0.808,nonaktif 7 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,2
+581,P-002437,2025-12,0.807,melunasi 8 bulan iuran telat dalam 12 bulan terakhir; nonaktif 6 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+582,P-017208,2025-12,0.807,nonaktif 6 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+583,P-008171,2025-12,0.807,nonaktif 7 dari 12 bulan terakhir; melunasi 8 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+584,P-011595,2025-12,0.807,nonaktif 5 dari 12 bulan terakhir; melunasi 5 bulan iuran telat dalam 12 bulan terakhir,cek_kelayakan_PBI,1-5,1,3
+585,P-019577,2025-12,0.807,nonaktif 6 dari 12 bulan terakhir; 4 kali aktif kembali dalam 12 bulan,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+586,P-016399,2025-12,0.807,4 kali aktif kembali dalam 12 bulan; nonaktif 5 dari 12 bulan terakhir,pengingat_saldo_autodebet,6-10,1,3
+587,P-006147,2025-12,0.806,nonaktif 7 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,1
+588,P-015016,2025-12,0.806,4 kali aktif kembali dalam 12 bulan; pernah nonaktif sejak 2023,pengingat_H-5_dan_tawaran_autodebet,tidak_padan,0,2
+589,P-009785,2025-12,0.806,nonaktif 7 dari 12 bulan terakhir; 4 kali aktif kembali dalam 12 bulan,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+590,P-010525,2025-12,0.805,nonaktif 7 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+591,P-001687,2025-12,0.805,5 kali aktif kembali dalam 12 bulan; nonaktif 5 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+592,P-003263,2025-12,0.805,melunasi 9 bulan iuran telat dalam 12 bulan terakhir; 3 kali aktif kembali dalam 12 bulan,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+593,P-008256,2025-12,0.805,nonaktif 6 dari 12 bulan terakhir; 4 kali aktif kembali dalam 12 bulan,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+594,P-005499,2025-12,0.805,4 kali aktif kembali dalam 12 bulan; melunasi 6 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+595,P-003712,2025-12,0.805,melunasi 8 bulan iuran telat dalam 12 bulan terakhir; nonaktif 5 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+596,P-004280,2025-12,0.805,5 kali aktif kembali dalam 12 bulan; nonaktif 5 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+597,P-008695,2025-12,0.804,nonaktif 8 dari 12 bulan terakhir; melunasi 8 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+598,P-001239,2025-12,0.804,nonaktif 7 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+599,P-009443,2025-12,0.804,melunasi 7 bulan iuran telat dalam 12 bulan terakhir; 4 kali aktif kembali dalam 12 bulan,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+600,P-012024,2025-12,0.804,nonaktif 7 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,1
+601,P-000656,2025-12,0.804,nonaktif 8 dari 12 bulan terakhir; melunasi 8 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+602,P-003751,2025-12,0.804,nonaktif 6 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,1
+603,P-007313,2025-12,0.804,melunasi 6 bulan iuran telat dalam 12 bulan terakhir; 3 kali aktif kembali dalam 12 bulan,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+604,P-010168,2025-12,0.803,nonaktif 5 dari 12 bulan terakhir; melunasi 5 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+605,P-010301,2025-12,0.803,4 kali aktif kembali dalam 12 bulan; nonaktif 5 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+606,P-010994,2025-12,0.803,nonaktif 6 dari 12 bulan terakhir; melunasi 6 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+607,P-000398,2025-12,0.802,nonaktif 6 dari 12 bulan terakhir; melunasi 6 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+608,P-016593,2025-12,0.802,5 kali aktif kembali dalam 12 bulan; melunasi 8 bulan iuran telat dalam 12 bulan terakhir,cek_kelayakan_PBI,1-5,1,2
+609,P-004910,2025-12,0.802,nonaktif 5 dari 12 bulan terakhir; melunasi 5 bulan iuran telat dalam 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,3
+610,P-017623,2025-12,0.802,melunasi 8 bulan iuran telat dalam 12 bulan terakhir; nonaktif 6 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,1
+611,P-007983,2025-12,0.802,nonaktif 6 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_saldo_autodebet,6-10,1,2
+612,P-017761,2025-12,0.801,melunasi 6 bulan iuran telat dalam 12 bulan terakhir; 3 kali aktif kembali dalam 12 bulan,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+613,P-000147,2025-12,0.801,nonaktif 6 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+614,P-011246,2025-12,0.8,melunasi 8 bulan iuran telat dalam 12 bulan terakhir; nonaktif 5 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,3
+615,P-018156,2025-12,0.8,melunasi 8 bulan iuran telat dalam 12 bulan terakhir; nonaktif 6 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+616,P-014506,2025-12,0.8,4 kali aktif kembali dalam 12 bulan; melunasi 6 bulan iuran telat dalam 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,3
+617,P-019174,2025-12,0.8,5 kali aktif kembali dalam 12 bulan; melunasi 6 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+618,P-010488,2025-12,0.8,nonaktif 6 dari 12 bulan terakhir; 4 kali aktif kembali dalam 12 bulan,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+619,P-004723,2025-12,0.799,melunasi 6 bulan iuran telat dalam 12 bulan terakhir; 3 kali aktif kembali dalam 12 bulan,pengingat_H-5_dan_tawaran_autodebet,tidak_padan,0,3
+620,P-018368,2025-12,0.799,nonaktif 6 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+621,P-013421,2025-12,0.799,melunasi 6 bulan iuran telat dalam 12 bulan terakhir; 3 kali aktif kembali dalam 12 bulan,cek_kelayakan_PBI,1-5,0,2
+622,P-007102,2025-12,0.799,melunasi 9 bulan iuran telat dalam 12 bulan terakhir; nonaktif 6 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,tidak_padan,0,1
+623,P-005910,2025-12,0.799,nonaktif 6 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+624,P-000510,2025-12,0.798,nonaktif 7 dari 12 bulan terakhir; melunasi 8 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+625,P-012129,2025-12,0.798,nonaktif 6 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,tidak_padan,0,2
+626,P-019944,2025-12,0.798,melunasi 7 bulan iuran telat dalam 12 bulan terakhir; 4 kali aktif kembali dalam 12 bulan,pengingat_H-5_dan_tawaran_autodebet,tidak_padan,0,3
+627,P-017330,2025-12,0.798,nonaktif 7 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+628,P-005091,2025-12,0.798,melunasi 6 bulan iuran telat dalam 12 bulan terakhir; nonaktif 5 dari 10 bulan terakhir,pengingat_saldo_autodebet,6-10,1,2
+629,P-011468,2025-12,0.798,nonaktif 6 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+630,P-003052,2025-12,0.798,melunasi 8 bulan iuran telat dalam 12 bulan terakhir; nonaktif 5 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,tidak_padan,0,3
+631,P-019861,2025-12,0.797,5 kali aktif kembali dalam 12 bulan; nonaktif 5 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+632,P-018418,2025-12,0.797,nonaktif 6 dari 12 bulan terakhir; 4 kali aktif kembali dalam 12 bulan,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+633,P-014308,2025-12,0.797,nonaktif 6 dari 12 bulan terakhir; 4 kali aktif kembali dalam 12 bulan,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+634,P-013201,2025-12,0.797,nonaktif 6 dari 12 bulan terakhir; 4 kali aktif kembali dalam 12 bulan,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+635,P-012162,2025-12,0.797,4 kali aktif kembali dalam 12 bulan; nonaktif 5 dari 12 bulan terakhir,pengingat_saldo_autodebet,6-10,1,2
+636,P-001162,2025-12,0.797,nonaktif 6 dari 12 bulan terakhir; melunasi 6 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+637,P-004790,2025-12,0.797,nonaktif 6 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+638,P-005757,2025-12,0.797,4 kali aktif kembali dalam 12 bulan; melunasi 6 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+639,P-006057,2025-12,0.796,4 kali aktif kembali dalam 12 bulan; melunasi 5 bulan iuran telat dalam 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,3
+640,P-018894,2025-12,0.796,nonaktif 7 dari 12 bulan terakhir; melunasi 8 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,1
+641,P-005427,2025-12,0.796,nonaktif 6 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+642,P-013545,2025-12,0.795,nonaktif 7 dari 12 bulan terakhir; melunasi 8 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+643,P-002957,2025-12,0.795,nonaktif 7 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,1
+644,P-006530,2025-12,0.795,nonaktif 6 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,1
+645,P-010899,2025-12,0.795,melunasi 7 bulan iuran telat dalam 12 bulan terakhir; 4 kali aktif kembali dalam 12 bulan,pengingat_H-5_dan_tawaran_autodebet,6-10,0,1
+646,P-002704,2025-12,0.795,melunasi 8 bulan iuran telat dalam 12 bulan terakhir; nonaktif 5 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,3
+647,P-019044,2025-12,0.795,nonaktif 6 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+648,P-001006,2025-12,0.794,nonaktif 7 dari 12 bulan terakhir; melunasi 8 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,1
+649,P-007515,2025-12,0.794,4 kali aktif kembali dalam 12 bulan; melunasi 6 bulan iuran telat dalam 12 bulan terakhir,pengingat_saldo_autodebet,tidak_padan,1,2
+650,P-007051,2025-12,0.794,nonaktif 7 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,tidak_padan,0,2
+651,P-014419,2025-12,0.793,nonaktif 7 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,2
+652,P-018930,2025-12,0.793,melunasi 9 bulan iuran telat dalam 12 bulan terakhir; nonaktif 6 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+653,P-001158,2025-12,0.793,nonaktif 6 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+654,P-017266,2025-12,0.792,nonaktif 6 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+655,P-015385,2025-12,0.792,nonaktif 7 dari 12 bulan terakhir; melunasi 8 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,1
+656,P-005215,2025-12,0.792,4 kali aktif kembali dalam 12 bulan; nonaktif 5 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+657,P-017651,2025-12,0.792,melunasi 7 bulan iuran telat dalam 12 bulan terakhir; 4 kali aktif kembali dalam 12 bulan,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+658,P-008322,2025-12,0.791,nonaktif 6 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+659,P-000954,2025-12,0.791,melunasi 8 bulan iuran telat dalam 12 bulan terakhir; nonaktif 6 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+660,P-006293,2025-12,0.791,nonaktif 7 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,tidak_padan,0,2
+661,P-006178,2025-12,0.791,4 kali aktif kembali dalam 12 bulan; melunasi 6 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+662,P-001721,2025-12,0.79,nonaktif 7 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,1
+663,P-014482,2025-12,0.79,melunasi 8 bulan iuran telat dalam 12 bulan terakhir; nonaktif 6 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+664,P-012509,2025-12,0.789,4 kali aktif kembali dalam 12 bulan; melunasi 6 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+665,P-010511,2025-12,0.789,4 kali aktif kembali dalam 12 bulan; pernah nonaktif sejak 2023,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+666,P-011580,2025-12,0.789,4 kali aktif kembali dalam 12 bulan; melunasi 6 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+667,P-002954,2025-12,0.789,4 kali aktif kembali dalam 12 bulan; nonaktif 5 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+668,P-017433,2025-12,0.789,nonaktif 6 dari 12 bulan terakhir; melunasi 6 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,tidak_padan,0,3
+669,P-016536,2025-12,0.789,nonaktif 6 dari 12 bulan terakhir; 4 kali aktif kembali dalam 12 bulan,cek_kelayakan_PBI,1-5,0,2
+670,P-004697,2025-12,0.789,melunasi 7 bulan iuran telat dalam 12 bulan terakhir; 4 kali aktif kembali dalam 12 bulan,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+671,P-017298,2025-12,0.788,nonaktif 6 dari 12 bulan terakhir; 4 kali aktif kembali dalam 12 bulan,pengingat_H-5_dan_tawaran_autodebet,6-10,0,1
+672,P-008052,2025-12,0.788,nonaktif 7 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,1
+673,P-010695,2025-12,0.788,nonaktif 6 dari 12 bulan terakhir; melunasi 6 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+674,P-015999,2025-12,0.788,nonaktif 6 dari 12 bulan terakhir; 4 kali aktif kembali dalam 12 bulan,pengingat_H-5_dan_tawaran_autodebet,6-10,0,1
+675,P-015561,2025-12,0.788,5 kali aktif kembali dalam 12 bulan; nonaktif 5 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+676,P-004293,2025-12,0.788,nonaktif 6 dari 12 bulan terakhir; 4 kali aktif kembali dalam 12 bulan,pengingat_H-5_dan_tawaran_autodebet,6-10,0,1
+677,P-019545,2025-12,0.788,nonaktif 7 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,1
+678,P-001904,2025-12,0.788,nonaktif 7 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+679,P-018321,2025-12,0.787,4 kali aktif kembali dalam 12 bulan; melunasi 6 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+680,P-006456,2025-12,0.787,4 kali aktif kembali dalam 12 bulan; melunasi 6 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+681,P-002889,2025-12,0.787,nonaktif 6 dari 12 bulan terakhir; 4 kali aktif kembali dalam 12 bulan,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+682,P-009479,2025-12,0.787,nonaktif 6 dari 12 bulan terakhir; melunasi 6 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,tidak_padan,0,3
+683,P-009319,2025-12,0.786,nonaktif 6 dari 12 bulan terakhir; 4 kali aktif kembali dalam 12 bulan,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+684,P-016208,2025-12,0.786,nonaktif 7 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+685,P-009744,2025-12,0.786,nonaktif 7 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+686,P-012186,2025-12,0.786,4 kali aktif kembali dalam 12 bulan; nonaktif 5 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,tidak_padan,0,3
+687,P-013083,2025-12,0.785,nonaktif 6 dari 12 bulan terakhir; 4 kali aktif kembali dalam 12 bulan,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+688,P-016350,2025-12,0.784,4 kali aktif kembali dalam 12 bulan; melunasi 6 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+689,P-005810,2025-12,0.784,nonaktif 7 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+690,P-009657,2025-12,0.784,nonaktif 6 dari 12 bulan terakhir; 4 kali aktif kembali dalam 12 bulan,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+691,P-007048,2025-12,0.784,melunasi 8 bulan iuran telat dalam 12 bulan terakhir; nonaktif 5 dari 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+692,P-007426,2025-12,0.783,nonaktif 7 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,1
+693,P-013825,2025-12,0.783,nonaktif 7 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,1
+694,P-014970,2025-12,0.783,4 kali aktif kembali dalam 12 bulan; melunasi 6 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+695,P-012197,2025-12,0.783,nonaktif 6 dari 12 bulan terakhir; melunasi 6 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+696,P-016062,2025-12,0.783,nonaktif 6 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+697,P-017644,2025-12,0.782,nonaktif 6 dari 12 bulan terakhir; melunasi 6 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+698,P-009535,2025-12,0.782,nonaktif 7 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,1
+699,P-010150,2025-12,0.782,nonaktif 7 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+700,P-001535,2025-12,0.782,nonaktif 7 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_saldo_autodebet,6-10,1,2
+701,P-010123,2025-12,0.781,4 kali aktif kembali dalam 12 bulan; nonaktif 5 dari 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,3
+702,P-010652,2025-12,0.781,nonaktif 6 dari 12 bulan terakhir; melunasi 6 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+703,P-004264,2025-12,0.781,nonaktif 6 dari 12 bulan terakhir; 4 kali aktif kembali dalam 12 bulan,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+704,P-014596,2025-12,0.78,nonaktif 6 dari 12 bulan terakhir; melunasi 6 bulan iuran telat dalam 12 bulan terakhir,cek_kelayakan_PBI,1-5,0,2
+705,P-015159,2025-12,0.78,melunasi 5 bulan iuran telat dalam 12 bulan terakhir; 3 kali aktif kembali dalam 12 bulan,pengingat_H-5_dan_tawaran_autodebet,6-10,0,3
+706,P-018409,2025-12,0.78,nonaktif 6 dari 12 bulan terakhir; 4 kali aktif kembali dalam 12 bulan,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+707,P-019486,2025-12,0.779,nonaktif 7 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+708,P-005045,2025-12,0.779,nonaktif 7 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+709,P-000455,2025-12,0.779,nonaktif 7 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+710,P-010393,2025-12,0.779,nonaktif 8 dari 12 bulan terakhir; melunasi 8 bulan iuran telat dalam 12 bulan terakhir,pengingat_saldo_autodebet,6-10,1,1
+711,P-017813,2025-12,0.779,nonaktif 6 dari 12 bulan terakhir; melunasi 7 bulan iuran telat dalam 12 bulan terakhir,pengingat_H-5_dan_tawaran_autodebet,6-10,0,2
+712,P-017550,2025-12,0.779,nonaktif 5 dari 12 bulan terakhir; melunasi 5 bulan iuran telat dalam 12 bulan terakhir,pengingat_saldo_autodebet,6-10,1,3

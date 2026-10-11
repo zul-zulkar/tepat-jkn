@@ -1,0 +1,14 @@
+fitur,keterangan,koef,rasio_odds,skala,sd_latih
+pernah_nonaktif,pernah nonaktif sejak 2023,0.9293,2.5328,ya vs tidak,
+bulan_telat_dibayar_12,"bulan iuran telat yang dilunasi, 12 bln terakhir",0.4129,1.5112,per 1 SD,2.5748
+bulan_nonaktif_12,"bulan nonaktif, 12 bln terakhir",0.3545,1.4254,per 1 SD,1.8027
+autodebet,terdaftar autodebet,-0.3259,0.7219,ya vs tidak,
+log_masa_kepesertaan,log(1 + bulan sejak daftar),-0.2777,0.7575,per 1 SD,0.7882
+kelas_1,kelas 1 (dibanding kelas 3),-0.2713,0.7624,ya vs tidak,
+klaim_besar_2_3bln,klaim besar 2-3 bln lalu,0.2455,1.2782,ya vs tidak,
+klaim_besar_4_12bln,klaim besar 4-12 bln lalu,-0.2349,0.7906,ya vs tidak,
+n_reaktivasi_12,"jumlah aktif kembali, 12 bln terakhir",0.2189,1.2447,per 1 SD,1.0359
+klaim_besar_bulan_lalu,klaim besar bulan lalu,0.1666,1.1813,ya vs tidak,
+kelas_2,kelas 2 (dibanding kelas 3),-0.1392,0.8701,ya vs tidak,
+aktif_kembali_3bln,aktif kembali dalam 3 bln terakhir,0.1217,1.1294,ya vs tidak,
+log_rasio_klaim_iuran_12,"log(1 + klaim/iuran), 12 bln terakhir",0.0968,1.1016,per 1 SD,0.8976

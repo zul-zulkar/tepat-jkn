@@ -1,0 +1,88 @@
+== EARLY WARNING: peluang peserta aktif menunggak dalam 3 bulan (data sintetis) ==
+panel latih  2023-07 s.d. 2024-09 : 203,457 peserta-bulan, 17,549 peserta, base rate 21.2%
+panel uji    2025-01 s.d. 2025-09 : 129,390 peserta-bulan, 17,882 peserta, base rate 21.2%
+
+-- Diskriminasi --
+AUC model                      : 0.854 (per bulan 0.845-0.866)
+AUC aturan sederhana           : 0.822
+AUC subset belum pernah nonaktif: 0.708 (n = 68,445; base rate 6.0%)
+
+-- Kalibrasi --
+Brier model 0.1127; Brier tanpa model (base rate latih) 0.1673
+rata-rata prediksi 22.7% vs aktual 21.2%
+     prediksi  aktual      n
+bin                         
+0       0.045   0.016  12939
+1       0.055   0.035  12939
+2       0.064   0.050  12939
+3       0.076   0.058  12939
+4       0.103   0.081  12941
+5       0.150   0.124  12938
+6       0.209   0.196  12938
+7       0.297   0.284  12939
+8       0.485   0.538  12939
+9       0.788   0.743  12939
+
+kalibrasi per segmen laten (label hanya untuk evaluasi):
+                       prediksi  aktual      n
+segmen                                        
+lalai                     0.500   0.595  31269
+patuh                     0.113   0.040  90808
+reaktivasi_saat_butuh     0.724   0.843   2145
+tidak_mampu               0.375   0.662   5168
+
+-- Presisi pada k teratas, rata-rata per bulan uji --
+k = kapasitas petugas. Angka resmi kapasitas belum tersedia, jadi k dinyatakan sebagai % peserta aktif per bulan.
+ k_persen  k_orang_per_bulan  presisi_model  presisi_aturan  recall_model  recall_aturan  lift_model
+        1                144          0.934           0.950         0.044          0.045       4.399
+        5                719          0.801           0.794         0.188          0.187       3.770
+       10               1438          0.743           0.736         0.350          0.347       3.499
+       20               2875          0.640           0.642         0.603          0.605       3.015
+
+-- Subset peserta yang belum pernah nonaktif sejak 2023 --
+Di sini aturan sederhana tidak punya informasi (semua bernilai 0), jadi sama dengan acak.
+Ini satu-satunya bagian di mana model memberi nilai tambah atas aturan.
+ k_persen_subset  k_orang_per_bulan  presisi_model  presisi_aturan_acak  recall_model  lift_model
+               1                 76          0.522                0.056         0.086       8.642
+               5                380          0.293                0.060         0.243       4.862
+              10                761          0.209                0.061         0.346       3.459
+              20               1521          0.140                0.062         0.465       2.325
+isi subset menurut segmen laten:
+                           n  base_rate
+segmen                                 
+lalai                   1470      0.455
+patuh                  64703      0.034
+reaktivasi_saat_butuh    672      0.720
+tidak_mampu             1600      0.489
+
+komposisi 5% teratas menurut segmen laten (hanya evaluasi):
+                          n  presisi  porsi
+segmen                                     
+lalai                  4262    0.730  0.659
+reaktivasi_saat_butuh  1332    0.900  0.206
+tidak_mampu             876    0.993  0.135
+
+-- Koefisien (dilatih 2023-07 s.d. 2024-09) --
+Rasio odds > 1 menaikkan peluang menunggak. Kontinu: per 1 SD; biner: ya vs tidak.
+Observasi berulang per peserta, jadi selang kepercayaan biasa tidak valid dan tidak dilaporkan.
+                                      keterangan  rasio_odds       skala
+                      pernah nonaktif sejak 2023        2.53 ya vs tidak
+bulan iuran telat yang dilunasi, 12 bln terakhir        1.51    per 1 SD
+                 bulan nonaktif, 12 bln terakhir        1.43    per 1 SD
+                             terdaftar autodebet        0.72 ya vs tidak
+                     log(1 + bulan sejak daftar)        0.76    per 1 SD
+                     kelas 1 (dibanding kelas 3)        0.76 ya vs tidak
+                        klaim besar 2-3 bln lalu        1.28 ya vs tidak
+                       klaim besar 4-12 bln lalu        0.79 ya vs tidak
+           jumlah aktif kembali, 12 bln terakhir        1.24    per 1 SD
+                          klaim besar bulan lalu        1.18 ya vs tidak
+                     kelas 2 (dibanding kelas 3)        0.87 ya vs tidak
+              aktif kembali dalam 3 bln terakhir        1.13 ya vs tidak
+           log(1 + klaim/iuran), 12 bln terakhir        1.10    per 1 SD
+
+-- Daftar operasional bulan 2025-12 (label belum ada) --
+model dilatih ulang pada 375,076 peserta-bulan berlabel; 14,237 peserta aktif dinilai; 712 teratas (5%) masuk daftar
+saran_intervensi
+pengingat_H-5_dan_tawaran_autodebet    452
+cek_kelayakan_PBI                      173
+pengingat_saldo_autodebet               87

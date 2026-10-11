@@ -43,12 +43,15 @@ Prinsip yang dipakai:
 
 Selain triase per peserta, ada **uji bunching** di hari ke-45 setelah reaktivasi. Uji ini menjadi bukti kebijakan apakah batas denda sedang diakali.
 
+Sebelum peserta menunggak, ada **early warning** (`early_warning.py`): regresi logistik pada panel peserta-bulan yang memperkirakan peluang peserta aktif menunggak dalam 3 bulan ke depan. Skor dihitung tanggal 1 tiap bulan, sebelum jatuh tempo tanggal 10. Skor ini hanya memicu bantuan (pengingat, tawaran autodebet, cek kelayakan PBI) dan tidak pernah memasukkan peserta ke rute verifikasi.
+
 ## Menjalankan
 
 ```bash
 pip install -r requirements.txt
 python generate_data.py --n 20000 --seed 2026 --out data   # ±20 detik
 python cek_sinyal.py --data data --out hasil                # ±5 detik
+python early_warning.py --data data --out hasil             # ±15 detik
 ```
 
 `--n` adalah jumlah peserta PBPU/BP mandiri. Generator juga membuat peserta PPU, PBI, dan PBPU/BP-Pemda sebanyak 15% dari `--n` (atur dengan `--n_lain`). Peserta segmen lain ini dikeluarkan saat analisis.
@@ -60,8 +63,9 @@ Folder `data/` tidak di-commit karena ukurannya sekitar 50 MB. Buat ulang dengan
 ```
 generate_data.py   generator 7 tabel sintetis (Jan 2023 – Des 2025)
 cek_sinyal.py      uji bunching, fitur perilaku, triase, validasi ke label
+early_warning.py   panel peserta-bulan, regresi logistik, validasi waktu, daftar top-k
 data_sampel/       contoh 500 peserta mandiri + 75 segmen lain (seed 2026)
-hasil/             ringkasan.txt, bunching_hari45.png
+hasil/             ringkasan.txt, bunching_hari45.png, early_warning_*
 ```
 
 ## Aturan JKN yang dimodelkan (disederhanakan) dan dasar hukumnya
@@ -111,6 +115,20 @@ Denda 2,5% dan batas Rp30 juta tidak kami pakai sebagai aturan berlaku. Batas Rp
 
 ![Bunching hari ke-45](hasil/bunching_hari45.png)
 
+- **Early warning** (latih titik prediksi 2023-07 s.d. 2024-09, uji 2025-01 s.d. 2025-09; fitur hanya dari data sebelum titik prediksi, diuji dengan memotong data di 2024-06):
+
+| Ukuran (data uji) | Seed 2026 | Rentang seed 2026, 1, 2 |
+|---|---|---|
+| AUC, semua peserta aktif | 0,854 | 0,854–0,854 |
+| AUC aturan "bulan nonaktif 12 bulan" | 0,822 | 0,817–0,822 |
+| Presisi 5% teratas, model / aturan | 80,1% / 79,4% | model 79,4–80,1% |
+| AUC, peserta yang belum pernah nonaktif | 0,708 | 0,704–0,721 |
+| Presisi 1% teratas di subset itu (base rate 6%) | 52,2% | 52,2–55,7% |
+
+Pada semua peserta, model **tidak lebih baik** dari aturan sederhana di k kecil. Nilai tambahnya ada pada peserta yang belum pernah menunggak, di mana aturan itu sama dengan acak. Model juga meremehkan risiko peserta tidak mampu (prediksi 38%, aktual 66%), karena generator tidak membuat tanda awal sebelum guncangan ekonomi. DTSEN tidak dipakai sebagai fitur: snapshot tunggalnya bertanggal 2025-01-01 dan ikut ditentukan oleh guncangan yang terjadi kemudian.
+
+![Early warning](hasil/early_warning.png)
+
 ## Keterbatasan
 
 1. **Sirkular**: pola sengaja ditanam di data sintetis. Validasi sesungguhnya butuh data BPJS.
@@ -118,7 +136,8 @@ Denda 2,5% dan batas Rp30 juta tidak kami pakai sebagai aturan berlaku. Batas Rp
 3. **Estimator bunching sederhana** (polinomial, jendela tetap). Untuk data nyata, pakai estimator dengan batasan integrasi (Chetty dkk. 2011; Kleven 2016).
 4. **Flag DTSEN** diasumsikan tersedia lewat integrasi data antarlembaga resmi.
 5. **Recall rute verifikasi rendah**: sebagian peserta belum butuh layanan selama jendela observasi (tersensor).
-6. **Belum mengukur efek intervensi.** Langkah berikutnya adalah uji coba terkontrol per rute.
+6. **Belum mengukur efek intervensi.** Langkah berikutnya adalah uji coba terkontrol per rute. Early warning mengurutkan siapa yang *akan* menunggak, bukan siapa yang *bisa dicegah* menunggak dengan pengingat. Untuk yang kedua butuh data uji coba.
+7. **Early warning belum punya tanda awal guncangan ekonomi.** Gagal autodebet, turun kelas, dan bayar makin mepet tanggal 10 belum ada di generator. Di generator, pembayaran rutin selalu jatuh di tanggal 1–10.
 
 ## Pertanyaan terbuka (akan divalidasi ke data BPJS Kesehatan)
 
