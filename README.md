@@ -52,6 +52,8 @@ pip install -r requirements.txt
 python generate_data.py --n 20000 --seed 2026 --out data   # ±20 detik
 python cek_sinyal.py --data data --out hasil                # ±5 detik
 python early_warning.py --data data --out hasil             # ±15 detik
+python uji_stabilitas.py --seeds 2026 1 2 3 4 --out hasil   # ±3 menit, membuat data sendiri
+python daya_uji_bunching.py --data data --out hasil         # ±1 menit
 ```
 
 `--n` adalah jumlah peserta PBPU/BP mandiri. Generator juga membuat peserta PPU, PBI, dan PBPU/BP-Pemda sebanyak 15% dari `--n` (atur dengan `--n_lain`). Peserta segmen lain ini dikeluarkan saat analisis.
@@ -64,8 +66,10 @@ Folder `data/` tidak di-commit karena ukurannya sekitar 50 MB. Buat ulang dengan
 generate_data.py   generator 7 tabel sintetis (Jan 2023 – Des 2025)
 cek_sinyal.py      uji bunching, fitur perilaku, triase, validasi ke label
 early_warning.py   panel peserta-bulan, regresi logistik, validasi waktu, daftar top-k
+uji_stabilitas.py  seluruh pipeline pada 5 seed, rentang tiap metrik
+daya_uji_bunching.py  simulasi: berapa kasus penundaan yang terdeteksi uji bunching
 data_sampel/       contoh 500 peserta mandiri + 75 segmen lain (seed 2026)
-hasil/             ringkasan.txt, bunching_hari45.png, early_warning_*
+hasil/             ringkasan.txt, bunching_*.png, early_warning_*, stabilitas_*, daya_uji_*
 ```
 
 ## Aturan JKN yang dimodelkan (disederhanakan) dan dasar hukumnya
@@ -102,6 +106,7 @@ Denda 2,5% dan batas Rp30 juta tidak kami pakai sebagai aturan berlaku. Batas Rp
 
 - **Cakupan:** 20.000 peserta PBPU/BP mandiri dianalisis. Sebanyak 3.000 peserta PPU, PBI, dan PBPU/BP-Pemda dikeluarkan, termasuk 159 reaktivasi PPU yang terjadi karena pemberi kerja menunggak, bukan karena pola bayar peserta.
 - **Bunching:** 169 kasus rawat inap terjadwal berlebih di hari 46–60 (IK95% bootstrap 131–213). Estimasi denda yang terhindar Rp745 juta, dihitung untuk satu kali rawat inap per reaktivasi dengan batas Rp20 juta dan biaya klaim sintetis. Ada 62 kasus yang melunasi tunggakan tepat di hari masuk RS.
+- **Plasebo IGD:** rawat inap darurat tidak bisa ditunda, jadi seharusnya tidak melonjak. Ukuran yang dipakai adalah **lompatan** = kelebihan hari 46–60 + kekurangan hari 31–45, karena penundaan memindahkan kasus dari sebelum batas ke sesudahnya. Rawat inap terjadwal: lompatan 227 (IK95% 185–274). IGD: lompatan 4 (IK95% −24 s.d. 31). Kelebihan hari 46–60 saja tidak cukup: di IGD kelebihannya 24 kasus, tapi hari 31–45 juga berlebih 21 kasus, artinya kurva kontrafaktual yang terlalu rendah, bukan penundaan.
 - **Triase** (tanpa label; label hanya dipakai untuk mengukur):
 
 | Rute | Presisi | Recall |
@@ -113,7 +118,25 @@ Denda 2,5% dan batas Rp30 juta tidak kami pakai sebagai aturan berlaku. Batas Rp
 - 603 peserta tidak mampu tertangkap lewat pola bayar padahal flag DTSEN mereka belum 1–5.
 - 18 peserta tidak mampu masuk rute verifikasi. Ini kesalahan yang paling ingin kami tekan.
 
-![Bunching hari ke-45](hasil/bunching_hari45.png)
+![Bunching dan plasebo IGD](hasil/bunching_vs_plasebo_igd.png)
+
+- **Stabilitas 5 seed** (2026, 1, 2, 3, 4; parameter sama; `hasil/stabilitas_ringkasan.csv`):
+
+| Metrik | Min–maks |
+|---|---|
+| Bunching terjadwal: kelebihan hari 46–60 | 152–242 kasus |
+| Bunching terjadwal: lompatan (IK95% di atas 0 di 5/5 seed) | 192–268 |
+| Plasebo IGD: lompatan (IK95% mencakup 0 di 4/5 seed) | −8 s.d. 28 |
+| Denda terhindar (biaya sintetis) | Rp592–989 juta |
+| Rute verifikasi: presisi / recall | 98,0–98,6% / 43,0–46,7% |
+| Rute cek PBI: presisi / recall | 84,9–86,9% / 70,5–72,9% |
+| Rute pengingat/REHAB: presisi / recall | 86,7–88,0% / 88,1–89,2% |
+| Peserta tidak mampu di rute verifikasi | 13–18 orang |
+| Early warning: AUC | 0,849–0,854 |
+
+- **Daya uji bunching** (`hasil/daya_uji_mde.csv`): dengan 1.233 rawat inap terjadwal dalam 1–120 hari setelah reaktivasi (ukuran data ini), penundaan terdeteksi dengan daya 80% bila sedikitnya 54 kasus (4,4%) dipindah melewati hari ke-45. Pada 10.000 kasus cukup 1,6%. Bila penundaan menyebar (46 + Exp(15) hari), kebutuhannya 87 kasus (7,0%). Ambang dihitung dari kurva yang mulus, jadi ini batas bawah.
+
+Di seed 3 lompatan IGD 28 (IK95% 1–57), sedikit di atas 0. Jadi pada ukuran data ini estimator bisa memberi sinyal palsu sampai sekitar 30 kasus, dan efek di bawah itu tidak kami klaim. Rentang di atas adalah variasi antar-dunia dengan asumsi yang sama; kalau asumsinya salah, kelima seed salah bersama.
 
 - **Early warning** (latih titik prediksi 2023-07 s.d. 2024-09, uji 2025-01 s.d. 2025-09; fitur hanya dari data sebelum titik prediksi, diuji dengan memotong data di 2024-06):
 
@@ -133,7 +156,7 @@ Pada semua peserta, model **tidak lebih baik** dari aturan sederhana di k kecil:
 
 1. **Sirkular**: pola sengaja ditanam di data sintetis. Validasi sesungguhnya butuh data BPJS.
 2. **Unit perorangan**: tagihan PBPU/BP dihitung kolektif per KK (Peraturan BPJS 5/2018 Ps. 12 ayat 4; Ps. 14 ayat 4), sedangkan penghentian sementara dan denda berlaku per peserta (Perpres 59/2024 Ps. 42 ayat 1 dan 5). Generator baru memodelkan level peserta. Level tagihan KK akan ditambahkan sebagai lapisan terpisah, dan kami tidak menganggap satu KK sama dengan satu VA.
-3. **Estimator bunching sederhana** (polinomial, jendela tetap). Untuk data nyata, pakai estimator dengan batasan integrasi (Chetty dkk. 2011; Kleven 2016).
+3. **Estimator bunching sederhana** (polinomial, jendela tetap). Polinomial bisa terlalu rendah di jendela yang dikeluarkan (plasebo IGD: kelebihan sampai 24 kasus di hari 46–60 tanpa penundaan apa pun), jadi uji memakai lompatan, bukan kelebihan saja. Untuk data nyata, pakai estimator dengan batasan integrasi (Chetty dkk. 2011; Kleven 2016).
 4. **Flag DTSEN** diasumsikan tersedia lewat integrasi data antarlembaga resmi.
 5. **Recall rute verifikasi rendah**: sebagian peserta belum butuh layanan selama jendela observasi (tersensor).
 6. **Belum mengukur efek intervensi.** Langkah berikutnya adalah uji coba terkontrol per rute. Early warning mengurutkan siapa yang *akan* menunggak, bukan siapa yang *bisa dicegah* menunggak dengan pengingat. Untuk yang kedua butuh data uji coba.

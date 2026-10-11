@@ -1,0 +1,17 @@
+== DAYA UJI BUNCHING (simulasi; distribusi H0 = kontrafaktual data ini) ==
+kasus rawat inap terjadwal 1-120 hari setelah reaktivasi di data ini: 1,233
+uji: lompatan > persentil 97.5 H0 (2000 simulasi); daya dari 500 simulasi; target daya 80%
+
+         ambang_lompatan  MDE_kasus_bawaan  MDE_%_bawaan  MDE_kasus_menyebar  MDE_%_menyebar
+n_kasus                                                                                     
+250                 19.0              24.0           9.4                39.0            15.5
+500                 27.0              33.0           6.7                54.0            10.8
+1000                37.0              48.0           4.8                73.0             7.3
+1233                42.0              54.0           4.4                87.0             7.0
+2500                61.0              76.0           3.0               120.0             4.8
+5000                85.0             111.0           2.2               169.0             3.4
+10000              115.0             162.0           1.6               228.0             2.3
+20000              170.0             260.0           1.3               357.0             1.8
+
+MDE = kasus yang ditunda (dipindah dari hari 1-45 ke sesudah hari 45) agar terdeteksi dengan daya 80%.
+% = terhadap seluruh rawat inap terjadwal 1-120 hari setelah reaktivasi. NaN = tidak tercapai sampai 20%.

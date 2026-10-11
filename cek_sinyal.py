@@ -9,6 +9,8 @@ Langkah:
   1. Uji bunching rawat inap terjadwal di sekitar hari ke-45 setelah reaktivasi
      (kontrafaktual polinomial + bootstrap), plus estimasi denda yang terhindar
      (satu kali rawat inap per reaktivasi, paling tinggi Rp20 juta; Ps. 42 ayat 5-6).
+     Plasebo: uji yang sama untuk rawat inap darurat (IGD), yang tidak bisa ditunda.
+     Lonjakan di IGD berarti estimatornya, bukan perilaku peserta, yang menghasilkan sinyal.
   2. Fitur perilaku per peserta: rasio hari aktif, jumlah reaktivasi, kaitan
      reaktivasi dengan klaim besar, rasio klaim/iuran, tunggakan akhir, dan pola
      "rutin lalu berhenti" (indikasi guncangan ekonomi).
@@ -111,8 +113,8 @@ def _ukur(hari):
     return hitung, cf, lebih, kurang
 
 
-def analisis_bunching(klaim, re, rng, n_boot=300):
-    el = klaim[(klaim["jenis_layanan"] == "RITL") & (klaim["cara_masuk"] == "terjadwal")]
+def analisis_bunching(klaim, re, rng, n_boot=300, cara_masuk="terjadwal"):
+    el = klaim[(klaim["jenis_layanan"] == "RITL") & (klaim["cara_masuk"] == cara_masuk)]
     el = el.sort_values("tgl_masuk")
     m = pd.merge_asof(el, re, left_on="tgl_masuk", right_on="tgl_reakt", by="id_peserta",
                       direction="backward")
@@ -120,8 +122,13 @@ def analisis_bunching(klaim, re, rng, n_boot=300):
     m = m[m["hari"].between(0, MAKS_HARI)].copy()
     hari = m["hari"].to_numpy(dtype=int)
     hitung, cf, lebih, kurang = _ukur(hari)
-    boot = np.array([_ukur(rng.choice(hari, size=len(hari)))[2] for _ in range(n_boot)])
-    ci = np.percentile(boot, [2.5, 97.5])
+    # bootstrap (lebih, kurang); urutan panggilan rng sama seperti versi lama, jadi IK lama tetap
+    boot = np.array([_ukur(rng.choice(hari, size=len(hari)))[2:4] for _ in range(n_boot)])
+    ci = np.percentile(boot[:, 0], [2.5, 97.5])
+    # lompatan = kelebihan sesudah batas + kekurangan sebelum batas. Penundaan menghasilkan
+    # keduanya; salah bentuk kurva kontrafaktual menghasilkan kelebihan di kedua jendela,
+    # sehingga saling meniadakan.
+    ci_lompat = np.percentile(boot.sum(axis=1), [2.5, 97.5])
 
     # estimasi denda terhindar: porsi kasus berlebih x denda hipotetis kasus di hari 46-60.
     # Denda hanya untuk satu kali rawat inap per reaktivasi (Perpres 59/2024 Ps. 42 ayat 5):
@@ -145,6 +152,7 @@ def analisis_bunching(klaim, re, rng, n_boot=300):
     porsi = max(lebih, 0) / max(n_jendela, 1)
     denda_terhindar = porsi * di_jendela["denda_hipotetis"].sum()
     return dict(m=m, hitung=hitung, cf=cf, lebih=lebih, kurang=kurang, ci=ci,
+                lompat=lebih + kurang, ci_lompat=ci_lompat,
                 n=len(hari), hari0=int((hari == 0).sum()), denda_terhindar=denda_terhindar)
 
 
@@ -183,6 +191,57 @@ def plot_bunching(h, path):
     for t in leg.get_texts():
         t.set_color(TINTA)
     fig.tight_layout(rect=(0, 0, 1, 0.88))
+    fig.savefig(path, facecolor=PERMUKAAN)
+    plt.close(fig)
+
+
+def plot_bunching_plasebo(h, h_pl, path):
+    """Dua panel berdampingan: rawat inap terjadwal (bisa ditunda) vs IGD (plasebo)."""
+    x = np.arange(1, MAKS_HARI + 1)
+    fig, axes = plt.subplots(1, 2, figsize=(14, 5.4), dpi=160)
+    fig.patch.set_facecolor(PERMUKAAN)
+    panel = [(h, "Rawat inap terjadwal (bisa ditunda)"),
+             (h_pl, "Plasebo: rawat inap darurat/IGD (tidak bisa ditunda)")]
+    for ax, (hh, judul) in zip(axes, panel):
+        hit, cf = hh["hitung"][1:], hh["cf"][1:]
+        ax.set_facecolor(PERMUKAAN)
+        for a_, b_ in (JENDELA_KURANG, JENDELA_LEBIH):
+            ax.axvspan(a_ - 0.5, b_ + 0.5, color=GRID, alpha=0.6, lw=0, zorder=0)
+        ax.bar(x, hit, width=0.8, color=WARNA_AKTUAL, label="Aktual", zorder=2)
+        ax.plot(x, cf, color=WARNA_CF, lw=2, label="Kontrafaktual (polinomial)", zorder=3)
+        ax.axvline(BATAS + 0.5, color=TINTA_2, lw=1, ls=(0, (4, 3)), zorder=1)
+        ymax = max(hit.max(), cf.max()) * 1.18
+        ax.set_ylim(0, ymax)
+        ax.text(BATAS - 0.5, ymax * 0.97, "hari ke-45 ", color=TINTA_2, fontsize=9, va="top",
+                ha="right")
+        ax.text(JENDELA_KURANG[0] + 0.5, ymax * 0.90, "31-45", color=TINTA_2, fontsize=8.5,
+                va="top", ha="left")
+        ax.text(JENDELA_LEBIH[0] + 0.5, ymax * 0.90, "46-60", color=TINTA_2, fontsize=8.5,
+                va="top", ha="left")
+        ax.set_xlim(0, MAKS_HARI + 1)
+        ax.set_xlabel("Hari sejak reaktivasi sampai masuk rawat inap", color=TINTA_2, fontsize=10)
+        ax.set_ylabel("Kasus per hari", color=TINTA_2, fontsize=10)
+        ax.tick_params(colors=TINTA_2, labelsize=9)
+        for sp in ["top", "right"]:
+            ax.spines[sp].set_visible(False)
+        for sp in ["left", "bottom"]:
+            ax.spines[sp].set_color(GRID)
+        ax.grid(axis="y", color=GRID, lw=0.8, zorder=0)
+        ax.set_axisbelow(True)
+        lo, hi = hh["ci_lompat"]
+        ax.set_title(f"{judul}\nhari 31-45: {-hh['kurang']:+.0f}; hari 46-60: {hh['lebih']:+.0f}; "
+                     f"lompatan {hh['lompat']:.0f} (IK95% {lo:.0f} s.d. {hi:.0f}); "
+                     f"n = {hh['n'] - hh['hari0']:,}", loc="left", fontsize=10, color=TINTA)
+        leg = ax.legend(frameon=False, fontsize=9, loc="upper right", bbox_to_anchor=(1, 0.9))
+        for t in leg.get_texts():
+            t.set_color(TINTA)
+    fig.text(0.008, 0.975, "Lonjakan setelah hari ke-45 hanya muncul pada rawat inap yang bisa ditunda",
+             ha="left", va="top", fontsize=13, fontweight="bold", color=TINTA)
+    fig.text(0.008, 0.928, "Data sintetis, seed yang sama. Angka = selisih aktual terhadap kontrafaktual. "
+             "Lompatan = kelebihan 46-60 + kekurangan 31-45. Hari 0 dikeluarkan dari fit. "
+             "Sumbu y tiap panel berbeda.",
+             ha="left", va="top", fontsize=9.5, color=TINTA_2)
+    fig.tight_layout(rect=(0, 0, 1, 0.89), w_pad=3)
     fig.savefig(path, facecolor=PERMUKAAN)
     plt.close(fig)
 
@@ -359,10 +418,32 @@ def main():
     say(f"lunas tunggakan di hari masuk RS (hari 0) : {h['hari0']:,} kasus (sinyal terpisah)")
     say(f"massa berlebih hari 46-60 : {h['lebih']:.0f} kasus "
         f"(IK95% bootstrap {h['ci'][0]:.0f}-{h['ci'][1]:.0f})")
+    say(f"kekurangan hari 31-45 : {h['kurang']:.0f} kasus; lompatan (berlebih + kekurangan) "
+        f"{h['lompat']:.0f} (IK95% {h['ci_lompat'][0]:.0f}-{h['ci_lompat'][1]:.0f})")
     say("catatan: kasus yang ditunda bisa berasal dari hari 0-45 mana pun. Untuk data nyata,")
     say("         pakai estimator dengan batasan integrasi (Chetty dkk. 2011).")
     say(f"estimasi denda terhindar  : Rp{h['denda_terhindar'] / 1e6:,.0f} juta "
         "(satu kali rawat inap per reaktivasi, paling tinggi Rp20 juta; biaya sintetis)")
+
+    # plasebo: RNG terpisah supaya angka bunching utama di atas tidak berubah
+    h_pl = analisis_bunching(D["klaim"], re, np.random.default_rng([a.seed, 45]),
+                             cara_masuk="IGD")
+    plot_bunching_plasebo(h, h_pl, os.path.join(a.out, "bunching_vs_plasebo_igd.png"))
+    lo, hi = h_pl["ci"]
+    llo, lhi = h_pl["ci_lompat"]
+    say("\n== 1b. PLASEBO: RAWAT INAP DARURAT (IGD), TIDAK BISA DITUNDA ==")
+    say(f"kasus IGD 0-{MAKS_HARI} hari setelah reaktivasi : {h_pl['n']:,} "
+        f"(hari 0: {h_pl['hari0']:,}, dikeluarkan dari fit)")
+    say(f"massa berlebih hari 46-60 : {h_pl['lebih']:.0f} kasus (IK95% bootstrap {lo:.0f}-{hi:.0f})")
+    say(f"kekurangan hari 31-45    : {h_pl['kurang']:.0f} kasus (negatif = juga berlebih)")
+    say(f"lompatan                 : {h_pl['lompat']:.0f} (IK95% {llo:.0f}-{lhi:.0f}); "
+        f"IK {'mencakup' if llo <= 0 <= lhi else 'TIDAK mencakup'} 0")
+    say("bacaan: pola penundaan = kekurangan sebelum batas DAN kelebihan sesudahnya. Kelebihan")
+    say("        di kedua jendela berarti kurva kontrafaktual terlalu rendah di hari 31-60, bukan")
+    say("        penundaan. Karena itu lompatan dipakai sebagai uji, bukan massa berlebih saja.")
+    say("catatan: di data sintetis IGD memang tidak pernah ditunda, jadi plasebo ini menguji")
+    say("         estimator, bukan perilaku. Di data nyata, sebagian rawat inap terencana bisa")
+    say("         masuk lewat IGD; lonjakan IGD perlu dibaca dengan itu.")
 
     p = triase(fitur_peserta(D, re))
     cols = ["id_peserta", "rute", "alasan", "jeda_dtsen", "rentang_desil", "bulan_berhenti",

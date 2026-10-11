@@ -1,0 +1,37 @@
+== UJI STABILITAS: 5 seed (2026, 1, 2, 3, 4), n = 20,000 + 3,000 segmen lain, parameter generator bawaan ==
+Rentang = variasi antar-dunia sintetis dengan asumsi sama, bukan ketidakpastian nyata.
+
+                                                        keterangan   min  maks seed_2026
+                  bunching terjadwal: kelebihan hari 46-60 (kasus)   152   242       169
+                   bunching terjadwal: batas bawah IK95% kelebihan   112   199       131
+                 bunching terjadwal: kekurangan hari 31-45 (kasus)    18    70        58
+             bunching terjadwal: lompatan = kelebihan + kekurangan   192   268       227
+                    bunching terjadwal: batas bawah IK95% lompatan   158   225       185
+                         denda terhindar (Rp juta, biaya sintetis)   592   989       745
+                       melunasi tunggakan di hari masuk RS (kasus)    62    72        62
+                         plasebo IGD: kelebihan hari 46-60 (kasus)   -13    24        24
+                                             plasebo IGD: lompatan    -8    28         4
+                           plasebo IGD: batas bawah IK95% lompatan   -35     1       -24
+                            plasebo IGD: batas atas IK95% lompatan    22    57        31
+           rute verifikasi: presisi (target reaktivasi_saat_butuh) 98.0% 98.6%     98.0%
+                                           rute verifikasi: recall 43.0% 46.7%     44.3%
+                        rute cek PBI: presisi (target tidak_mampu) 84.9% 86.9%     86.3%
+                                              rute cek PBI: recall 70.5% 72.9%     70.5%
+                      rute pengingat/REHAB: presisi (target lalai) 86.7% 88.0%     86.8%
+                                      rute pengingat/REHAB: recall 88.1% 89.2%     88.7%
+            peserta tidak mampu yang masuk rute verifikasi (orang)    13    18        18
+      rute PBI tertangkap lewat pola meski DTSEN belum 1-5 (orang)   603   640       603
+                                            early warning: AUC uji 0.849 0.854     0.854
+                          early warning: AUC aturan bulan nonaktif 0.816 0.822     0.822
+                  early warning: AUC peserta belum pernah nonaktif 0.704 0.721     0.708
+                          early warning: presisi 1% teratas, model 90.6% 93.4%     93.4%
+                         early warning: presisi 1% teratas, aturan 93.6% 95.0%     95.0%
+                          early warning: presisi 5% teratas, model 78.9% 80.1%     80.1%
+                         early warning: presisi 5% teratas, aturan 78.6% 79.6%     79.4%
+early warning: presisi 1% teratas di peserta belum pernah nonaktif 49.3% 55.7%     52.2%
+
+-- Uji lolos/gagal per seed --
+bunching terjadwal: IK95% lompatan di atas 0 pada 5/5 seed
+plasebo IGD: IK95% lompatan mencakup 0 pada 4/5 seed
+plasebo IGD, ukuran lama (kelebihan 46-60 saja): -13 s.d. 24 kasus
+early warning: aturan >= model di 1% teratas pada 5/5 seed

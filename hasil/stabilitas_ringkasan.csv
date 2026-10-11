@@ -1,0 +1,28 @@
+metrik,keterangan,min,maks,seed_2026
+bunching_lebih,bunching terjadwal: kelebihan hari 46-60 (kasus),152.08,242.0645,168.9468
+bunching_ci_bawah,bunching terjadwal: batas bawah IK95% kelebihan,112.1475,198.7107,131.1229
+bunching_kurang,bunching terjadwal: kekurangan hari 31-45 (kasus),17.5496,70.3377,57.8055
+bunching_lompat,bunching terjadwal: lompatan = kelebihan + kekurangan,192.292,267.7975,226.7523
+bunching_lompat_ci_bawah,bunching terjadwal: batas bawah IK95% lompatan,157.506,224.7979,185.3089
+denda_terhindar_juta,"denda terhindar (Rp juta, biaya sintetis)",591.7397,988.5372,745.4341
+lunas_hari0,melunasi tunggakan di hari masuk RS (kasus),62.0,72.0,62.0
+plasebo_igd_lebih,plasebo IGD: kelebihan hari 46-60 (kasus),-13.2075,24.0731,24.0731
+plasebo_igd_lompat,plasebo IGD: lompatan,-8.0807,27.965,3.5384
+plasebo_igd_lompat_ci_bawah,plasebo IGD: batas bawah IK95% lompatan,-35.2335,1.0521,-24.1513
+plasebo_igd_lompat_ci_atas,plasebo IGD: batas atas IK95% lompatan,22.0443,56.5717,30.8833
+verifikasi_presisi,rute verifikasi: presisi (target reaktivasi_saat_butuh),0.9802,0.9864,0.9802
+verifikasi_recall,rute verifikasi: recall,0.4302,0.4673,0.4428
+pbi_presisi,rute cek PBI: presisi (target tidak_mampu),0.8494,0.8688,0.8631
+pbi_recall,rute cek PBI: recall,0.7046,0.7286,0.7046
+rehab_presisi,rute pengingat/REHAB: presisi (target lalai),0.8666,0.8799,0.8676
+rehab_recall,rute pengingat/REHAB: recall,0.881,0.8919,0.8872
+tidak_mampu_di_verifikasi,peserta tidak mampu yang masuk rute verifikasi (orang),13.0,18.0,18.0
+pbi_lewat_pola,rute PBI tertangkap lewat pola meski DTSEN belum 1-5 (orang),603.0,640.0,603.0
+ew_auc,early warning: AUC uji,0.849,0.854,0.854
+ew_auc_aturan,early warning: AUC aturan bulan nonaktif,0.8159,0.8219,0.8219
+ew_auc_belum_pernah,early warning: AUC peserta belum pernah nonaktif,0.7035,0.7212,0.7084
+ew_presisi_1pct_model,"early warning: presisi 1% teratas, model",0.9059,0.9344,0.9344
+ew_presisi_1pct_aturan,"early warning: presisi 1% teratas, aturan",0.9359,0.9498,0.9498
+ew_presisi_5pct_model,"early warning: presisi 5% teratas, model",0.7892,0.8006,0.8006
+ew_presisi_5pct_aturan,"early warning: presisi 5% teratas, aturan",0.7863,0.7964,0.7944
+ew_belum_pernah_presisi_1pct,early warning: presisi 1% teratas di peserta belum pernah nonaktif,0.4928,0.5566,0.5221

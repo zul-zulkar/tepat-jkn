@@ -9,9 +9,22 @@ reaktivasi segmen lain yang tidak ikut dihitung : 159 (tunggakan pemberi kerja, 
 kasus rawat inap terjadwal 0-120 hari setelah reaktivasi : 1,295
 lunas tunggakan di hari masuk RS (hari 0) : 62 kasus (sinyal terpisah)
 massa berlebih hari 46-60 : 169 kasus (IK95% bootstrap 131-213)
+kekurangan hari 31-45 : 58 kasus; lompatan (berlebih + kekurangan) 227 (IK95% 185-274)
 catatan: kasus yang ditunda bisa berasal dari hari 0-45 mana pun. Untuk data nyata,
          pakai estimator dengan batasan integrasi (Chetty dkk. 2011).
 estimasi denda terhindar  : Rp745 juta (satu kali rawat inap per reaktivasi, paling tinggi Rp20 juta; biaya sintetis)
+
+== 1b. PLASEBO: RAWAT INAP DARURAT (IGD), TIDAK BISA DITUNDA ==
+kasus IGD 0-120 hari setelah reaktivasi : 1,073 (hari 0: 536, dikeluarkan dari fit)
+massa berlebih hari 46-60 : 24 kasus (IK95% bootstrap -1-51)
+kekurangan hari 31-45    : -21 kasus (negatif = juga berlebih)
+lompatan                 : 4 (IK95% -24-31); IK mencakup 0
+bacaan: pola penundaan = kekurangan sebelum batas DAN kelebihan sesudahnya. Kelebihan
+        di kedua jendela berarti kurva kontrafaktual terlalu rendah di hari 31-60, bukan
+        penundaan. Karena itu lompatan dipakai sebagai uji, bukan massa berlebih saja.
+catatan: di data sintetis IGD memang tidak pernah ditunda, jadi plasebo ini menguji
+         estimator, bukan perilaku. Di data nyata, sebagian rawat inap terencana bisa
+         masuk lewat IGD; lonjakan IGD perlu dibaca dengan itu.
 
 == 2. RUTE TRIASE (tanpa label) ==
                             peserta  tunggakan_rp_miliar  klaim_rp_miliar  iuran_rp_miliar
