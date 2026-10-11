@@ -1,0 +1,15 @@
+kelompok,prediksi,aktual,n
+desil_1,0.0453,0.0159,12939
+desil_2,0.0555,0.0353,12939
+desil_3,0.0644,0.0501,12939
+desil_4,0.0756,0.0575,12939
+desil_5,0.1027,0.0807,12941
+desil_6,0.1498,0.1238,12938
+desil_7,0.2092,0.1962,12938
+desil_8,0.2972,0.2842,12939
+desil_9,0.4854,0.5375,12939
+desil_10,0.7882,0.743,12939
+segmen_laten_lalai,0.5,0.5947,31269
+segmen_laten_patuh,0.1134,0.0403,90808
+segmen_laten_reaktivasi_saat_butuh,0.7236,0.8434,2145
+segmen_laten_tidak_mampu,0.3747,0.6616,5168

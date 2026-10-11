@@ -51,7 +51,10 @@ LOOKBACK = 12                   # bulan riwayat untuk fitur
 JATUH_TEMPO = 10                # tanggal jatuh tempo iuran (Perpres 82/2018 Ps. 40 ayat 1)
 LATIH = ("2023-07", "2024-09")  # mulai 2023-07 supaya ada >= 6 bulan riwayat
 UJI = ("2025-01", "2025-09")
-K_PERSEN = [1, 5, 10, 20]       # k = kapasitas petugas, sebagai % peserta aktif per bulan
+K_PERSEN = [0.5, 1, 2, 5, 10, 20]   # k = kapasitas petugas, sebagai % peserta aktif per bulan
+# Hanya untuk menerjemahkan k ke skala nasional: peserta PBPU Mandiri aktif per 30 Sep 2025
+# (Laporan Monitoring JKN Kuartal III 2025, Bab I). BP aktif (4,86 juta) tidak termasuk.
+PBPU_MANDIRI_AKTIF = 17_464_328
 
 NA, AKTIF, NONAKTIF, TUNGGU = 0, 1, 2, 3
 
@@ -251,7 +254,7 @@ def skor_aturan(X, rng):
 
 
 def presisi_at_k(X, skor, k_persen):
-    """Rata-rata per bulan: presisi, recall, dan lift pada k teratas."""
+    """Rata-rata per bulan: presisi, recall, dan lift pada k teratas (plus rentang presisi)."""
     hasil = []
     for _, g in X.assign(_s=skor).groupby("bulan"):
         k = max(1, int(round(len(g) * k_persen / 100)))
@@ -260,7 +263,7 @@ def presisi_at_k(X, skor, k_persen):
         hasil.append((k, tp / k, tp / max(g["y"].sum(), 1), (tp / k) / g["y"].mean()))
     h = np.array(hasil)
     return dict(k_rata=h[:, 0].mean(), presisi=h[:, 1].mean(), recall=h[:, 2].mean(),
-                lift=h[:, 3].mean())
+                lift=h[:, 3].mean(), presisi_min=h[:, 1].min(), presisi_max=h[:, 1].max())
 
 
 def kalibrasi(y, p, n_bin=10):
@@ -414,21 +417,26 @@ def main():
         f"{tr['id_peserta'].nunique():,} peserta, base rate {tr['y'].mean():.1%}")
     say(f"panel uji    {UJI[0]} s.d. {UJI[1]} : {len(te):,} peserta-bulan, "
         f"{te['id_peserta'].nunique():,} peserta, base rate {te['y'].mean():.1%}")
+    say("Latih tidak memakai seluruh 2023-2024: titik Jan-Jun 2023 belum punya riwayat 6 bulan, dan")
+    say("titik Okt-Des 2024 berlabel Jan-Mar 2025 (masa uji). Uji berhenti di 2025-09 karena label")
+    say("butuh 3 bulan sesudahnya dan data berakhir Des 2025.")
 
     auc = roc_auc_score(te["y"], te["p"])
     auc_aturan = roc_auc_score(te["y"], te["p_aturan"])
+    brier = brier_score_loss(te["y"], te["p"])
+    brier_dasar = brier_score_loss(te["y"], np.full(len(te), tr["y"].mean()))
     per_bulan = te.groupby("bulan").apply(lambda g: roc_auc_score(g["y"], g["p"]),
                                           include_groups=False)
     baru = te[te["pernah_nonaktif"] == 0]
+    auc_baru = roc_auc_score(baru["y"], baru["p"])
     say("\n-- Diskriminasi --")
     say(f"AUC model                      : {auc:.3f} (per bulan {per_bulan.min():.3f}-{per_bulan.max():.3f})")
     say(f"AUC aturan sederhana           : {auc_aturan:.3f}")
-    say(f"AUC subset belum pernah nonaktif: {roc_auc_score(baru['y'], baru['p']):.3f} "
+    say(f"AUC subset belum pernah nonaktif: {auc_baru:.3f} "
         f"(n = {len(baru):,}; base rate {baru['y'].mean():.1%})")
 
     say("\n-- Kalibrasi --")
-    say(f"Brier model {brier_score_loss(te['y'], te['p']):.4f}; "
-        f"Brier tanpa model (base rate latih) {brier_score_loss(te['y'], np.full(len(te), tr['y'].mean())):.4f}")
+    say(f"Brier model {brier:.4f}; Brier tanpa model (base rate latih) {brier_dasar:.4f}")
     say(f"rata-rata prediksi {te['p'].mean():.1%} vs aktual {te['y'].mean():.1%}")
     kal = kalibrasi(te["y"].to_numpy(), te["p"].to_numpy())
     say(kal.round(3).to_string())
@@ -439,29 +447,37 @@ def main():
     say("\n-- Presisi pada k teratas, rata-rata per bulan uji --")
     say("k = kapasitas petugas. Angka resmi kapasitas belum tersedia, jadi k dinyatakan "
         "sebagai % peserta aktif per bulan.")
-    baris = []
-    for k in K_PERSEN:
-        m_ = presisi_at_k(te, te["p"], k)
-        r_ = presisi_at_k(te, te["p_aturan"], k)
-        baris.append((k, round(m_["k_rata"]), m_["presisi"], r_["presisi"], m_["recall"],
-                      r_["recall"], m_["lift"]))
-    tk = pd.DataFrame(baris, columns=["k_persen", "k_orang_per_bulan", "presisi_model",
-                                      "presisi_aturan", "recall_model", "recall_aturan",
-                                      "lift_model"])
-    say(tk.round(3).to_string(index=False))
+    say(f"setara_nasional = k x {PBPU_MANDIRI_AKTIF:,} peserta PBPU Mandiri aktif (30 Sep 2025), "
+        "hanya untuk memberi skala.")
+
+    def tabel_k(X, populasi, nasional):
+        baris = []
+        for k in K_PERSEN:
+            m_ = presisi_at_k(X, X["p"], k)
+            r_ = presisi_at_k(X, X["p_aturan"], k)
+            baris.append(dict(
+                populasi=populasi, k_persen=k, k_orang_per_bulan=round(m_["k_rata"]),
+                setara_nasional=round(PBPU_MANDIRI_AKTIF * k / 100) if nasional else np.nan,
+                presisi_model=m_["presisi"], presisi_model_min_bulan=m_["presisi_min"],
+                presisi_model_max_bulan=m_["presisi_max"], presisi_aturan=r_["presisi"],
+                recall_model=m_["recall"], recall_aturan=r_["recall"], lift_model=m_["lift"]))
+        return pd.DataFrame(baris)
+
+    tk = tabel_k(te, "semua_aktif", True)
+    say(tk[["k_persen", "k_orang_per_bulan", "setara_nasional", "presisi_model", "presisi_aturan",
+            "recall_model", "recall_aturan", "lift_model"]].round(3).to_string(index=False))
+    say("rentang presisi model antarbulan uji: " + "; ".join(
+        f"k {r.k_persen:g}% {r.presisi_model_min_bulan:.1%}-{r.presisi_model_max_bulan:.1%}"
+        for r in tk.itertuples()))
 
     say("\n-- Subset peserta yang belum pernah nonaktif sejak 2023 --")
     say("Di sini aturan sederhana tidak punya informasi (semua bernilai 0), jadi sama dengan acak.")
     say("Ini satu-satunya bagian di mana model memberi nilai tambah atas aturan.")
-    baris = []
-    for k in K_PERSEN:
-        m_ = presisi_at_k(baru, baru["p"], k)
-        r_ = presisi_at_k(baru, baru["p_aturan"], k)
-        baris.append((k, round(m_["k_rata"]), m_["presisi"], r_["presisi"], m_["recall"],
-                      m_["lift"]))
-    say(pd.DataFrame(baris, columns=["k_persen_subset", "k_orang_per_bulan", "presisi_model",
-                                     "presisi_aturan_acak", "recall_model", "lift_model"]
-                     ).round(3).to_string(index=False))
+    tb = tabel_k(baru, "belum_pernah_nonaktif", False)
+    say(tb[["k_persen", "k_orang_per_bulan", "presisi_model", "presisi_aturan", "recall_model",
+            "lift_model"]].rename(columns={"k_persen": "k_persen_subset",
+                                           "presisi_aturan": "presisi_aturan_acak"})
+        .round(3).to_string(index=False))
     kb = baru.groupby("segmen").agg(n=("y", "size"), base_rate=("y", "mean"))
     say("isi subset menurut segmen laten:")
     say(kb.round(3).to_string())
@@ -480,6 +496,30 @@ def main():
     say(koef[["keterangan", "rasio_odds", "skala"]].round(2).to_string(index=False))
     koef.round(4).to_csv(os.path.join(a.out, "early_warning_koefisien.csv"), index=False)
 
+    # tabel validasi untuk proposal (semua angka dari data uji 2025, sintetis)
+    metrik = pd.DataFrame([
+        ("semua_aktif", "n_peserta_bulan_uji", len(te)),
+        ("semua_aktif", "base_rate", te["y"].mean()),
+        ("semua_aktif", "auc_model", auc),
+        ("semua_aktif", "auc_model_min_bulan", per_bulan.min()),
+        ("semua_aktif", "auc_model_max_bulan", per_bulan.max()),
+        ("semua_aktif", "auc_aturan", auc_aturan),
+        ("semua_aktif", "brier_model", brier),
+        ("semua_aktif", "brier_tanpa_model", brier_dasar),
+        ("semua_aktif", "rata_prediksi", te["p"].mean()),
+        ("belum_pernah_nonaktif", "n_peserta_bulan_uji", len(baru)),
+        ("belum_pernah_nonaktif", "base_rate", baru["y"].mean()),
+        ("belum_pernah_nonaktif", "auc_model", auc_baru),
+    ], columns=["populasi", "metrik", "nilai"])
+    metrik.round(4).to_csv(os.path.join(a.out, "early_warning_metrik.csv"), index=False)
+    pd.concat([tk, tb]).round(4).to_csv(os.path.join(a.out, "early_warning_presisi_k.csv"),
+                                        index=False)
+    kal_out = pd.concat([
+        kal.reset_index().assign(kelompok=lambda d: "desil_" + (d["bin"] + 1).astype(str)),
+        ks.reset_index().assign(kelompok=lambda d: "segmen_laten_" + d["segmen"]),
+    ])[["kelompok", "prediksi", "aktual", "n"]]
+    kal_out.round(4).to_csv(os.path.join(a.out, "early_warning_kalibrasi.csv"), index=False)
+
     # kurva presisi untuk grafik
     ks_grid = [1, 2, 5, 10, 15, 20, 30]
 
@@ -491,7 +531,7 @@ def main():
             "dasar": X.groupby("bulan")["y"].mean().mean(),
         })
 
-    plot(kal, kurva(te), kurva(baru), auc, roc_auc_score(baru["y"], baru["p"]),
+    plot(kal, kurva(te), kurva(baru), auc, auc_baru,
          os.path.join(a.out, "early_warning.png"))
 
     # daftar operasional: model dilatih ulang pada semua bulan berlabel, skor bulan terakhir

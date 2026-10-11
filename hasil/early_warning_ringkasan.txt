@@ -1,6 +1,9 @@
 == EARLY WARNING: peluang peserta aktif menunggak dalam 3 bulan (data sintetis) ==
 panel latih  2023-07 s.d. 2024-09 : 203,457 peserta-bulan, 17,549 peserta, base rate 21.2%
 panel uji    2025-01 s.d. 2025-09 : 129,390 peserta-bulan, 17,882 peserta, base rate 21.2%
+Latih tidak memakai seluruh 2023-2024: titik Jan-Jun 2023 belum punya riwayat 6 bulan, dan
+titik Okt-Des 2024 berlabel Jan-Mar 2025 (masa uji). Uji berhenti di 2025-09 karena label
+butuh 3 bulan sesudahnya dan data berakhir Des 2025.
 
 -- Diskriminasi --
 AUC model                      : 0.854 (per bulan 0.845-0.866)
@@ -33,20 +36,26 @@ tidak_mampu               0.375   0.662   5168
 
 -- Presisi pada k teratas, rata-rata per bulan uji --
 k = kapasitas petugas. Angka resmi kapasitas belum tersedia, jadi k dinyatakan sebagai % peserta aktif per bulan.
- k_persen  k_orang_per_bulan  presisi_model  presisi_aturan  recall_model  recall_aturan  lift_model
-        1                144          0.934           0.950         0.044          0.045       4.399
-        5                719          0.801           0.794         0.188          0.187       3.770
-       10               1438          0.743           0.736         0.350          0.347       3.499
-       20               2875          0.640           0.642         0.603          0.605       3.015
+setara_nasional = k x 17,464,328 peserta PBPU Mandiri aktif (30 Sep 2025), hanya untuk memberi skala.
+ k_persen  k_orang_per_bulan  setara_nasional  presisi_model  presisi_aturan  recall_model  recall_aturan  lift_model
+      0.5                 72            87322          0.924           0.941         0.022          0.022       4.351
+      1.0                144           174643          0.934           0.950         0.044          0.045       4.399
+      2.0                288           349287          0.882           0.894         0.083          0.084       4.151
+      5.0                719           873216          0.801           0.794         0.188          0.187       3.770
+     10.0               1438          1746433          0.743           0.736         0.350          0.347       3.499
+     20.0               2875          3492866          0.640           0.642         0.603          0.605       3.015
+rentang presisi model antarbulan uji: k 0.5% 87.5%-95.8%; k 1% 91.6%-97.2%; k 2% 84.5%-91.3%; k 5% 77.7%-82.6%; k 10% 73.0%-76.3%; k 20% 62.3%-65.8%
 
 -- Subset peserta yang belum pernah nonaktif sejak 2023 --
 Di sini aturan sederhana tidak punya informasi (semua bernilai 0), jadi sama dengan acak.
 Ini satu-satunya bagian di mana model memberi nilai tambah atas aturan.
  k_persen_subset  k_orang_per_bulan  presisi_model  presisi_aturan_acak  recall_model  lift_model
-               1                 76          0.522                0.056         0.086       8.642
-               5                380          0.293                0.060         0.243       4.862
-              10                761          0.209                0.061         0.346       3.459
-              20               1521          0.140                0.062         0.465       2.325
+             0.5                 38          0.507                0.052         0.042       8.377
+             1.0                 76          0.522                0.056         0.086       8.642
+             2.0                152          0.431                0.058         0.143       7.138
+             5.0                380          0.293                0.060         0.243       4.862
+            10.0                761          0.209                0.061         0.346       3.459
+            20.0               1521          0.140                0.062         0.465       2.325
 isi subset menurut segmen laten:
                            n  base_rate
 segmen                                 

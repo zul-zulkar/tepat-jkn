@@ -125,7 +125,7 @@ Denda 2,5% dan batas Rp30 juta tidak kami pakai sebagai aturan berlaku. Batas Rp
 | AUC, peserta yang belum pernah nonaktif | 0,708 | 0,704–0,721 |
 | Presisi 1% teratas di subset itu (base rate 6%) | 52,2% | 52,2–55,7% |
 
-Pada semua peserta, model **tidak lebih baik** dari aturan sederhana di k kecil. Nilai tambahnya ada pada peserta yang belum pernah menunggak, di mana aturan itu sama dengan acak. Model juga meremehkan risiko peserta tidak mampu (prediksi 38%, aktual 66%), karena generator tidak membuat tanda awal sebelum guncangan ekonomi. DTSEN tidak dipakai sebagai fitur: snapshot tunggalnya bertanggal 2025-01-01 dan ikut ditentukan oleh guncangan yang terjadi kemudian.
+Pada semua peserta, model **tidak lebih baik** dari aturan sederhana di k kecil: di k ≤ 2%, aturan bahkan sedikit lebih presisi di ketiga seed (k 1%: aturan 93,6–95,0%, model 90,6–93,4%). Sebagai skala, k 1% setara sekitar 175 ribu peserta per bulan bila diterapkan ke 17,46 juta peserta PBPU Mandiri aktif (30 Sep 2025). Kapasitas petugas resmi belum tersedia, jadi presisi dilaporkan untuk k 0,5–20% (`hasil/early_warning_presisi_k.csv`). Nilai tambahnya ada pada peserta yang belum pernah menunggak, di mana aturan itu sama dengan acak. Model juga meremehkan risiko peserta tidak mampu (prediksi 38%, aktual 66%), karena generator tidak membuat tanda awal sebelum guncangan ekonomi. DTSEN tidak dipakai sebagai fitur: snapshot tunggalnya bertanggal 2025-01-01 dan ikut ditentukan oleh guncangan yang terjadi kemudian.
 
 ![Early warning](hasil/early_warning.png)
 
