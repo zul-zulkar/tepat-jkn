@@ -47,7 +47,11 @@ Sebelum peserta menunggak, ada **early warning** (`early_warning.py`): regresi l
 
 ## Menjalankan
 
+Butuh Python 3.10 atau lebih baru.
+
 ```bash
+python -m venv .venv
+.venv/Scripts/activate            # Windows. Linux/macOS: source .venv/bin/activate
 pip install -r requirements.txt
 python generate_data.py --n 20000 --seed 2026 --out data   # ±20 detik
 python cek_sinyal.py --data data --out hasil                # ±5 detik
@@ -55,6 +59,19 @@ python early_warning.py --data data --out hasil             # ±15 detik
 python uji_stabilitas.py --seeds 2026 1 2 3 4 --out hasil   # ±3 menit, membuat data sendiri
 python daya_uji_bunching.py --data data --out hasil         # ±1 menit
 ```
+
+### Cek reproduksibilitas
+
+Sebelum commit yang menyentuh skrip pipeline atau `requirements.txt`, jalankan ke `hasil_cek/` (bukan `hasil/`) lalu cocokkan:
+
+```bash
+python generate_data.py --n 20000 --seed 2026 --out data
+python cek_sinyal.py --data data --out hasil_cek
+python early_warning.py --data data --out hasil_cek
+python cocokkan_angka.py --data data --hasil hasil_cek
+```
+
+`cocokkan_angka.py` memeriksa 58 butir: jumlah baris dan sidik jari data, seluruh angka kanonik di proposal (rute triase, presisi/recall, bunching, plasebo IGD, early warning, daftar Des 2025), aturan DTSEN 1–5, dan kesamaan isi `hasil_cek/` dengan `hasil/` yang di-commit. Kode keluar 1 bila ada yang beda. scikit-learn 1.3 masih berjalan tetapi menggeser angka early warning, karena itu batas bawahnya 1.4.
 
 `--n` adalah jumlah peserta PBPU/BP mandiri. Generator juga membuat peserta PPU, PBI, dan PBPU/BP-Pemda sebanyak 15% dari `--n` (atur dengan `--n_lain`). Peserta segmen lain ini dikeluarkan saat analisis.
 
@@ -68,6 +85,7 @@ cek_sinyal.py      uji bunching, fitur perilaku, triase, validasi ke label
 early_warning.py   panel peserta-bulan, regresi logistik, validasi waktu, daftar top-k
 uji_stabilitas.py  seluruh pipeline pada 5 seed, rentang tiap metrik
 daya_uji_bunching.py  simulasi: berapa kasus penundaan yang terdeteksi uji bunching
+cocokkan_angka.py  cek angka kanonik seed 2026 + kesamaan dengan hasil/ yang di-commit
 data_sampel/       contoh 500 peserta mandiri + 75 segmen lain (seed 2026)
 hasil/             ringkasan.txt, bunching_*.png, early_warning_*, stabilitas_*, daya_uji_*
 ```

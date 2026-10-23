@@ -1,6 +1,8 @@
 # data sintetis lengkap (±45 MB) - buat ulang dengan generate_data.py
 data/
 hasil/triase_peserta.csv
+# keluaran cocokkan_angka.py, dibuat ulang setiap verifikasi
+hasil_cek/
 
 # Python
 __pycache__/
