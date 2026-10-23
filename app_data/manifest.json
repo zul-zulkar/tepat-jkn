@@ -1,0 +1,197 @@
+{
+  "keterangan": "Data sintetis, dibuat oleh siapkan_app.py. Jangan diedit tangan.",
+  "cek_kanonik": "lolos (seed 2026)",
+  "triase_per_tanggal": "2025-12-31",
+  "ew_bulan_operasional": "2025-12",
+  "ew_k_persen_daftar": 5,
+  "ew_k_orang_daftar": 712,
+  "ew_n_dinilai": 14237,
+  "ew_n_peserta_bulan_latih": 375076,
+  "versi": {
+    "python": "3.11.17",
+    "pandas": "3.1.0",
+    "numpy": "2.4.6",
+    "scikit-learn": "1.9.1",
+    "pyarrow": "26.0.0"
+  },
+  "total_mb": 3.61,
+  "batas_mb": 20,
+  "file": {
+    "peserta.parquet": {
+      "baris": 20000,
+      "byte": 162735,
+      "kolom": [
+        "id_peserta",
+        "tgl_daftar",
+        "kelas",
+        "iuran_bulanan",
+        "usia_2023",
+        "jenis_kelamin",
+        "kode_wilayah",
+        "autodebet",
+        "segmen_kepesertaan",
+        "pembayar_iuran",
+        "indeks_kemiskinan",
+        "rentang_desil"
+      ]
+    },
+    "daftar_kerja.parquet": {
+      "baris": 20000,
+      "byte": 266038,
+      "kolom": [
+        "id_peserta",
+        "rute",
+        "alasan",
+        "jeda_dtsen",
+        "rentang_desil",
+        "tunggakan_bulan",
+        "tunggakan_rp",
+        "n_reaktivasi",
+        "n_reakt_terkait_klaim",
+        "porsi_reakt_terkait",
+        "rasio_hari_aktif",
+        "rasio_klaim_iuran",
+        "klaim_rp",
+        "iuran_rp",
+        "skor_patah",
+        "pola_rutin_lalu_berhenti",
+        "bulan_berhenti",
+        "baru_klaim_lalu_berhenti"
+      ]
+    },
+    "ew_daftar.parquet": {
+      "baris": 14237,
+      "byte": 539767,
+      "kolom": [
+        "peringkat",
+        "id_peserta",
+        "bulan",
+        "skor",
+        "masuk_daftar",
+        "alasan",
+        "saran_intervensi",
+        "rentang_desil",
+        "autodebet",
+        "kelas",
+        "bulan_teramati_12",
+        "bulan_nonaktif_12",
+        "n_reaktivasi_12",
+        "bulan_telat_dibayar_12",
+        "log_rasio_klaim_iuran_12",
+        "log_masa_kepesertaan",
+        "pernah_nonaktif",
+        "aktif_kembali_3bln",
+        "klaim_besar_bulan_lalu",
+        "klaim_besar_2_3bln",
+        "klaim_besar_4_12bln",
+        "kelas_1",
+        "kelas_2",
+        "kontribusi_bulan_nonaktif_12",
+        "kontribusi_n_reaktivasi_12",
+        "kontribusi_bulan_telat_dibayar_12",
+        "kontribusi_log_rasio_klaim_iuran_12",
+        "kontribusi_log_masa_kepesertaan",
+        "kontribusi_pernah_nonaktif",
+        "kontribusi_aktif_kembali_3bln",
+        "kontribusi_klaim_besar_bulan_lalu",
+        "kontribusi_klaim_besar_2_3bln",
+        "kontribusi_klaim_besar_4_12bln",
+        "kontribusi_autodebet",
+        "kontribusi_kelas_1",
+        "kontribusi_kelas_2"
+      ]
+    },
+    "linimasa_bayar.parquet": {
+      "baris": 491200,
+      "byte": 1213749,
+      "kolom": [
+        "id_peserta",
+        "tgl_bayar",
+        "periode_awal",
+        "periode_akhir",
+        "jumlah_bulan_dibayar",
+        "nominal",
+        "kanal"
+      ]
+    },
+    "linimasa_status.parquet": {
+      "baris": 113602,
+      "byte": 412878,
+      "kolom": [
+        "id_peserta",
+        "tgl_mulai",
+        "tgl_selesai",
+        "status"
+      ]
+    },
+    "linimasa_klaim.parquet": {
+      "baris": 67380,
+      "byte": 780373,
+      "kolom": [
+        "id_klaim",
+        "id_peserta",
+        "id_episode",
+        "tgl_masuk",
+        "tgl_keluar",
+        "jenis_layanan",
+        "cara_masuk",
+        "kelompok_layanan",
+        "kelas_rawat",
+        "biaya_klaim",
+        "denda_pelayanan"
+      ]
+    },
+    "linimasa_reaktivasi.parquet": {
+      "baris": 43984,
+      "byte": 152398,
+      "kolom": [
+        "id_peserta",
+        "tgl_reakt",
+        "bulan_tertunggak"
+      ]
+    },
+    "bunching_harian.parquet": {
+      "baris": 242,
+      "byte": 6644,
+      "kolom": [
+        "cara_masuk",
+        "hari",
+        "hitung",
+        "cf",
+        "jendela",
+        "dipakai_fit"
+      ]
+    },
+    "bunching_ringkasan.parquet": {
+      "baris": 2,
+      "byte": 8900,
+      "kolom": [
+        "cara_masuk",
+        "n_kasus",
+        "n_hari0",
+        "lebih",
+        "lebih_ik_bawah",
+        "lebih_ik_atas",
+        "kurang",
+        "lompat",
+        "lompat_ik_bawah",
+        "lompat_ik_atas",
+        "ik_lompat_mencakup_0",
+        "denda_terhindar_rp",
+        "batas_hari",
+        "n_bootstrap"
+      ]
+    },
+    "evaluasi_label.parquet": {
+      "baris": 20000,
+      "byte": 65902,
+      "kolom": [
+        "id_peserta",
+        "segmen",
+        "pengakal_45",
+        "peserta_baru",
+        "tgl_guncangan"
+      ]
+    }
+  }
+}

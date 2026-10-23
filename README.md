@@ -73,6 +73,26 @@ python cocokkan_angka.py --data data --hasil hasil_cek
 
 `cocokkan_angka.py` memeriksa 58 butir: jumlah baris dan sidik jari data, seluruh angka kanonik di proposal (rute triase, presisi/recall, bunching, plasebo IGD, early warning, daftar Des 2025), aturan DTSEN 1–5, dan kesamaan isi `hasil_cek/` dengan `hasil/` yang di-commit. Kode keluar 1 bila ada yang beda. scikit-learn 1.3 masih berjalan tetapi menggeser angka early warning, karena itu batas bawahnya 1.4.
 
+### Data aplikasi
+
+Aplikasi tidak menghitung apa pun saat dibuka. Semua hasil dihitung sekali lalu disimpan di `app_data/` (di-commit, ±3,6 MB, batas 20 MB):
+
+```bash
+python siapkan_app.py --data data --out app_data   # ±20 detik
+```
+
+| File | Isi |
+|---|---|
+| `daftar_kerja.parquet` | triase per 31 Des 2025 untuk semua 20.000 peserta mandiri: rute, alasan, fitur perilaku |
+| `ew_daftar.parquet` | peringatan dini 2025-12: semua 14.237 peserta aktif berperingkat, `masuk_daftar` = k 5% (712), kontribusi tiap fitur |
+| `linimasa_bayar` / `_status` / `_klaim` / `_reaktivasi` `.parquet` | riwayat per peserta untuk halaman profil |
+| `bunching_harian.parquet`, `bunching_ringkasan.parquet` | uji lonjakan hari-45 dan plasebo IGD |
+| `peserta.parquet` | atribut peserta, indeks kemiskinan wilayah, rentang desil DTSEN |
+| `evaluasi_label.parquet` | label sintetis, **hanya** untuk halaman Evaluasi |
+| `manifest.json` | jumlah baris, kolom, ukuran, versi paket, hasil pemeriksaan |
+
+Skrip menolak menulis bila angka kunci beda dari angka kanonik seed 2026, bila ada peserta DTSEN 1–5 di rute verifikasi, bila kolom label muncul di luar `evaluasi_label.parquet`, atau bila total melebihi 20 MB. Buat ulang `app_data/` setiap kali skrip pipeline berubah. Di lingkungan paket yang berbeda, urutan peserta dengan skor peringatan dini yang persis seri bisa tertukar (selisih skor ±1e-13); daftar 712 dan angka kanonik tetap sama.
+
 `--n` adalah jumlah peserta PBPU/BP mandiri. Generator juga membuat peserta PPU, PBI, dan PBPU/BP-Pemda sebanyak 15% dari `--n` (atur dengan `--n_lain`). Peserta segmen lain ini dikeluarkan saat analisis.
 
 Folder `data/` tidak di-commit karena ukurannya sekitar 50 MB. Buat ulang dengan perintah di atas: seed yang sama menghasilkan data yang identik. Untuk sekadar melihat struktur tabel, buka `data_sampel/` (500 peserta mandiri + 75 peserta segmen lain).
@@ -86,6 +106,8 @@ early_warning.py   panel peserta-bulan, regresi logistik, validasi waktu, daftar
 uji_stabilitas.py  seluruh pipeline pada 5 seed, rentang tiap metrik
 daya_uji_bunching.py  simulasi: berapa kasus penundaan yang terdeteksi uji bunching
 cocokkan_angka.py  cek angka kanonik seed 2026 + kesamaan dengan hasil/ yang di-commit
+siapkan_app.py     hitung sekali semua yang dibaca aplikasi -> app_data/*.parquet
+app_data/          data siap baca untuk aplikasi (di-commit)
 data_sampel/       contoh 500 peserta mandiri + 75 segmen lain (seed 2026)
 hasil/             ringkasan.txt, bunching_*.png, early_warning_*, stabilitas_*, daya_uji_*
 ```

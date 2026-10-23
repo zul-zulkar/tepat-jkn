@@ -8,8 +8,11 @@
 #                     pandas 2.1 berhenti dengan TypeError.
 # scikit-learn >= 1.4 1.3 masih berjalan, tetapi koefisien regresi logistik bergeser:
 #                     AUC 0.8541, presisi 1% teratas subset 52,4% (kanonik 52,2%).
-# Batas atas = versi mayor berikutnya, karena belum diuji.
+# pyarrow >= 16      siapkan_app.py menulis app_data/*.parquet. Diuji 16.0.0 (dengan numpy 1.24)
+#                     dan 26.0.0. Tanpa batas atas: versi mayor pyarrow naik tiap beberapa bulan.
+# Batas atas lainnya = versi mayor berikutnya, karena belum diuji.
 numpy>=1.24,<3
 pandas>=2.2,<4
 scikit-learn>=1.4,<2
 matplotlib>=3.7,<4
+pyarrow>=16
