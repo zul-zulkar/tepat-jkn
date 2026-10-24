@@ -103,6 +103,19 @@ Skrip menolak menyimpan kalau angka utama beda dari angka di proposal, ada peser
 
 Catatan kecil: di versi paket Python yang berbeda, peserta dengan skor peringatan dini yang persis sama bisa bertukar urutan (selisih skornya sekitar 1e-13). Daftar 712 dan angka di proposal tetap sama.
 
+### Menjalankan aplikasi
+
+```bash
+streamlit run app.py
+```
+
+Dua halaman: **Daftar kerja** (triase pola bayar dan peringatan dini, filter wilayah, rute, kapasitas k) dan **Profil peserta** (linimasa 3 tahun, rute dan alasan, keputusan petugas, draf pesan). Profil bisa dibuka langsung lewat alamat `/profil?id=P-002329`.
+
+- Aplikasi hanya membaca `app_data/`. `evaluasi_label.parquet` tidak dibaca di kedua halaman ini.
+- Sorotan "klaim besar ≤ 90 hari setelah aktif kembali" di linimasa memakai konstanta yang sama dengan `cek_sinyal.py`, dan cocok dengan `n_reakt_terkait_klaim` per peserta.
+- Keputusan petugas tersimpan selama sesi dan tidak mengubah rute. Draf pesan berasal dari template (`pesan_template.py`), yang nanti menjadi jalur cadangan lapisan AI.
+- Tema dan font ada di `.streamlit/config.toml`. Huruf memakai Plus Jakarta Sans dan angka memakai IBM Plex Mono, keduanya berlisensi OFL dan disimpan di `static/fonts/`.
+
 ## Isi folder
 
 ```
@@ -113,6 +126,8 @@ uji_stabilitas.py     menjalankan semuanya di 5 seed dan mencatat rentang tiap a
 daya_uji_bunching.py  simulasi: berapa banyak penundaan yang bisa ditangkap uji lonjakan
 cocokkan_angka.py     cek angka proposal tidak berubah
 siapkan_app.py        menghitung sekali semua data untuk aplikasi -> app_data/
+app.py                aplikasi Streamlit (halaman ada di halaman/, bagian bersama di tepat_ui.py)
+pesan_template.py     draf pesan per rute, tanpa AI
 app_data/             data siap baca untuk aplikasi (ikut di-commit)
 data_sampel/          contoh kecil: 500 peserta mandiri + 75 kelompok lain (seed 2026)
 hasil/                ringkasan, grafik, dan tabel hasil

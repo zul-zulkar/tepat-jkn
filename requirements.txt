@@ -11,8 +11,18 @@
 # pyarrow >= 16      siapkan_app.py menulis app_data/*.parquet. Diuji 16.0.0 (dengan numpy 1.24)
 #                     dan 26.0.0. Tanpa batas atas: versi mayor pyarrow naik tiap beberapa bulan.
 # Batas atas lainnya = versi mayor berikutnya, karena belum diuji.
+#
+# Aplikasi (app.py), ditambahkan 24 Okt 2026. Diuji dengan streamlit 1.66.1 dan altair 6.3.0
+# (Python 3.13, pandas 3.1.0, numpy 2.5.4, scikit-learn 1.9.1, pyarrow 26.0.0):
+# cocokkan_angka.py 58/58, dan app_data/ yang dibuat ulang setara isinya dengan yang di-commit.
+# streamlit >= 1.66   tema memakai theme.fontFaces dengan unicodeRange (angka dan huruf beda font)
+#                     dan st.navigation(position="top"). Versi lebih lama belum diuji.
+# Catatan: streamlit sendiri mensyaratkan numpy >= 1.25, jadi batas bawah numpy efektif 1.25
+# bila requirements ini dipasang lengkap. Pipeline saja tetap jalan di numpy 1.24.
 numpy>=1.24,<3
 pandas>=2.2,<4
 scikit-learn>=1.4,<2
 matplotlib>=3.7,<4
 pyarrow>=16
+streamlit>=1.66,<2
+altair>=6,<7
