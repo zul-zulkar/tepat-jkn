@@ -109,7 +109,9 @@ Catatan kecil: di versi paket Python yang berbeda, peserta dengan skor peringata
 streamlit run app.py
 ```
 
-Dua halaman: **Daftar kerja** (triase pola bayar dan peringatan dini, filter wilayah, rute, kapasitas k) dan **Profil peserta** (linimasa 3 tahun, rute dan alasan, keputusan petugas, draf pesan). Profil bisa dibuka langsung lewat alamat `/profil?id=P-002329`.
+Dua halaman: **Daftar kerja** (triase pola bayar dan daftar berisiko menunggak 3 bulan ke depan dari model peringatan dini; filter wilayah, rute, kapasitas k) dan **Profil peserta** (linimasa 3 tahun, rute dan alasan, keputusan petugas, draf pesan).
+
+Satu peserta hanya mendapat satu tindakan, dengan urutan verifikasi > cek PBI > berisiko menunggak > pengingat. Pada kapasitas 5%: triase 7.788 peserta dan berisiko menunggak 650. Jumlah per rute di proposal (909, 2.133, 224) tidak berubah; 537 peserta rute pengingat ditangani lewat daftar berisiko menunggak. Profil bisa dibuka langsung lewat alamat `/profil?id=P-002329`.
 
 - Aplikasi hanya membaca `app_data/`. `evaluasi_label.parquet` tidak dibaca di kedua halaman ini.
 - Sorotan "klaim besar ≤ 90 hari setelah aktif kembali" di linimasa memakai konstanta yang sama dengan `cek_sinyal.py`, dan cocok dengan `n_reakt_terkait_klaim` per peserta.

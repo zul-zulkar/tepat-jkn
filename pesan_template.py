@@ -33,7 +33,8 @@ def _triase(p: dict) -> dict | None:
                  "Sebelum menindaklanjuti:\n"
                  "1. Cocokkan tanggal aktif kembali dengan tanggal klaim di linimasa.\n"
                  "2. Cek penjelasan lain yang wajar: jatuh miskin karena sakit, pasien penyakit kronis, "
-                 "pembayar musiman.\n"
+                 "pembayar musiman. Bila klaimnya rawat inap IGD di hari yang sama dengan pelunasan, "
+                 "kemungkinan peserta melunasi karena darurat.\n"
                  "3. Bila peserta ternyata tidak mampu, ubah tindak lanjut menjadi rujukan cek kelayakan PBI.\n\n"
                  "Dalam komunikasi dengan peserta, jangan memakai kata yang menuduh."))
     if rute == "rujuk_cek_kelayakan_PBI":
@@ -86,7 +87,7 @@ def _ew(p: dict) -> dict | None:
                "atau Dinas Sosial setempat.")
     else:
         return None
-    return dict(sumber="Peringatan dini", jenis="pesan_peserta", judul="Pesan pencegahan",
+    return dict(sumber="Berisiko menunggak", jenis="pesan_peserta", judul="Pesan pencegahan",
                 isi=PEMBUKA.format(id=pid) + "\n\n" + isi + "\n\n" + INFO)
 
 

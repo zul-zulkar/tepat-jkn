@@ -80,8 +80,14 @@ def tindakan_utama(rute: pd.Series, masuk_ew: pd.Series) -> pd.Series:
     return hasil
 
 
+# Istilah untuk pengguna internal BPJS (disepakati 24 Okt): daftar hasil model peringatan dini disebut
+# "berisiko menunggak 3 bulan ke depan". Tidak dipakai di pesan ke peserta.
+EW_NAMA = "Berisiko menunggak"
+EW_NAMA_PANJANG = "Berisiko menunggak 3 bulan ke depan"
+
+
 def nama_tindakan(t: str) -> str:
-    return "Peringatan dini" if t == PERINGATAN_DINI else RUTE[t]["nama"]
+    return "Pencegahan untuk peserta berisiko menunggak" if t == PERINGATAN_DINI else RUTE[t]["nama"]
 
 
 SARAN = {
@@ -234,7 +240,7 @@ def pasangan_reaktivasi_klaim(reakt: pd.DataFrame, klaim: pd.DataFrame) -> pd.Da
     if reakt.empty:
         return pd.DataFrame(columns=["tgl_reakt", "tgl_masuk", "hari", "terkait"])
     besar = klaim[(klaim["jenis_layanan"] == "RITL") | (klaim["biaya_klaim"] >= KLAIM_BESAR)]
-    besar = besar[["tgl_masuk"]].sort_values("tgl_masuk")
+    besar = besar[["tgl_masuk", "jenis_layanan", "cara_masuk"]].sort_values("tgl_masuk")
     r = pd.merge_asof(reakt[["tgl_reakt", "bulan_tertunggak"]].sort_values("tgl_reakt"), besar,
                       left_on="tgl_reakt", right_on="tgl_masuk", direction="forward")
     r["hari"] = (r["tgl_masuk"] - r["tgl_reakt"]).dt.days
@@ -326,6 +332,7 @@ p, li { font-feature-settings: "tnum" 1; }
 .tp-utama { font-size: 1rem; color: #17263A; margin: 0 0 1rem; max-width: 80ch; line-height: 1.5; }
 .tp-utama b { font-weight: 650; }
 .tp-sekunder { opacity: .55; }
+.tp-catatan { font-size: .88rem; color: #8F4F0A; margin: .5rem 0 0; line-height: 1.5; max-width: 76ch; }
 </style>
 """
 
@@ -339,7 +346,7 @@ def kepala(judul: str, ket: str) -> None:
     st.html(
         f'<div class="tp-kepala"><h1>{e(judul)}</h1><p>{e(ket)}</p>'
         f'<div class="tp-cap"><b>Data sintetis.</b> Triase per {tgl(m["triase_per_tanggal"])}, '
-        f'peringatan dini {BULAN_PANJANG[int(m["ew_bulan_operasional"][5:]) - 1]} '
+        f'risiko menunggak dihitung {BULAN_PANJANG[int(m["ew_bulan_operasional"][5:]) - 1]} '
         f'{m["ew_bulan_operasional"][:4]}.</div></div>')
 
 

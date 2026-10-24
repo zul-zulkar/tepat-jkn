@@ -34,7 +34,7 @@ n_triase, n_ew = len(triase_w), len(ew_utama)
 pilihan = st.segmented_control(
     "Daftar", ["triase", "ew"], key="f_daftar", label_visibility="collapsed",
     format_func=lambda x: (f"Triase pola bayar  {ui.angka(n_triase)}" if x == "triase"
-                           else f"Peringatan dini  {ui.angka(n_ew)}"))
+                           else f"{ui.EW_NAMA}  {ui.angka(n_ew)}"))
 pilihan = pilihan or "triase"
 
 
@@ -74,8 +74,8 @@ if pilihan == "triase":
     pindah = int(((T_w["rute"] == "pengingat_autodebet_REHAB") & (T_w["utama"] == ui.PERINGATAN_DINI)).sum())
     st.html('<p class="tp-ket">Rute per 31 Desember 2025, dihitung aturan dari riwayat bayar, status, '
             'dan klaim sejak Januari 2023. Satu peserta hanya mendapat satu tindakan: '
-            f'{ui.angka(pindah)} peserta rute pengingat yang juga masuk peringatan dini ditangani di '
-            'daftar Peringatan dini. Keputusan tetap di petugas.</p>')
+            f'{ui.angka(pindah)} peserta rute pengingat yang juga berisiko menunggak ditangani di '
+            f'daftar {ui.EW_NAMA}. Keputusan tetap di petugas.</p>')
 
     c1, c2 = st.columns([5, 2], vertical_alignment="center")
     rute = c1.pills("Rute", ui.RUTE_AKSI, selection_mode="multi", key="f_rute",
@@ -98,12 +98,12 @@ if pilihan == "triase":
             "Tunggakan": d["tunggakan_bulan"].astype(int),
             "Wilayah": d["kode_wilayah"],
             "DTSEN": d["rentang_desil"].map(ui.DESIL),
-            "Juga di": np.where(d["id_peserta"].isin(ew_ids), "Peringatan dini", ""),
+            "Juga di": np.where(d["id_peserta"].isin(ew_ids), ui.EW_NAMA, ""),
             "Keputusan": d["id_peserta"].map(ui.label_keputusan),
         })
         unduh = d[["id_peserta", "rute", "alasan", "status_akhir", "tunggakan_bulan", "tunggakan_rp",
                    "kode_wilayah", "rentang_desil"]].assign(
-            juga_peringatan_dini=d["id_peserta"].isin(ew_ids), tindakan_utama=d["utama"],
+            juga_berisiko_menunggak=d["id_peserta"].isin(ew_ids), tindakan_utama=d["utama"],
             keputusan=d["id_peserta"].map(ui.label_keputusan))
         if not ui.keputusan():
             view = view.drop(columns="Keputusan")
@@ -126,8 +126,9 @@ if pilihan == "triase":
 # ---------------------------------------------------------------- peringatan dini
 else:
     ke_rute = len(ew_list) - n_ew
-    st.html('<p class="tp-ket">Peserta yang masih aktif pada Desember 2025, diurutkan menurut peluang '
-            'menunggak dalam 3 bulan ke depan. Yang masuk hanya sebanyak kapasitas petugas; angka kanonik '
+    st.html('<p class="tp-ket">Peserta yang masih aktif pada Desember 2025 dan berisiko menunggak dalam '
+            '3 bulan ke depan menurut model peringatan dini, diurutkan dari peluang tertinggi. '
+            'Yang masuk hanya sebanyak kapasitas petugas; angka kanonik '
             'proposal adalah 5% dari seluruh peserta aktif, yaitu 712 orang. Satu peserta hanya mendapat '
             f'satu tindakan: {ui.angka(ke_rute)} di antaranya juga ada di rute verifikasi, jadi ditangani '
             'lewat verifikasi.</p>')
@@ -157,7 +158,7 @@ else:
     if not ui.keputusan():
         view = view.drop(columns="Keputusan")
     kunci = "tbl_ew_" + str(abs(hash((tuple(wilayah), st.session_state["f_k"]))))
-    tabel_pilih(view, kunci, unduh, "tepat_peringatan_dini.csv", {
+    tabel_pilih(view, kunci, unduh, "tepat_berisiko_menunggak.csv", {
         "Peringkat": st.column_config.NumberColumn(
             format="%d", width=76, pinned=True,
             help="Peringkat risiko di daftar kapasitas. Nomor yang tidak muncul ditangani lewat rute verifikasi."),
@@ -169,6 +170,6 @@ else:
         "Saran": st.column_config.TextColumn(width=200),
         "Wilayah": st.column_config.TextColumn(width=66),
         "Juga di": st.column_config.TextColumn(
-            width=98, help="Juga memenuhi rute triase ini, tetapi ditangani lewat peringatan dini"),
+            width=98, help="Juga memenuhi rute triase ini, tetapi ditangani lewat daftar ini"),
         "Keputusan": st.column_config.TextColumn(width=88),
     })

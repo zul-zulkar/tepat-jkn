@@ -45,7 +45,7 @@ if not pid:
             contoh.append((d.iloc[0]["id_peserta"], ui.RUTE[r]["nama"]))
     p1 = T[T["ew_peringkat"] == 1]
     if len(p1):
-        contoh.append((p1.iloc[0]["id_peserta"], "Peringatan dini, peringkat 1"))
+        contoh.append((p1.iloc[0]["id_peserta"], f"{ui.EW_NAMA}, peringkat 1"))
     st.markdown("**Contoh per rute**")
     kol = st.columns(len(contoh))
     for c, (i, lbl) in zip(kol, contoh):
@@ -106,8 +106,16 @@ if p["rute"] != "tanpa_tindakan":
                   f'<span>Aktif kembali <b>{int(p["n_reaktivasi"])} kali</b></span>'
                   f'<span>Diikuti klaim besar ≤ 90 hari <b>{int(p["n_reakt_terkait_klaim"])} kali</b></span>'
                   f'<span>Waktu aktif <b>{ui.persen(p["rasio_hari_aktif"], 0)}</b></span></div>')
-pagar = ('<p class="tp-pagar">Peserta DTSEN desil 1–5 tidak pernah masuk rute ini.</p>'
-         if p["rute"] == "verifikasi_pola_reaktivasi" else "")
+pagar = ""
+if p["rute"] == "verifikasi_pola_reaktivasi":
+    # aturan tetap menghitung IGD (keputusan 24 Okt); petugas diberi tahu bila buktinya rawat inap darurat
+    q = pasangan[pasangan["terkait"]] if len(pasangan) else pasangan
+    n_igd = int(((q["jenis_layanan"] == "RITL") & (q["cara_masuk"] == "IGD")).sum()) if len(q) else 0
+    if n_igd:
+        awal = "Semua bukti" if n_igd == len(q) else f"{n_igd} dari {len(q)} bukti"
+        pagar += (f'<p class="tp-catatan">{awal} berupa rawat inap darurat lewat IGD. Sebelum '
+                  'menindaklanjuti, periksa apakah peserta baru melunasi karena musibah.</p>')
+    pagar += '<p class="tp-pagar">Peserta DTSEN desil 1–5 tidak pernah masuk rute ini.</p>'
 panel_triase = (
     f'<section class="tp-rute{"" if utama == p["rute"] else " tp-sekunder"}" style="--c:{R["warna"]}">'
     f'<p class="sumber">Rute triase</p>'
@@ -127,7 +135,7 @@ if pd.notna(p.get("ew_peringkat")):
                      if masuk_ew else "Tidak masuk daftar pada kapasitas saat ini.")
     panel_ew = (
         f'<section class="tp-rute{"" if utama == ui.PERINGATAN_DINI else " tp-sekunder"}" '
-        f'style="--c:{ui.WARNA_EW}"><p class="sumber">Peringatan dini, '
+        f'style="--c:{ui.WARNA_EW}"><p class="sumber">{ui.EW_NAMA_PANJANG}, dihitung '
         f'{ui.bulan_tahun(str(e_["bulan"]))}</p>'
         f'<p class="nama">Peluang menunggak 3 bulan: {ui.persen(e_["skor"], 1)}</p>'
         f'<p class="alasan">{ui.e(ui.alasan_rapi(e_["alasan"]))}</p>'
@@ -140,11 +148,11 @@ if pd.notna(p.get("ew_peringkat")):
 if utama == "tanpa_tindakan":
     kalimat = "Tidak ada tindakan bulan ini."
 else:
-    lain = [ui.RUTE[p["rute"]]["nama"]] if p["rute"] not in ("tanpa_tindakan", utama) else []
-    lain += ["Peringatan dini"] if masuk_ew and utama != ui.PERINGATAN_DINI else []
+    lain = [f"rute {ui.kecil(ui.RUTE[p['rute']]['nama'])}"] if p["rute"] not in ("tanpa_tindakan", utama) else []
+    lain += [f"daftar {ui.kecil(ui.EW_NAMA)}"] if masuk_ew and utama != ui.PERINGATAN_DINI else []
     kalimat = f"Tindakan bulan ini: <b>{ui.e(ui.nama_tindakan(utama))}</b>."
     if lain:
-        kalimat += (f" Juga memenuhi {ui.e(ui.kecil(', '.join(lain)))}, tetapi tidak dijalankan: "
+        kalimat += (f" Juga masuk {ui.e(' dan '.join(lain))}, tetapi tidak dijalankan: "
                     "satu peserta hanya mendapat satu tindakan.")
 st.html(f'<p class="tp-utama">{kalimat}</p>')
 
@@ -280,7 +288,7 @@ st.html('<div class="tp-legenda-lini">'
 kiri, kanan = st.columns([2, 3], gap="large")
 
 if utama == ui.PERINGATAN_DINI:
-    sasaran = ("Peringatan dini", ui.SARAN[p["ew_saran"]], ui.PERINGATAN_DINI)
+    sasaran = ("Pencegahan, berisiko menunggak", ui.SARAN[p["ew_saran"]], ui.PERINGATAN_DINI)
 elif utama in ui.RUTE_AKSI:
     sasaran = ("Rute triase", R["nama"], p["rute"])
 else:
