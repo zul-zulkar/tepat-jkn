@@ -90,8 +90,13 @@ def _ew(p: dict) -> dict | None:
                 isi=PEMBUKA.format(id=pid) + "\n\n" + isi + "\n\n" + INFO)
 
 
-def susun(p: dict, masuk_peringatan_dini: bool) -> list[dict]:
-    """Semua draf yang relevan untuk satu peserta. Bila peserta ada di dua daftar, keduanya
-    ditampilkan apa adanya; petugas yang memilih."""
-    hasil = [d for d in (_triase(p), _ew(p) if masuk_peringatan_dini else None) if d]
-    return hasil
+def susun(p: dict, tindakan: str) -> list[dict]:
+    """Draf untuk tindakan utama peserta saja (satu peserta, satu tindakan; lihat tepat_ui.PRIORITAS).
+    tindakan = kode rute triase atau "peringatan_dini"."""
+    if tindakan == "peringatan_dini":
+        d = _ew(p)
+    elif tindakan == p["rute"]:
+        d = _triase(p)
+    else:
+        d = None
+    return [d] if d else []

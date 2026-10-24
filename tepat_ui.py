@@ -61,6 +61,29 @@ RUTE = {  # urutan = urutan tampil
 }
 RUTE_AKSI = [r for r in RUTE if r != "tanpa_tindakan"]
 
+PERINGATAN_DINI = "peringatan_dini"
+
+# Satu peserta, satu tindakan (disepakati 24 Okt 2026): verifikasi > cek PBI > peringatan dini > pengingat.
+# Nonaktif lama diletakkan setelah cek PBI; tidak pernah bentrok dengan peringatan dini karena
+# peringatan dini hanya untuk peserta aktif. Dihitung saat aplikasi berjalan karena isi daftar
+# peringatan dini bergantung pada kapasitas k dan filter wilayah.
+PRIORITAS = ["verifikasi_pola_reaktivasi", "rujuk_cek_kelayakan_PBI", "nonaktif_lama_tanpa_sinyal",
+             PERINGATAN_DINI, "pengingat_autodebet_REHAB"]
+
+
+def tindakan_utama(rute: pd.Series, masuk_ew: pd.Series) -> pd.Series:
+    """Tindakan utama tiap peserta menurut PRIORITAS. masuk_ew: True bila masuk daftar peringatan dini."""
+    hasil = pd.Series("tanpa_tindakan", index=rute.index)
+    for t in reversed(PRIORITAS):  # prioritas tertinggi ditulis terakhir supaya menang
+        kena = masuk_ew if t == PERINGATAN_DINI else rute.eq(t)
+        hasil = hasil.mask(kena.astype(bool).values, t)
+    return hasil
+
+
+def nama_tindakan(t: str) -> str:
+    return "Peringatan dini" if t == PERINGATAN_DINI else RUTE[t]["nama"]
+
+
 SARAN = {
     "pengingat_H-5_dan_tawaran_autodebet": "Pengingat H-5 dan tawaran autodebet",
     "cek_kelayakan_PBI": "Cek kelayakan PBI",
@@ -300,6 +323,9 @@ p, li { font-feature-settings: "tnum" 1; }
 .tp-legenda-lini i { display: inline-block; }
 
 .tp-pagar { font-size: .82rem; color: #7A8897; margin: .4rem 0 0; }
+.tp-utama { font-size: 1rem; color: #17263A; margin: 0 0 1rem; max-width: 80ch; line-height: 1.5; }
+.tp-utama b { font-weight: 650; }
+.tp-sekunder { opacity: .55; }
 </style>
 """
 

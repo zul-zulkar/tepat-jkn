@@ -22,13 +22,19 @@ wilayah = st.multiselect("Wilayah", sorted(T["kode_wilayah"].unique()), key="f_w
 T_w = T[T["kode_wilayah"].isin(wilayah)] if wilayah else T
 
 ew_list, n_ew_dinilai = ui.daftar_ew(T, wilayah, st.session_state["f_k"])
+ew_list = ew_list.assign(urut=np.arange(1, len(ew_list) + 1))  # peringkat risiko di daftar k
 ew_ids = set(ew_list["id_peserta"])
-n_triase = int(T_w["rute"].isin(ui.RUTE_AKSI).sum())
+
+# satu peserta, satu tindakan (tepat_ui.PRIORITAS)
+T_w = T_w.assign(utama=ui.tindakan_utama(T_w["rute"], T_w["id_peserta"].isin(ew_ids)))
+triase_w = T_w[T_w["utama"].isin(ui.RUTE_AKSI)]
+ew_utama = ew_list[ew_list["id_peserta"].isin(T_w.loc[T_w["utama"] == ui.PERINGATAN_DINI, "id_peserta"])]
+n_triase, n_ew = len(triase_w), len(ew_utama)
 
 pilihan = st.segmented_control(
     "Daftar", ["triase", "ew"], key="f_daftar", label_visibility="collapsed",
     format_func=lambda x: (f"Triase pola bayar  {ui.angka(n_triase)}" if x == "triase"
-                           else f"Peringatan dini  {ui.angka(len(ew_list))}"))
+                           else f"Peringatan dini  {ui.angka(n_ew)}"))
 pilihan = pilihan or "triase"
 
 
@@ -63,11 +69,13 @@ def tabel_pilih(view: pd.DataFrame, kunci: str, unduh: pd.DataFrame, nama_file: 
 
 # ---------------------------------------------------------------- triase pola bayar
 if pilihan == "triase":
-    hitung = T_w["rute"].value_counts()
+    hitung = triase_w["rute"].value_counts()
     st.html(ui.strip_rute({r: int(hitung.get(r, 0)) for r in ui.RUTE_AKSI}))
+    pindah = int(((T_w["rute"] == "pengingat_autodebet_REHAB") & (T_w["utama"] == ui.PERINGATAN_DINI)).sum())
     st.html('<p class="tp-ket">Rute per 31 Desember 2025, dihitung aturan dari riwayat bayar, status, '
-            'dan klaim sejak Januari 2023. Rute pengingat juga memuat peserta yang saat ini aktif '
-            'tetapi berulang kali nonaktif. Keputusan tetap di petugas.</p>')
+            'dan klaim sejak Januari 2023. Satu peserta hanya mendapat satu tindakan: '
+            f'{ui.angka(pindah)} peserta rute pengingat yang juga masuk peringatan dini ditangani di '
+            'daftar Peringatan dini. Keputusan tetap di petugas.</p>')
 
     c1, c2 = st.columns([5, 2], vertical_alignment="center")
     rute = c1.pills("Rute", ui.RUTE_AKSI, selection_mode="multi", key="f_rute",
@@ -78,7 +86,7 @@ if pilihan == "triase":
     if not rute:
         st.markdown("Pilih minimal satu rute untuk menampilkan peserta.")
     else:
-        d = T_w[T_w["rute"].isin(rute)]
+        d = triase_w[triase_w["rute"].isin(rute)]
         if hanya_nonaktif:
             d = d[d["status_akhir"] == "nonaktif"]
         d = d.sort_values(["urut_rute", "tunggakan_rp", "id_peserta"], ascending=[True, False, True])
@@ -90,12 +98,12 @@ if pilihan == "triase":
             "Tunggakan": d["tunggakan_bulan"].astype(int),
             "Wilayah": d["kode_wilayah"],
             "DTSEN": d["rentang_desil"].map(ui.DESIL),
-            "Peringatan dini": np.where(d["id_peserta"].isin(ew_ids), "Masuk daftar", ""),
+            "Juga di": np.where(d["id_peserta"].isin(ew_ids), "Peringatan dini", ""),
             "Keputusan": d["id_peserta"].map(ui.label_keputusan),
         })
         unduh = d[["id_peserta", "rute", "alasan", "status_akhir", "tunggakan_bulan", "tunggakan_rp",
                    "kode_wilayah", "rentang_desil"]].assign(
-            masuk_peringatan_dini=d["id_peserta"].isin(ew_ids),
+            juga_peringatan_dini=d["id_peserta"].isin(ew_ids), tindakan_utama=d["utama"],
             keputusan=d["id_peserta"].map(ui.label_keputusan))
         if not ui.keputusan():
             view = view.drop(columns="Keputusan")
@@ -110,43 +118,49 @@ if pilihan == "triase":
                                                        help="Bulan iuran tertunggak per 31 Des 2025"),
             "Wilayah": st.column_config.TextColumn(width=66),
             "DTSEN": st.column_config.TextColumn(width=92),
-            "Peringatan dini": st.column_config.TextColumn(
-                width=104, help="Juga masuk daftar peringatan dini pada kapasitas saat ini"),
+            "Juga di": st.column_config.TextColumn(
+                width=110, help="Juga memenuhi daftar lain, tetapi ditangani lewat rute ini"),
             "Keputusan": st.column_config.TextColumn(width=88, help="Keputusan petugas di sesi ini"),
         })
 
 # ---------------------------------------------------------------- peringatan dini
 else:
+    ke_rute = len(ew_list) - n_ew
     st.html('<p class="tp-ket">Peserta yang masih aktif pada Desember 2025, diurutkan menurut peluang '
-            'menunggak dalam 3 bulan ke depan. Yang tampil hanya sebanyak kapasitas petugas. '
-            'Angka kanonik proposal: 5% dari seluruh peserta aktif, yaitu 712 orang.</p>')
+            'menunggak dalam 3 bulan ke depan. Yang masuk hanya sebanyak kapasitas petugas; angka kanonik '
+            'proposal adalah 5% dari seluruh peserta aktif, yaitu 712 orang. Satu peserta hanya mendapat '
+            f'satu tindakan: {ui.angka(ke_rute)} di antaranya juga ada di rute verifikasi, jadi ditangani '
+            'lewat verifikasi.</p>')
     c1, c2 = st.columns([3, 4], vertical_alignment="bottom")
     c1.slider("Kapasitas petugas bulan ini", 1, 20, key="f_k", format="%d%% peserta aktif")
-    saran = ew_list["ew_saran"].value_counts()
+    saran = ew_utama["ew_saran"].value_counts()
     rincian = ", ".join(f"{ui.angka(saran[s])} {ui.kecil(ui.SARAN[s])}" for s in ui.SARAN if s in saran)
-    c2.markdown(f"**{ui.angka(len(ew_list))}** dari {ui.angka(n_ew_dinilai)} peserta aktif "
-                f"{'di wilayah terpilih ' if wilayah else ''}yang dinilai. Saran: {rincian}.")
+    c2.markdown(f"**{ui.angka(n_ew)}** ditangani di sini, dari {ui.angka(len(ew_list))} peserta "
+                f"teratas di antara {ui.angka(n_ew_dinilai)} peserta aktif"
+                f"{' di wilayah terpilih' if wilayah else ''}. Saran: {rincian}.")
 
-    d = ew_list
+    d = ew_utama
     view = pd.DataFrame({
-        "Peringkat": np.arange(1, len(d) + 1),
+        "Peringkat": d["urut"].values,
         "ID peserta": d["id_peserta"].values,
         # dibulatkan ke bawah: skor 0,9975 tampil 99%, bukan 100% yang terkesan pasti
         "Peluang menunggak": np.floor(100 * d["ew_skor"].values),
         "Alasan": d["ew_alasan"].map(ui.alasan_rapi).values,
         "Saran": d["ew_saran"].map(ui.SARAN).values,
         "Wilayah": d["kode_wilayah"].values,
-        "Rute triase": d["rute"].map(lambda r: ui.RUTE[r]["pendek"]).values,
+        "Juga di": d["rute"].map(lambda r: ui.RUTE[r]["pendek"]).values,
         "Keputusan": d["id_peserta"].map(ui.label_keputusan).values,
     })
     unduh = d[["ew_peringkat", "id_peserta", "ew_skor", "ew_alasan", "ew_saran", "kode_wilayah",
-               "rute"]].assign(peringkat_di_daftar=np.arange(1, len(d) + 1),
-                               keputusan=d["id_peserta"].map(ui.label_keputusan))
+               "rute", "urut"]].rename(columns={"urut": "peringkat_di_daftar"}).assign(
+        keputusan=d["id_peserta"].map(ui.label_keputusan))
     if not ui.keputusan():
         view = view.drop(columns="Keputusan")
     kunci = "tbl_ew_" + str(abs(hash((tuple(wilayah), st.session_state["f_k"]))))
     tabel_pilih(view, kunci, unduh, "tepat_peringatan_dini.csv", {
-        "Peringkat": st.column_config.NumberColumn(format="%d", width=76, pinned=True),
+        "Peringkat": st.column_config.NumberColumn(
+            format="%d", width=76, pinned=True,
+            help="Peringkat risiko di daftar kapasitas. Nomor yang tidak muncul ditangani lewat rute verifikasi."),
         "ID peserta": st.column_config.TextColumn(width=88, pinned=True),
         "Peluang menunggak": st.column_config.ProgressColumn(
             format="%.0f%%", min_value=0, max_value=100, width=150,
@@ -154,6 +168,7 @@ else:
         "Alasan": st.column_config.TextColumn(width=360),
         "Saran": st.column_config.TextColumn(width=200),
         "Wilayah": st.column_config.TextColumn(width=66),
-        "Rute triase": st.column_config.TextColumn(width=98, help="Rute triase pola bayar bila ada"),
+        "Juga di": st.column_config.TextColumn(
+            width=98, help="Juga memenuhi rute triase ini, tetapi ditangani lewat peringatan dini"),
         "Keputusan": st.column_config.TextColumn(width=88),
     })

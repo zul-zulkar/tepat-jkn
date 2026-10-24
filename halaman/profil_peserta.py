@@ -72,6 +72,7 @@ pasangan = ui.pasangan_reaktivasi_klaim(reakt, klaim)
 # daftar peringatan dini memakai filter dan kapasitas yang sedang dipakai di halaman Daftar kerja
 ew_list, _ = ui.daftar_ew(T, st.session_state.get("f_wilayah", []), st.session_state.get("f_k", 5))
 masuk_ew = pid in set(ew_list["id_peserta"])
+utama = ui.tindakan_utama(pd.Series([p["rute"]]), pd.Series([masuk_ew])).iloc[0]
 
 # ---------------------------------------------------------------- kepala dan fakta
 m = ui.manifest()
@@ -108,7 +109,8 @@ if p["rute"] != "tanpa_tindakan":
 pagar = ('<p class="tp-pagar">Peserta DTSEN desil 1–5 tidak pernah masuk rute ini.</p>'
          if p["rute"] == "verifikasi_pola_reaktivasi" else "")
 panel_triase = (
-    f'<section class="tp-rute" style="--c:{R["warna"]}"><p class="sumber">Rute triase</p>'
+    f'<section class="tp-rute{"" if utama == p["rute"] else " tp-sekunder"}" style="--c:{R["warna"]}">'
+    f'<p class="sumber">Rute triase</p>'
     f'<p class="nama">{ui.e(R["nama"])}</p>'
     + (f'<p class="alasan">{ui.e(p["alasan_rapi"])}</p>' if p["alasan_rapi"] else "")
     + f'<p class="arti">{ui.e(R["arti"])}</p>{angka_rute}{pagar}</section>')
@@ -124,7 +126,8 @@ if pd.notna(p.get("ew_peringkat")):
     status_daftar = (f"Masuk daftar pada kapasitas saat ini ({ui.angka(len(ew_list))} orang)."
                      if masuk_ew else "Tidak masuk daftar pada kapasitas saat ini.")
     panel_ew = (
-        f'<section class="tp-rute" style="--c:{ui.WARNA_EW}"><p class="sumber">Peringatan dini, '
+        f'<section class="tp-rute{"" if utama == ui.PERINGATAN_DINI else " tp-sekunder"}" '
+        f'style="--c:{ui.WARNA_EW}"><p class="sumber">Peringatan dini, '
         f'{ui.bulan_tahun(str(e_["bulan"]))}</p>'
         f'<p class="nama">Peluang menunggak 3 bulan: {ui.persen(e_["skor"], 1)}</p>'
         f'<p class="alasan">{ui.e(ui.alasan_rapi(e_["alasan"]))}</p>'
@@ -133,6 +136,17 @@ if pd.notna(p.get("ew_peringkat")):
         + (f'<p class="tp-pagar" style="margin-top:.7rem">Penyumbang terbesar skor</p>'
            f'<div class="tp-kontrib">{baris}</div>' if kontrib else "")
         + "</section>")
+
+if utama == "tanpa_tindakan":
+    kalimat = "Tidak ada tindakan bulan ini."
+else:
+    lain = [ui.RUTE[p["rute"]]["nama"]] if p["rute"] not in ("tanpa_tindakan", utama) else []
+    lain += ["Peringatan dini"] if masuk_ew and utama != ui.PERINGATAN_DINI else []
+    kalimat = f"Tindakan bulan ini: <b>{ui.e(ui.nama_tindakan(utama))}</b>."
+    if lain:
+        kalimat += (f" Juga memenuhi {ui.e(ui.kecil(', '.join(lain)))}, tetapi tidak dijalankan: "
+                    "satu peserta hanya mendapat satu tindakan.")
+st.html(f'<p class="tp-utama">{kalimat}</p>')
 
 if panel_ew:
     k1, k2 = st.columns(2, gap="large")
@@ -265,10 +279,10 @@ st.html('<div class="tp-legenda-lini">'
 # ---------------------------------------------------------------- keputusan dan draf pesan
 kiri, kanan = st.columns([2, 3], gap="large")
 
-if p["rute"] != "tanpa_tindakan":
+if utama == ui.PERINGATAN_DINI:
+    sasaran = ("Peringatan dini", ui.SARAN[p["ew_saran"]], ui.PERINGATAN_DINI)
+elif utama in ui.RUTE_AKSI:
     sasaran = ("Rute triase", R["nama"], p["rute"])
-elif masuk_ew:
-    sasaran = ("Saran peringatan dini", ui.SARAN[p["ew_saran"]], p["ew_saran"])
 else:
     sasaran = None
 
@@ -317,7 +331,7 @@ with kiri:
 
 with kanan:
     st.subheader("Draf pesan", anchor=False)
-    draf = pesan_template.susun(p, masuk_ew)
+    draf = pesan_template.susun(p, utama)
     if not draf:
         st.markdown("Tidak ada pesan. Peserta tidak masuk rute mana pun bulan ini.")
     else:
@@ -326,9 +340,8 @@ with kanan:
             with t:
                 st.text_area(d["judul"], d["isi"], height=300, key=f"draf_{pid}_{d['sumber']}",
                              label_visibility="collapsed")
-        st.caption("Draf dari template, bisa disunting sebelum dikirim. Lapisan AI menyusul dan tidak "
-                   "mengubah rute." + (" Peserta ini ada di dua daftar; pilih satu pesan saja."
-                                       if len(draf) > 1 else ""))
+        st.caption("Draf untuk tindakan bulan ini, dari template, bisa disunting sebelum dikirim. "
+                   "Lapisan AI menyusul dan tidak mengubah rute.")
 
 # ---------------------------------------------------------------- riwayat
 st.subheader("Riwayat", anchor=False)
