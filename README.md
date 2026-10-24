@@ -116,7 +116,7 @@ Satu peserta hanya mendapat satu tindakan, dengan urutan verifikasi > cek PBI > 
 - Aplikasi hanya membaca `app_data/`. `evaluasi_label.parquet` tidak dibaca di kedua halaman ini.
 - Sorotan "klaim besar ≤ 90 hari setelah aktif kembali" di linimasa memakai konstanta yang sama dengan `cek_sinyal.py`, dan cocok dengan `n_reakt_terkait_klaim` per peserta.
 - Keputusan petugas tersimpan selama sesi dan tidak mengubah rute. Draf pesan berasal dari template (`pesan_template.py`), yang nanti menjadi jalur cadangan lapisan AI.
-- Tema dan font ada di `.streamlit/config.toml`. Huruf memakai Plus Jakarta Sans dan angka memakai IBM Plex Mono, keduanya berlisensi OFL dan disimpan di `static/fonts/`.
+- Tema dan font ada di `.streamlit/config.toml`. Huruf memakai Plus Jakarta Sans dan angka memakai JetBrains Mono, sama dengan deck proposal; keduanya berlisensi OFL dan disimpan di `static/fonts/`. Logo ada di `static/logo/`, ikon dari Lucide (lisensi ISC) di `ikon.py`.
 
 ## Isi folder
 

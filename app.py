@@ -1,14 +1,15 @@
 """Aplikasi TEPAT (Streamlit). Jalankan:  streamlit run app.py
 
 Hanya membaca app_data/ (dibuat siapkan_app.py). Tidak melatih model saat dibuka.
-Tema dan font: .streamlit/config.toml. Bagian bersama: tepat_ui.py.
+Tema dan font: .streamlit/config.toml. Bagian bersama: tepat_ui.py. Logo: static/logo/.
 """
 import streamlit as st
 
 import tepat_ui as ui
 
-st.set_page_config(page_title="TEPAT", page_icon=":material/fact_check:", layout="wide",
+st.set_page_config(page_title="TEPAT", page_icon="static/logo/tepat-mark.svg", layout="wide",
                    initial_sidebar_state="collapsed")
+st.logo("static/logo/tepat-logo.svg", size="large")
 ui.pasang_gaya()
 
 halaman = st.navigation(

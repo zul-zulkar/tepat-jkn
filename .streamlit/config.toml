@@ -1,9 +1,9 @@
 # Tema aplikasi TEPAT. Satu-satunya tempat warna dan font didefinisikan.
-# Warna rute dan status ada di tepat_ui.py (WARNA_RUTE, WARNA_STATUS) dan memakai nilai yang sama.
+# Warna rute dan status ada di tepat_ui.py (RUTE, WARNA) dan memakai palet deck yang sama.
 #
 # Font: satu keluarga "Tepat" yang dirakit dari dua font.
 #   huruf  : Plus Jakarta Sans (sama dengan deck proposal dan flowchart)
-#   angka  : IBM Plex Mono, hanya untuk karakter 0-9 (unicodeRange U+0030-0039)
+#   angka  : JetBrains Mono (sama dengan deck), hanya untuk karakter 0-9 (unicodeRange U+0030-0039)
 # Karena dipisah per rentang karakter, angka di tabel, metrik, grafik, dan kalimat
 # otomatis memakai font angka tanpa CSS per elemen. Berkas font ada di static/fonts (OFL).
 
@@ -18,34 +18,35 @@ toolbarMode = "minimal"
 
 [theme]
 base = "light"
-primaryColor = "#0B6E68"
-backgroundColor = "#FFFFFF"
-secondaryBackgroundColor = "#F2F5F7"
-textColor = "#17263A"
-borderColor = "#D9E0E7"
-dataframeBorderColor = "#E4E9EE"
-dataframeHeaderBackgroundColor = "#F2F5F7"
-dataframeHeaderTextColor = "#4A5A6C"
-linkColor = "#0B6E68"
+# palet deck proposal TEPAT (slide isi: latar #F6F5F0, tinta #12302A, aksen #17704D)
+primaryColor = "#17704D"
+backgroundColor = "#F6F5F0"
+secondaryBackgroundColor = "#ECEBE4"
+textColor = "#12302A"
+borderColor = "#DCDFD7"
+dataframeBorderColor = "#E3E5DE"
+dataframeHeaderBackgroundColor = "#E6E4DC"
+dataframeHeaderTextColor = "#12302A"
+linkColor = "#17704D"
 linkUnderline = false
 showWidgetBorder = true
-baseRadius = "6px"
-buttonRadius = "6px"
+baseRadius = "10px"
+buttonRadius = "999px"
 baseFontSize = 15
 font = "Tepat, sans-serif"
 headingFont = "Tepat, sans-serif"
 codeFont = "Tepat Mono, monospace"
-headingFontSizes = ["1.75rem", "1.2rem", "1.02rem", "0.95rem"]
-headingFontWeights = [700, 650, 600, 600]
+headingFontSizes = ["1.85rem", "1.15rem", "1rem", "0.95rem"]
+headingFontWeights = [800, 700, 650, 600]
 metricValueFontSize = "1.6rem"
-metricValueFontWeight = 500
-greenColor = "#3D7D44"
-orangeColor = "#B4650E"
-blueColor = "#2C5C9E"
-redColor = "#B23A2E"
-violetColor = "#6B4C9A"
-grayColor = "#6A7785"
-chartCategoricalColors = ["#0B6E68", "#B4650E", "#2C5C9E", "#3D7D44", "#6B4C9A", "#6A7785", "#B23A2E", "#A9B3BE"]
+metricValueFontWeight = 600
+greenColor = "#17704D"
+orangeColor = "#9A5F0E"
+blueColor = "#2F5D8C"
+redColor = "#9A3F12"
+violetColor = "#7A4A9E"
+grayColor = "#5E6B66"
+chartCategoricalColors = ["#17704D", "#9A5F0E", "#2F5D8C", "#9A3F12", "#7A4A9E", "#5E6B66", "#1E8A5F", "#8F9993"]
 
 # ---- huruf: Plus Jakarta Sans, semua karakter kecuali 0-9 ----
 [[theme.fontFaces]]
@@ -78,44 +79,44 @@ url = "app/static/fonts/plus-jakarta-sans-latin-800-normal.woff2"
 weight = 800
 unicodeRange = "U+0000-002F, U+003A-FFFF"
 
-# ---- angka: IBM Plex Mono, hanya 0-9. Bobot 800 memakai berkas 700 (Plex Mono tidak punya 800). ----
+# ---- angka: JetBrains Mono, hanya 0-9. Bobot 800 memakai berkas 700 (JetBrains Mono di sini sampai 700). ----
 [[theme.fontFaces]]
 family = "Tepat"
-url = "app/static/fonts/ibm-plex-mono-latin-400-normal.woff2"
+url = "app/static/fonts/jetbrains-mono-latin-400-normal.woff2"
 weight = 400
 unicodeRange = "U+0030-0039"
 
 [[theme.fontFaces]]
 family = "Tepat"
-url = "app/static/fonts/ibm-plex-mono-latin-500-normal.woff2"
+url = "app/static/fonts/jetbrains-mono-latin-500-normal.woff2"
 weight = 500
 unicodeRange = "U+0030-0039"
 
 [[theme.fontFaces]]
 family = "Tepat"
-url = "app/static/fonts/ibm-plex-mono-latin-600-normal.woff2"
+url = "app/static/fonts/jetbrains-mono-latin-600-normal.woff2"
 weight = 600
 unicodeRange = "U+0030-0039"
 
 [[theme.fontFaces]]
 family = "Tepat"
-url = "app/static/fonts/ibm-plex-mono-latin-700-normal.woff2"
+url = "app/static/fonts/jetbrains-mono-latin-700-normal.woff2"
 weight = 700
 unicodeRange = "U+0030-0039"
 
 [[theme.fontFaces]]
 family = "Tepat"
-url = "app/static/fonts/ibm-plex-mono-latin-700-normal.woff2"
+url = "app/static/fonts/jetbrains-mono-latin-700-normal.woff2"
 weight = 800
 unicodeRange = "U+0030-0039"
 
 # ---- kode / ID mentah ----
 [[theme.fontFaces]]
 family = "Tepat Mono"
-url = "app/static/fonts/ibm-plex-mono-latin-400-normal.woff2"
+url = "app/static/fonts/jetbrains-mono-latin-400-normal.woff2"
 weight = 400
 
 [[theme.fontFaces]]
 family = "Tepat Mono"
-url = "app/static/fonts/ibm-plex-mono-latin-500-normal.woff2"
+url = "app/static/fonts/jetbrains-mono-latin-500-normal.woff2"
 weight = 500

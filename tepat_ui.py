@@ -15,6 +15,8 @@ import pandas as pd
 import pyarrow as pa
 import streamlit as st
 
+from ikon import ikon
+
 APP_DATA = Path(__file__).parent / "app_data"
 
 
@@ -34,29 +36,34 @@ HALAMAN_DAFTAR = "halaman/daftar_kerja.py"
 HALAMAN_PROFIL = "halaman/profil_peserta.py"
 
 # ---------------------------------------------------------------- label dan warna
-# Warna sama dengan .streamlit/config.toml.
-WARNA = dict(tinta="#17263A", tinta2="#4A5A6C", tinta3="#7A8897", garis="#D9E0E7",
-             permukaan="#F2F5F7", utama="#0B6E68")
+# Palet deck proposal TEPAT; sama dengan .streamlit/config.toml.
+WARNA = dict(tinta="#12302A", tinta2="#3D4B46", tinta3="#5E6B66", garis="#DCDFD7", permukaan="#ECEBE4",
+             kartu="#FCFCF9", utama="#17704D", utama_lembut="#E1EEE6", mint="#9FD8BC")
 
-RUTE = {  # urutan = urutan tampil
+RUTE = {  # urutan = urutan tampil. ikon = Lucide (HTML), mi = Material Symbols (widget Streamlit)
     "verifikasi_pola_reaktivasi": dict(
-        nama="Verifikasi pola reaktivasi", pendek="Verifikasi", warna="#B4650E",
+        nama="Verifikasi pola reaktivasi", pendek="Verifikasi", warna="#9A3F12", lembut="#F6E4D6",
+        ikon="search-check", mi=":material/fact_check:",
         arti="Aktif kembali tak lama sebelum klaim besar, berulang. Petugas memeriksa riwayatnya "
              "sebelum menindaklanjuti. Rute ini bukan tuduhan."),
     "rujuk_cek_kelayakan_PBI": dict(
-        nama="Rujuk cek kelayakan PBI", pendek="Cek PBI", warna="#2C5C9E",
+        nama="Rujuk cek kelayakan PBI", pendek="Cek PBI", warna="#2F5D8C", lembut="#DCE6F1",
+        ikon="hand-heart", mi=":material/volunteer_activism:",
         arti="Menunggak dan tercatat di DTSEN desil 1–5. Peserta dirujuk untuk dicek "
              "kelayakannya sebagai penerima bantuan iuran."),
     "pengingat_autodebet_REHAB": dict(
-        nama="Pengingat, autodebet, REHAB", pendek="Pengingat", warna="#3D7D44",
+        nama="Pengingat, autodebet, REHAB", pendek="Pengingat", warna="#17704D", lembut="#E1EEE6",
+        ikon="bell-ring", mi=":material/notifications_active:",
         arti="Sering nonaktif lalu melunasi sendiri, dan jarang terkait klaim. Cukup pengingat, "
              "tawaran autodebet, atau cicilan REHAB."),
     "nonaktif_lama_tanpa_sinyal": dict(
-        nama="Nonaktif lama", pendek="Nonaktif lama", warna="#6A7785",
+        nama="Nonaktif lama", pendek="Nonaktif lama", warna="#5E6B66", lembut="#E6E4DC",
+        ikon="hourglass", mi=":material/hourglass_empty:",
         arti="Menunggak lama tanpa pernah aktif kembali dan tanpa sinyal lain. "
              "Kemampuan bayarnya perlu diverifikasi."),
     "tanpa_tindakan": dict(
-        nama="Tanpa tindakan", pendek="", warna="#A9B3BE",
+        nama="Tanpa tindakan", pendek="", warna="#8F9993", lembut="#ECEBE4",
+        ikon="circle-check-big", mi=":material/check_circle:",
         arti="Tidak ada pola pembayaran yang memerlukan tindakan."),
 }
 RUTE_AKSI = [r for r in RUTE if r != "tanpa_tindakan"]
@@ -95,7 +102,7 @@ SARAN = {
     "cek_kelayakan_PBI": "Cek kelayakan PBI",
     "pengingat_saldo_autodebet": "Pengingat saldo autodebet",
 }
-WARNA_EW = "#6B4C9A"
+WARNA_EW, EW_LEMBUT, EW_IKON, EW_MI = "#9A5F0E", "#F5E6C8", "trending-up", ":material/trending_up:"
 
 STATUS = {"aktif": "Aktif", "nonaktif": "Nonaktif", "masa_tunggu": "Masa tunggu"}
 DESIL = {"1-5": "Desil 1–5", "6-10": "Desil 6–10", "tidak_padan": "Tidak padan"}
@@ -278,61 +285,75 @@ def normalkan_id(s: str) -> str:
 # ---------------------------------------------------------------- tampilan
 CSS = """
 <style>
-[data-testid="stMainBlockContainer"] { max-width: 1240px; padding-top: 4.6rem; padding-bottom: 4rem; }
-h1, h2, h3 { letter-spacing: -0.01em; }
+[data-testid="stMainBlockContainer"] { max-width: 1240px; padding-top: 4.4rem; padding-bottom: 4rem; }
+[data-testid="stHeader"] { background: #F6F5F0; border-bottom: 1px solid #DCDFD7; }
+h1, h2, h3 { letter-spacing: -0.015em; }
 p, li { font-feature-settings: "tnum" 1; }
+.tp-ikon { flex: none; vertical-align: -3px; }
 
-.tp-kepala { margin: 0 0 1.4rem; }
-.tp-kepala h1 { font-size: 1.75rem; font-weight: 700; margin: 0 0 .35rem; padding: 0; line-height: 1.2; }
-.tp-kepala p { color: #4A5A6C; margin: 0; max-width: 68ch; line-height: 1.5; }
-.tp-cap { color: #7A8897; font-size: .82rem; margin-top: .45rem; }
-.tp-cap b { color: #4A5A6C; font-weight: 600; }
+.tp-kepala { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem .7rem; margin: .1rem 0 1.1rem; }
+.tp-kepala h1 { font-size: 1.85rem; font-weight: 800; color: #12302A; margin: 0; padding: 0; line-height: 1.15; }
+.tp-chip { display: inline-flex; align-items: center; gap: .35rem; font-size: .78rem; font-weight: 600;
+           padding: .28rem .7rem; border-radius: 999px; background: #ECEBE4; color: #3D4B46; white-space: nowrap; }
 
-.tp-strip { display: flex; height: 8px; border-radius: 4px; overflow: hidden; background: #E4E9EE; margin: .2rem 0 .7rem; }
-.tp-strip span { display: block; height: 100%; }
-.tp-legenda { display: flex; flex-wrap: wrap; gap: .35rem 1.4rem; margin: 0 0 .9rem; font-size: .88rem; color: #4A5A6C; }
-.tp-legenda span { display: inline-flex; align-items: baseline; gap: .45rem; }
-.tp-legenda i { width: 9px; height: 9px; border-radius: 2px; display: inline-block; transform: translateY(1px); }
-.tp-legenda b { color: #17263A; font-weight: 600; }
+.tp-info { display: inline-block; position: relative; vertical-align: middle; }
+.tp-info > summary { list-style: none; cursor: pointer; display: inline-grid; place-items: center;
+                     width: 28px; height: 28px; border-radius: 50%; color: #5E6B66; }
+.tp-info > summary::-webkit-details-marker { display: none; }
+.tp-info > summary:hover, .tp-info[open] > summary { background: #E1EEE6; color: #17704D; }
+.tp-info > summary:focus-visible { outline: 2px solid #17704D; outline-offset: 2px; }
+.tp-info > div { position: absolute; z-index: 60; top: 34px; left: 0; width: min(380px, 78vw);
+                 padding: .75rem .9rem; background: #FCFCF9; border: 1px solid #DCDFD7; border-radius: 12px;
+                 box-shadow: 0 8px 24px rgba(18, 48, 42, .12); font-size: .86rem; font-weight: 400;
+                 line-height: 1.55; color: #3D4B46; text-align: left; white-space: normal; }
+.tp-info.kanan > div { left: auto; right: 0; }
 
-.tp-ket { color: #4A5A6C; font-size: .9rem; margin: 0 0 .8rem; max-width: 80ch; line-height: 1.5; }
+.tp-kartu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(185px, 1fr)); gap: .7rem; margin: .2rem 0 1rem; }
+.tp-kartu { background: #FCFCF9; border: 1px solid #DCDFD7; border-radius: 14px; padding: .8rem .95rem;
+            display: flex; gap: .75rem; align-items: center; transition: opacity .15s; }
+.tp-kartu.mati { opacity: .4; }
+.tp-bulat { width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center;
+            background: var(--l); color: var(--c); flex: none; }
+.tp-kartu .n { font-size: 1.4rem; font-weight: 700; color: #12302A; line-height: 1.1; }
+.tp-kartu .l { font-size: .8rem; color: #5E6B66; margin-top: .12rem; line-height: 1.3; }
 
-.tp-id { font-size: 2rem; font-weight: 600; letter-spacing: -0.01em; line-height: 1.1; margin: .2rem 0 .3rem; }
-.tp-ringkas { color: #4A5A6C; margin: 0 0 1.1rem; }
-.tp-fakta { padding: 0; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 0; margin: 0 0 1.6rem;
-            border-top: 1px solid #D9E0E7; border-bottom: 1px solid #D9E0E7; }
-.tp-fakta div { padding: .75rem .9rem .8rem 0; }
-.tp-fakta div + div { padding-left: .9rem; border-left: 1px solid #E4E9EE; }
-.tp-fakta dt { font-size: .78rem; color: #7A8897; margin: 0 0 .2rem; }
-.tp-fakta dd { margin: 0; font-size: 1rem; font-weight: 600; color: #17263A; }
-.tp-fakta dd small { display: block; font-weight: 400; color: #4A5A6C; font-size: .82rem; margin-top: .1rem; }
-@media (max-width: 900px) {
-  .tp-fakta { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .tp-fakta div, .tp-fakta div + div { padding: .65rem .6rem; border-left: 0; border-top: 1px solid #E4E9EE; }
-}
+.tp-id { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem .7rem; margin: .3rem 0 1rem; }
+.tp-id h1 { font-size: 2.1rem; font-weight: 700; margin: 0; padding: 0; color: #12302A; line-height: 1.1; }
 
-.tp-rute { border-left: 3px solid var(--c); padding: .15rem 0 .2rem 1rem; margin: 0 0 1rem; }
-.tp-rute .sumber { font-size: .8rem; color: #7A8897; margin: 0 0 .15rem; }
-.tp-rute .nama { font-size: 1.15rem; font-weight: 650; color: var(--c); margin: 0 0 .3rem; }
-.tp-rute .alasan { font-size: 1rem; color: #17263A; margin: 0 0 .35rem; line-height: 1.45; }
-.tp-rute .arti { font-size: .88rem; color: #4A5A6C; margin: 0; line-height: 1.5; max-width: 76ch; }
+.tp-fakta { padding: 0; margin: 0 0 1.2rem; display: grid; gap: .6rem; grid-template-columns: repeat(6, minmax(0, 1fr)); }
+.tp-fakta > div { background: #FCFCF9; border: 1px solid #DCDFD7; border-radius: 12px; padding: .7rem .8rem; }
+.tp-fakta .dt { display: flex; align-items: center; gap: .35rem; font-size: .76rem; color: #5E6B66; margin: 0 0 .25rem; }
+.tp-fakta .dd { margin: 0; font-size: 1.02rem; font-weight: 700; color: #12302A; }
+.tp-fakta .dd small { display: block; font-weight: 400; color: #5E6B66; font-size: .78rem; margin-top: .1rem; }
+@media (max-width: 900px) { .tp-fakta { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 
-.tp-angka { display: flex; flex-wrap: wrap; gap: .3rem 1.6rem; margin: .5rem 0 0; font-size: .88rem; color: #4A5A6C; }
-.tp-angka b { color: #17263A; font-weight: 600; }
+.tp-tindakan { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem .8rem; padding: .75rem 1rem;
+               border-radius: 14px; background: var(--l); margin: 0 0 1rem; color: #12302A; }
+.tp-tindakan .tp-bulat { background: #FCFCF9; }
+.tp-tindakan .lbl { font-size: .78rem; color: #3D4B46; }
+.tp-tindakan .isi { font-size: 1.05rem; font-weight: 700; color: var(--c); }
+.tp-tindakan .lain { font-size: .8rem; color: #3D4B46; }
 
-.tp-kontrib { margin: .6rem 0 0; display: grid; gap: .35rem; max-width: 560px; }
-.tp-kontrib div { display: grid; grid-template-columns: 1fr 120px; gap: .8rem; align-items: center; font-size: .86rem; color: #4A5A6C; }
-.tp-kontrib s { display: block; height: 6px; border-radius: 3px; background: #6B4C9A; text-decoration: none; }
+.tp-panel { background: #FCFCF9; border: 1px solid #DCDFD7; border-radius: 14px; padding: .95rem 1.05rem; margin: 0 0 1rem; }
+.tp-panel.tp-sekunder { opacity: .55; }
+.tp-panel .atas { display: flex; align-items: center; gap: .7rem; margin: 0 0 .55rem; }
+.tp-panel .sumber { font-size: .76rem; color: #5E6B66; margin: 0; }
+.tp-panel .nama { font-size: 1.08rem; font-weight: 700; color: var(--c); margin: 0; line-height: 1.25; }
+.tp-panel .atas .tp-info { margin-left: auto; }
+.tp-panel .alasan { font-size: .95rem; color: #12302A; margin: 0 0 .55rem; line-height: 1.45; }
+.tp-angka { display: flex; flex-wrap: wrap; gap: .4rem; margin: 0; }
+.tp-catatan { display: flex; gap: .5rem; align-items: flex-start; font-size: .85rem; color: #8A3B14;
+              background: #F6E4D6; border-radius: 10px; padding: .55rem .7rem; margin: .65rem 0 0; line-height: 1.45; }
 
-.tp-legenda-lini { display: flex; flex-wrap: wrap; gap: .3rem 1.3rem; font-size: .82rem; color: #4A5A6C; margin: .1rem 0 1.4rem; }
-.tp-legenda-lini span { display: inline-flex; align-items: center; gap: .4rem; }
+.tp-kontrib { margin: .65rem 0 0; display: grid; gap: .4rem; }
+.tp-kontrib div { display: grid; grid-template-columns: 1fr 110px; gap: .8rem; align-items: center; font-size: .82rem; color: #3D4B46; }
+.tp-kontrib s { display: block; height: 6px; border-radius: 3px; background: #9A5F0E; text-decoration: none; }
+
+.tp-judul { display: flex; align-items: center; gap: .5rem; margin: 1.2rem 0 .4rem; }
+.tp-judul h3 { font-size: 1.1rem; font-weight: 700; margin: 0; padding: 0; color: #12302A; }
+.tp-legenda-lini { display: flex; flex-wrap: wrap; gap: .3rem 1.1rem; font-size: .78rem; color: #5E6B66; margin: .1rem 0 1.2rem; }
+.tp-legenda-lini span { display: inline-flex; align-items: center; gap: .35rem; }
 .tp-legenda-lini i { display: inline-block; }
-
-.tp-pagar { font-size: .82rem; color: #7A8897; margin: .4rem 0 0; }
-.tp-utama { font-size: 1rem; color: #17263A; margin: 0 0 1rem; max-width: 80ch; line-height: 1.5; }
-.tp-utama b { font-weight: 650; }
-.tp-sekunder { opacity: .55; }
-.tp-catatan { font-size: .88rem; color: #8F4F0A; margin: .5rem 0 0; line-height: 1.5; max-width: 76ch; }
 </style>
 """
 
@@ -341,19 +362,43 @@ def pasang_gaya() -> None:
     st.html(CSS)
 
 
-def kepala(judul: str, ket: str) -> None:
+def info(teks: str, kanan: bool = False, label: str = "Penjelasan") -> str:
+    """Ikon info yang membuka/menutup penjelasan (HTML details, tanpa JavaScript). teks sudah aman/escaped."""
+    return (f'<details class="tp-info{" kanan" if kanan else ""}"><summary aria-label="{e(label)}" '
+            f'title="{e(label)}">{ikon("info", 18, "#5E6B66")}</summary><div>{teks}</div></details>')
+
+
+def chip(teks: str, nama_ikon: str | None = None, warna: str | None = None, latar: str | None = None) -> str:
+    gaya = (f' style="{f"color:{warna};" if warna else ""}{f"background:{latar};" if latar else ""}"'
+            if (warna or latar) else "")
+    return (f'<span class="tp-chip"{gaya}>{ikon(nama_ikon, 14, warna or "#3D4B46") if nama_ikon else ""}'
+            f'{e(teks)}</span>')
+
+
+def chip_data() -> str:
     m = manifest()
-    st.html(
-        f'<div class="tp-kepala"><h1>{e(judul)}</h1><p>{e(ket)}</p>'
-        f'<div class="tp-cap"><b>Data sintetis.</b> Triase per {tgl(m["triase_per_tanggal"])}, '
-        f'risiko menunggak dihitung {BULAN_PANJANG[int(m["ew_bulan_operasional"][5:]) - 1]} '
-        f'{m["ew_bulan_operasional"][:4]}.</div></div>')
+    return (chip("Data sintetis", "flask-conical")
+            + info(f'Data buatan untuk prototipe, bukan data peserta asli. Triase per '
+                   f'{tgl(m["triase_per_tanggal"])}; risiko menunggak dihitung untuk '
+                   f'{BULAN_PANJANG[int(m["ew_bulan_operasional"][5:]) - 1]} {m["ew_bulan_operasional"][:4]}.',
+                   kanan=True, label="Tentang data"))
 
 
-def strip_rute(hitung: dict[str, int]) -> str:
-    total = sum(hitung.values()) or 1
-    seg = "".join(f'<span style="width:{100 * n / total:.3f}%;background:{RUTE[r]["warna"]}" '
-                  f'title="{e(RUTE[r]["nama"])}"></span>' for r, n in hitung.items() if n)
-    leg = "".join(f'<span><i style="background:{RUTE[r]["warna"]}"></i>{e(RUTE[r]["nama"])} '
-                  f'<b>{angka(n)}</b></span>' for r, n in hitung.items())
-    return f'<div class="tp-strip" aria-hidden="true">{seg}</div><div class="tp-legenda">{leg}</div>'
+def kepala(judul: str, penjelasan: str) -> None:
+    st.html(f'<div class="tp-kepala"><h1>{e(judul)}</h1>{info(e(penjelasan))}'
+            f'<span style="margin-left:auto;display:inline-flex;align-items:center;gap:.2rem">{chip_data()}</span></div>')
+
+
+def kartu(item: list[dict]) -> str:
+    """item: dict(ikon, c, l, n, label, mati=False)."""
+    isi = "".join(
+        f'<div class="tp-kartu{" mati" if k.get("mati") else ""}" style="--c:{k["c"]};--l:{k["l"]}">'
+        f'<div class="tp-bulat">{ikon(k["ikon"], 20, k["c"])}</div>'
+        f'<div><div class="n">{e(k["n"])}</div><div class="l">{e(k["label"])}</div></div></div>'
+        for k in item)
+    return f'<div class="tp-kartu-grid">{isi}</div>'
+
+
+def judul_bagian(teks: str, nama_ikon: str, penjelasan: str | None = None) -> None:
+    st.html(f'<div class="tp-judul">{ikon(nama_ikon, 20, WARNA["utama"])}<h3>{e(teks)}</h3>'
+            + (info(e(penjelasan)) if penjelasan else "") + "</div>")

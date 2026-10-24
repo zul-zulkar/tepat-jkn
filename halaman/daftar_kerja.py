@@ -1,4 +1,4 @@
-"""Halaman Daftar kerja: dua daftar (triase pola bayar, peringatan dini), filter wilayah, rute, kapasitas k."""
+"""Halaman Daftar kerja: dua daftar (triase pola bayar, berisiko menunggak), filter wilayah, rute, kapasitas k."""
 import numpy as np
 import pandas as pd
 import streamlit as st
@@ -13,12 +13,13 @@ for k, v in FILTER.items():
 T = ui.tabel_peserta()
 
 ui.kepala("Daftar kerja",
-          "Siapa yang ditangani bulan ini, lewat jalur apa, dan kenapa. "
-          "Pilih satu baris untuk membuka profil peserta.")
+          "Siapa yang ditangani bulan ini, lewat jalur apa, dan kenapa. Satu peserta hanya mendapat satu "
+          "tindakan. Pilih satu baris di tabel untuk membuka profilnya.")
 
-# ---------------------------------------------------------------- filter bersama
-wilayah = st.multiselect("Wilayah", sorted(T["kode_wilayah"].unique()), key="f_wilayah",
-                         placeholder="Semua wilayah")
+# ---------------------------------------------------------------- filter bersama dan hitungan
+c1, c2 = st.columns([2, 3], vertical_alignment="bottom")
+wilayah = c1.multiselect(":material/location_on: Wilayah", sorted(T["kode_wilayah"].unique()),
+                         key="f_wilayah", placeholder="Semua wilayah")
 T_w = T[T["kode_wilayah"].isin(wilayah)] if wilayah else T
 
 ew_list, n_ew_dinilai = ui.daftar_ew(T, wilayah, st.session_state["f_k"])
@@ -31,10 +32,10 @@ triase_w = T_w[T_w["utama"].isin(ui.RUTE_AKSI)]
 ew_utama = ew_list[ew_list["id_peserta"].isin(T_w.loc[T_w["utama"] == ui.PERINGATAN_DINI, "id_peserta"])]
 n_triase, n_ew = len(triase_w), len(ew_utama)
 
-pilihan = st.segmented_control(
+pilihan = c2.segmented_control(
     "Daftar", ["triase", "ew"], key="f_daftar", label_visibility="collapsed",
-    format_func=lambda x: (f"Triase pola bayar  {ui.angka(n_triase)}" if x == "triase"
-                           else f"{ui.EW_NAMA}  {ui.angka(n_ew)}"))
+    format_func=lambda x: (f":material/route: Triase pola bayar  {ui.angka(n_triase)}" if x == "triase"
+                           else f"{ui.EW_MI} {ui.EW_NAMA}  {ui.angka(n_ew)}"))
 pilihan = pilihan or "triase"
 
 
@@ -52,16 +53,14 @@ def tabel_pilih(view: pd.DataFrame, kunci: str, unduh: pd.DataFrame, nama_file: 
         if i < len(view):
             pid = view.iloc[i]["ID peserta"]
 
-    a, b, c = st.columns([6, 1.6, 1.4], vertical_alignment="center")
-    if pid:
-        a.markdown(f"{ui.angka(len(view))} peserta. Terpilih **{pid}**.")
-    else:
-        a.markdown(f"{ui.angka(len(view))} peserta. Pilih satu baris untuk membuka profilnya.")
-    if b.button("Buka profil", type="primary", disabled=pid is None, width="stretch",
-                key=f"{kunci}_buka"):
+    a, b, c = st.columns([6, 1.7, 1.5], vertical_alignment="center")
+    a.markdown(f"**{ui.angka(len(view))}** peserta" + (f", terpilih **{pid}**" if pid else ""))
+    if b.button("Buka profil", icon=":material/open_in_new:", type="primary", disabled=pid is None,
+                width="stretch", key=f"{kunci}_buka", help=None if pid else "Pilih satu baris dulu"):
         st.switch_page(ui.HALAMAN_PROFIL, query_params={"id": pid})
-    c.download_button("Unduh CSV", unduh.to_csv(index=False).encode("utf-8-sig"), nama_file,
-                      "text/csv", on_click="ignore", width="stretch", key=f"{kunci}_unduh")
+    c.download_button("CSV", unduh.to_csv(index=False).encode("utf-8-sig"), nama_file, "text/csv",
+                      icon=":material/download:", on_click="ignore", width="stretch",
+                      key=f"{kunci}_unduh", help="Unduh daftar ini")
     st.html('<div style="height:.9rem" aria-hidden="true"></div>')  # ruang untuk toolbar tabel
     st.dataframe(view, key=kunci, on_select="rerun", selection_mode="single-row", hide_index=True,
                  height=min(600, 38 + 35 * max(len(view), 1)), column_config=column_config)
@@ -70,21 +69,24 @@ def tabel_pilih(view: pd.DataFrame, kunci: str, unduh: pd.DataFrame, nama_file: 
 # ---------------------------------------------------------------- triase pola bayar
 if pilihan == "triase":
     hitung = triase_w["rute"].value_counts()
-    st.html(ui.strip_rute({r: int(hitung.get(r, 0)) for r in ui.RUTE_AKSI}))
-    pindah = int(((T_w["rute"] == "pengingat_autodebet_REHAB") & (T_w["utama"] == ui.PERINGATAN_DINI)).sum())
-    st.html('<p class="tp-ket">Rute per 31 Desember 2025, dihitung aturan dari riwayat bayar, status, '
-            'dan klaim sejak Januari 2023. Satu peserta hanya mendapat satu tindakan: '
-            f'{ui.angka(pindah)} peserta rute pengingat yang juga berisiko menunggak ditangani di '
-            f'daftar {ui.EW_NAMA}. Keputusan tetap di petugas.</p>')
+    terpilih = st.session_state.get("f_rute") or []
+    st.html(ui.kartu([dict(ikon=ui.RUTE[r]["ikon"], c=ui.RUTE[r]["warna"], l=ui.RUTE[r]["lembut"],
+                           n=ui.angka(int(hitung.get(r, 0))), label=ui.RUTE[r]["nama"], mati=r not in terpilih)
+                      for r in ui.RUTE_AKSI]))
 
-    c1, c2 = st.columns([5, 2], vertical_alignment="center")
+    pindah = int(((T_w["rute"] == "pengingat_autodebet_REHAB") & (T_w["utama"] == ui.PERINGATAN_DINI)).sum())
+    c1, c2, c3 = st.columns([6, 2.4, 0.4], vertical_alignment="center")
     rute = c1.pills("Rute", ui.RUTE_AKSI, selection_mode="multi", key="f_rute",
-                    format_func=lambda r: ui.RUTE[r]["nama"], label_visibility="collapsed")
-    hanya_nonaktif = c2.toggle("Hanya yang sedang nonaktif", key="f_nonaktif",
-                               help="Status per 31 Desember 2025.")
+                    format_func=lambda r: f'{ui.RUTE[r]["mi"]} {ui.RUTE[r]["pendek"]}',
+                    label_visibility="collapsed")
+    hanya_nonaktif = c2.toggle("Hanya yang nonaktif", key="f_nonaktif", help="Status per 31 Desember 2025")
+    c3.html(ui.info(
+        "Rute dihitung aturan dari riwayat bayar, status, dan klaim sejak Januari 2023, posisi "
+        f"31 Desember 2025. {ui.angka(pindah)} peserta rute pengingat yang juga berisiko menunggak "
+        f"ditangani di daftar {ui.EW_NAMA}. Keputusan tetap di petugas.", kanan=True))
 
     if not rute:
-        st.markdown("Pilih minimal satu rute untuk menampilkan peserta.")
+        st.markdown("Pilih minimal satu rute.")
     else:
         d = triase_w[triase_w["rute"].isin(rute)]
         if hanya_nonaktif:
@@ -123,22 +125,26 @@ if pilihan == "triase":
             "Keputusan": st.column_config.TextColumn(width=88, help="Keputusan petugas di sesi ini"),
         })
 
-# ---------------------------------------------------------------- peringatan dini
+# ---------------------------------------------------------------- berisiko menunggak
 else:
     ke_rute = len(ew_list) - n_ew
-    st.html('<p class="tp-ket">Peserta yang masih aktif pada Desember 2025 dan berisiko menunggak dalam '
-            '3 bulan ke depan menurut model peringatan dini, diurutkan dari peluang tertinggi. '
-            'Yang masuk hanya sebanyak kapasitas petugas; angka kanonik '
-            'proposal adalah 5% dari seluruh peserta aktif, yaitu 712 orang. Satu peserta hanya mendapat '
-            f'satu tindakan: {ui.angka(ke_rute)} di antaranya juga ada di rute verifikasi, jadi ditangani '
-            'lewat verifikasi.</p>')
-    c1, c2 = st.columns([3, 4], vertical_alignment="bottom")
-    c1.slider("Kapasitas petugas bulan ini", 1, 20, key="f_k", format="%d%% peserta aktif")
     saran = ew_utama["ew_saran"].value_counts()
-    rincian = ", ".join(f"{ui.angka(saran[s])} {ui.kecil(ui.SARAN[s])}" for s in ui.SARAN if s in saran)
-    c2.markdown(f"**{ui.angka(n_ew)}** ditangani di sini, dari {ui.angka(len(ew_list))} peserta "
-                f"teratas di antara {ui.angka(n_ew_dinilai)} peserta aktif"
-                f"{' di wilayah terpilih' if wilayah else ''}. Saran: {rincian}.")
+    ikon_saran = {"pengingat_H-5_dan_tawaran_autodebet": ("bell-ring", "Pengingat H-5 + autodebet"),
+                  "cek_kelayakan_PBI": ("hand-heart", "Cek kelayakan PBI"),
+                  "pengingat_saldo_autodebet": ("wallet", "Pengingat saldo autodebet")}
+    st.html(ui.kartu(
+        [dict(ikon=ui.EW_IKON, c=ui.WARNA_EW, l=ui.EW_LEMBUT, n=ui.angka(n_ew),
+              label=f"dari {ui.angka(len(ew_list))} teratas")]
+        + [dict(ikon=ikon_saran[s][0], c=ui.WARNA["tinta2"], l=ui.WARNA["permukaan"],
+                n=ui.angka(int(saran.get(s, 0))), label=ikon_saran[s][1]) for s in ui.SARAN]))
+
+    c1, c2 = st.columns([3, 5], vertical_alignment="center")
+    c1.slider(":material/groups: Kapasitas petugas bulan ini", 1, 20, key="f_k", format="%d%% peserta aktif")
+    c2.html(ui.info(
+        f"Peserta aktif yang berisiko menunggak dalam 3 bulan ke depan menurut model peringatan dini, "
+        f"diurutkan dari peluang tertinggi. Kapasitas dihitung dari {ui.angka(n_ew_dinilai)} peserta aktif"
+        f"{' di wilayah terpilih' if wilayah else ''}; angka proposal adalah 5%, yaitu 712 orang. "
+        f"{ui.angka(ke_rute)} peserta juga ada di rute verifikasi, jadi ditangani lewat verifikasi."))
 
     d = ew_utama
     view = pd.DataFrame({
