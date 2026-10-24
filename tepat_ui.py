@@ -5,17 +5,31 @@ evaluasi_label.parquet sengaja tidak dibaca di modul ini: label hanya boleh munc
 """
 from __future__ import annotations
 
+import ast
 import html
 import json
 import re
 from pathlib import Path
 
 import pandas as pd
+import pyarrow as pa
 import streamlit as st
 
-from cek_sinyal import JEDA_KAIT, KLAIM_BESAR  # satu sumber aturan "klaim besar"
-
 APP_DATA = Path(__file__).parent / "app_data"
+
+
+def _konstanta(nama_file: str, *nama: str) -> list:
+    """Baca konstanta dari skrip pipeline tanpa meng-import-nya. Import cek_sinyal ikut memuat
+    matplotlib (±140 MB), terlalu mahal untuk batas memori Streamlit Community Cloud."""
+    pohon = ast.parse((Path(__file__).parent / nama_file).read_text(encoding="utf-8"))
+    nilai = {n.targets[0].id: ast.literal_eval(n.value) for n in pohon.body
+             if isinstance(n, ast.Assign) and len(n.targets) == 1
+             and isinstance(n.targets[0], ast.Name) and n.targets[0].id in nama}
+    return [nilai[x] for x in nama]
+
+
+# satu sumber aturan "klaim besar": konstanta yang sama dengan cek_sinyal.py
+KLAIM_BESAR, JEDA_KAIT = _konstanta("cek_sinyal.py", "KLAIM_BESAR", "JEDA_KAIT")
 HALAMAN_DAFTAR = "halaman/daftar_kerja.py"
 HALAMAN_PROFIL = "halaman/profil_peserta.py"
 
@@ -127,8 +141,8 @@ def e(s) -> str:
 
 
 # ---------------------------------------------------------------- data
-@st.cache_resource(show_spinner=False)
 def _baca(nama: str) -> pd.DataFrame:
+    """Tidak di-cache: yang di-cache adalah tabel turunannya, supaya data tidak tersimpan dua kali."""
     if nama == "evaluasi_label":
         raise ValueError("Label hanya untuk halaman Evaluasi.")
     return pd.read_parquet(APP_DATA / f"{nama}.parquet")
@@ -155,12 +169,17 @@ def tabel_peserta() -> pd.DataFrame:
                  "alasan": "ew_alasan", "saran_intervensi": "ew_saran"})
     t = t.merge(e_, on="id_peserta", how="left", validate="1:1")
     t["urut_rute"] = t["rute"].map({r: i for i, r in enumerate(RUTE)})
+    pa.default_memory_pool().release_unused()
     return t
 
 
 @st.cache_resource(show_spinner=False)
 def _indeks(nama: str) -> pd.DataFrame:
-    return _baca(nama).set_index("id_peserta").sort_index()
+    d = _baca(nama)
+    d["id_peserta"] = d["id_peserta"].astype("category")
+    d = d.set_index("id_peserta").sort_index()
+    pa.default_memory_pool().release_unused()
+    return d
 
 
 def linimasa(nama: str, pid: str) -> pd.DataFrame:
