@@ -34,6 +34,7 @@ def _konstanta(nama_file: str, *nama: str) -> list:
 KLAIM_BESAR, JEDA_KAIT = _konstanta("cek_sinyal.py", "KLAIM_BESAR", "JEDA_KAIT")
 HALAMAN_DAFTAR = "halaman/daftar_kerja.py"
 HALAMAN_PROFIL = "halaman/profil_peserta.py"
+HALAMAN_KEBIJAKAN = "halaman/kebijakan.py"
 
 # ---------------------------------------------------------------- label dan warna
 # Palet deck proposal TEPAT; sama dengan .streamlit/config.toml.
@@ -226,6 +227,12 @@ def linimasa(nama: str, pid: str) -> pd.DataFrame:
 
 
 @st.cache_resource(show_spinner=False)
+def bunching() -> tuple[pd.DataFrame, pd.DataFrame]:
+    """(harian, ringkasan) uji lonjakan hari-45. Ringkasan berindeks cara_masuk: 'terjadwal', 'IGD'."""
+    return _baca("bunching_harian"), _baca("bunching_ringkasan").set_index("cara_masuk")
+
+
+@st.cache_resource(show_spinner=False)
 def ew_baris() -> pd.DataFrame:
     return _baca("ew_daftar").set_index("id_peserta")
 
@@ -354,6 +361,20 @@ p, li { font-feature-settings: "tnum" 1; }
 .tp-legenda-lini { display: flex; flex-wrap: wrap; gap: .3rem 1.1rem; font-size: .78rem; color: #5E6B66; margin: .1rem 0 1.2rem; }
 .tp-legenda-lini span { display: inline-flex; align-items: center; gap: .35rem; }
 .tp-legenda-lini i { display: inline-block; }
+
+/* halaman Kebijakan: panel grafik (st.container dengan key berawalan tpgrafik) */
+[class*="st-key-tpgrafik"] { background: #FCFCF9; border-radius: 14px !important; padding: .95rem 1.05rem .7rem !important; }
+.tp-grafik-kepala { display: flex; align-items: center; gap: .7rem; margin: 0 0 .1rem; }
+.tp-grafik-kepala .nama { font-size: 1.02rem; font-weight: 700; color: var(--c); margin: 0; line-height: 1.25; }
+.tp-grafik-kepala .sumber { font-size: .76rem; color: #5E6B66; margin: 0; }
+.tp-grafik-kepala .vonis { margin-left: auto; }
+.tp-jendela { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; margin: .2rem 0 .3rem; }
+.tp-jendela > div { border-radius: 10px; padding: .5rem .65rem; background: #F3F2EC; font-size: .8rem; color: #3D4B46; line-height: 1.4; }
+.tp-jendela b { display: block; font-size: .95rem; color: #12302A; }
+.tp-jendela .naik { color: #17704D; } .tp-jendela .turun { color: #9A3F12; }
+.tp-catatan-kecil { font-size: .78rem; color: #5E6B66; margin: .2rem 0 0; line-height: 1.45; }
+.tp-baca { margin: .2rem 0 0; padding: 0 0 0 1.1rem; color: #3D4B46; font-size: .92rem; line-height: 1.55; }
+.tp-baca li { margin: 0 0 .35rem; }
 </style>
 """
 

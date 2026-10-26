@@ -18,6 +18,8 @@ halaman = st.navigation(
                 url_path="daftar-kerja", default=True),
         st.Page(ui.HALAMAN_PROFIL, title="Profil peserta", icon=":material/person:",
                 url_path="profil"),
+        st.Page(ui.HALAMAN_KEBIJAKAN, title="Kebijakan", icon=":material/gavel:",
+                url_path="kebijakan"),
     ],
     position="top",
 )
