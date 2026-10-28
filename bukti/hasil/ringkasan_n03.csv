@@ -1,0 +1,23 @@
+data,aturan,jenis,n,masuk_jalur_diperiksa,persen
+kasus_jujur,asli,baru_berhenti_cepat,500,35,7.0
+kasus_jujur,asli,baru_sakit_tetap_bayar,500,0,0.0
+kasus_jujur,asli,jatuh_miskin_sakit,500,32,6.4
+kasus_jujur,asli,kronis_bolong_sekali,500,0,0.0
+kasus_jujur,asli,pembayar_musiman,500,0,0.0
+kasus_jujur,tanpa_igd,baru_berhenti_cepat,500,35,7.0
+kasus_jujur,tanpa_igd,baru_sakit_tetap_bayar,500,0,0.0
+kasus_jujur,tanpa_igd,jatuh_miskin_sakit,500,32,6.4
+kasus_jujur,tanpa_igd,kronis_bolong_sekali,500,0,0.0
+kasus_jujur,tanpa_igd,pembayar_musiman,500,0,0.0
+data_dasar,asli,lalai,4947,0,0.0
+data_dasar,asli,patuh,10428,0,0.0
+data_dasar,asli,reaktivasi_saat_butuh,2012,891,44.28
+data_dasar,asli,tidak_mampu,2613,18,0.69
+data_dasar,asli,RINGKAS jalur diperiksa,909,891,98.02
+data_dasar,asli,RINGKAS tertangkap dari semua curang,2012,891,44.28
+data_dasar,tanpa_igd,lalai,4947,0,0.0
+data_dasar,tanpa_igd,patuh,10428,0,0.0
+data_dasar,tanpa_igd,reaktivasi_saat_butuh,2012,675,33.55
+data_dasar,tanpa_igd,tidak_mampu,2613,8,0.31
+data_dasar,tanpa_igd,RINGKAS jalur diperiksa,683,675,98.83
+data_dasar,tanpa_igd,RINGKAS tertangkap dari semua curang,2012,675,33.55

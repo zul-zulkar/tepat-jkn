@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="id"><head><meta charset="utf-8"><title>Kartu bukti</title>
+<style>
+body { font-family: Arial, Helvetica, sans-serif; color: #1A1A1A; background: #FFFFFF; max-width: 820px;
+       margin: 32px auto; padding: 0 16px; line-height: 1.4; }
+h1 { font-size: 26px; margin-bottom: 4px; }
+h2 { font-size: 17px; margin: 24px 0 8px; }
+table { border-collapse: collapse; width: 100%; font-size: 14px; }
+th, td { text-align: left; padding: 4px 8px; border-bottom: 1px solid #DDDDDD; vertical-align: top; }
+th { color: #6B6B6B; font-weight: normal; }
+.box { border: 2px solid #B23A3A; padding: 8px 16px; margin-top: 24px; }
+.box h2 { color: #B23A3A; margin-top: 8px; }
+.jury { border: 2px solid #0F6E6E; padding: 8px 16px; margin-top: 16px; font-size: 16px; }
+.jury h2 { color: #0F6E6E; margin-top: 8px; }
+@media print { body { margin: 0 auto; } }
+</style></head><body>
+<h1>Kartu bukti</h1>
+<h2>Kondisi pengujian</h2>
+<table>
+<tr><th>Sumber data</th><td>sintetis</td></tr>
+<tr><th>Tolok ukur</th><td>data konsentrasi buatan tim sendiri (bukan benchmark independen)</td></tr>
+<tr><th>Generator ditulis oleh</th><td>Zul bersama asisten AI; penulis sama dengan penulis aturan</td></tr>
+<tr><th>Dikalibrasi ke</th><td>regulasi saja (Perpres 64/2020, Perpres 59/2024); perilaku dan biaya dikarang</td></tr>
+<tr><th>Seed</th><td>2026</td></tr>
+<tr><th>Entitas yang dinilai</th><td>20.000</td></tr>
+<tr><th>Prevalensi</th><td>10,1%</td></tr>
+<tr><th>Kapasitas audit k</th><td>200 peserta (asumsi)</td></tr>
+</table>
+<h2>Hasil utama pada kapasitas k</h2>
+<table>
+<tr><th>precision@k</th><td>0,98 (IK 95% 0,91–0,99, resampling per wilayah)</td></tr>
+<tr><th>Lift dibanding acak</th><td>9,7×</td></tr>
+<tr><th>Persentase wilayah jujur yang diaudit</th><td>4 / 35 (11,4%)</td></tr>
+</table>
+<h2>Positif palsu tingkat entitas</h2>
+<table>
+<tr><td>4 dari 17.988 peserta jujur termasuk kasus yang ditandai (tingkat positif palsu 0,0%). Bukan metrik utama: pada kapasitas tetap angka ini selalu kecil. Persentase wilayah jujur yang diaudit menunjukkan di mana bebannya jatuh.</td></tr>
+</table>
+<h2>Recall@k per modus</h2>
+<table>
+<tr><th>Modus</th><th>Kasus</th><th>Masuk k teratas</th><th>Recall</th></tr>
+<tr><td>reaktivasi_saat_butuh</td><td>2.012</td><td>196</td><td>0,10 (lemah)</td></tr>
+</table>
+<h2>Persentase wilayah jujur yang diaudit, per strata</h2>
+<table>
+<tr><th>Strata</th><th>Nilai</th><th>Jujur</th><th>Ditandai</th><th>Tingkat</th></tr>
+<tr><td>kelas</td><td>kelas_3</td><td>35</td><td>4</td><td>11,4%</td></tr>
+<tr><td>kemiskinan</td><td>rendah</td><td>13</td><td>1</td><td>7,7%</td></tr>
+<tr><td>kemiskinan</td><td>sedang</td><td>10</td><td>1</td><td>10%</td></tr>
+<tr><td>kemiskinan</td><td>tinggi</td><td>12</td><td>2</td><td>16,7%</td></tr>
+<tr><td>usia</td><td>36-55</td><td>35</td><td>4</td><td>11,4%</td></tr>
+<tr><td>jk</td><td>L</td><td>18</td><td>4</td><td>22,2%</td></tr>
+<tr><td>jk</td><td>P</td><td>17</td><td>0</td><td>0%</td></tr>
+<tr><td>ukuran</td><td>besar</td><td>8</td><td>2</td><td>25%</td></tr>
+<tr><td>ukuran</td><td>sedang</td><td>13</td><td>2</td><td>15,4%</td></tr>
+<tr><td>ukuran</td><td>kecil</td><td>14</td><td>0</td><td>0%</td></tr>
+</table>
+<div class="box"><h2>Keterbatasan</h2><ul>
+<li>Data sintetis; kinerja pada peserta nyata belum diukur.</li>
+<li>Lemah pada reaktivasi_saat_butuh (recall@k di bawah 0,30).</li>
+<li>Persentase wilayah jujur yang diaudit untuk ukuran besar sebesar 25%, lebih dari dua kali rata-rata 11,4%.</li>
+</ul></div>
+<div class="jury"><h2>Untuk juri</h2><p>Dari 200 peserta yang diaudit pada asumsi kapasitas kami (200), 196 (IK 95% 182–199) merupakan fraud pada data konsentrasi buatan tim sendiri (bukan benchmark independen), 9,7× dibanding pemilihan acak. Dari 35 wilayah yang jujur, 4 ikut diaudit.</p></div>
+</body></html>

@@ -1,0 +1,3 @@
+uji,n,prevalensi,isi_jalur,k,diperiksa,presisi,ik95_bawah,ik95_atas,presisi_kit,kit_ik95_bawah,kit_ik95_atas,seri_di_batas_k,wilayah_di_daftar,presisi_wilayah_min,presisi_wilayah_maks,target
+T2 data dasar,20000,0.1006,909,200,200,0.98,0.96,0.995,0.98,0.96,0.995,1,39,0.75,1.0,batas bawah >= 80%
+T8 data konsentrasi,20000,0.1006,909,200,200,0.98,0.9199,0.995,0.98,0.91,0.995,1,9,0.0,1.0,tanpa ambang

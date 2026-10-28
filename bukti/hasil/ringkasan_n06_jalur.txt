@@ -1,0 +1,14 @@
+N06 jalur diperiksa - pra-registrasi bagian 3a (commit 601a1d8)
+
+T2 data dasar: presisi 98.0% (IK95% per wilayah 96.0%-99.5%), diperiksa 200 dari isi jalur 909; eval-kit apa adanya 98.0% (96.0%-99.5%); presisi per wilayah 75.0%-100.0% (39 wilayah)
+T8 data konsentrasi: presisi 98.0% (IK95% per wilayah 92.0%-99.5%), diperiksa 200 dari isi jalur 909; eval-kit apa adanya 98.0% (91.0%-99.5%); presisi per wilayah 0.0%-100.0% (9 wilayah)
+
+T1 (data dasar + kasus jujur, k 1%, 200 undian, seed 7). Target: batas bawah >= 50% di prevalensi 1%
+  prevalensi 0.5%: presisi 42.5% (selang 95% 35.9%-48.5%), diperiksa 87 dari k 201; eval-kit apa adanya 18.9% (14.9%-23.4%); lift 85.4x
+  prevalensi 1.0%: presisi 60.0% (selang 95% 55.7%-63.8%), diperiksa 125 dari k 202; eval-kit apa adanya 38.1% (32.2%-44.1%); lift 60.0x
+  prevalensi 2.0%: presisi 75.1% (selang 95% 72.8%-76.5%), diperiksa 201 dari k 204; eval-kit apa adanya 74.0% (65.7%-76.5%); lift 37.6x
+  prevalensi 5.0%: presisi 82.9% (selang 95% 82.5%-84.4%), diperiksa 211 dari k 211; eval-kit apa adanya 82.9% (82.5%-84.4%); lift 16.6x
+  prevalensi 10.0%: presisi 93.3% (selang 95% 92.8%-93.3%), diperiksa 223 dari k 223; eval-kit apa adanya 93.3% (92.8%-93.3%); lift 9.3x
+
+T4: 18 peserta jujur di jalur diperiksa (data dasar); syarat dinilai >= 30 -> terlalu sedikit untuk dinilai
+    rasio tertinggi ke rata-rata: 1.64x (kelas kelas_3)

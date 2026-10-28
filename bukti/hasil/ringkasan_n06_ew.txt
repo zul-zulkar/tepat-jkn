@@ -1,0 +1,13 @@
+N06 peringatan dini (T6, T7)
+
+cek kanonik: AUC model 0.854, aturan 0.822, belum pernah nonaktif 0.708 (n 68,445, base rate 6.0%)
+
+T6 belum pernah nonaktif, k 1% per bulan, Jan-Sep 2025 digabung: presisi 52.3% vs base rate 6.0% -> lift 8.6x (target >= 3x: LULUS)
+    rata-rata lift per bulan 8.6x (rentang 8.0-9.3); satu peringkat gabungan 8.5x (IK95% per peserta 7.8-9.5); acak 1.0x
+
+T7 ablasi berpasangan (eval-kit stress.ablation, k 1% dari gabungan peserta-bulan):
+             populasi          variant  precision_at_k   ci_low  ci_high     lift   pr_auc  honest_group_audit_rate      diff  diff_low  diff_high  p_value
+          semua_aktif aturan sederhana        0.948223 0.932819 0.962134 4.463908 0.632245                 0.001171       NaN       NaN        NaN      NaN
+          semua_aktif   aturan + model        0.932767 0.914991 0.951508 4.391147 0.646028                 0.000958 -0.015456 -0.027007  -0.000775     0.03
+belum_pernah_nonaktif aturan sederhana        0.051095 0.036496 0.069570 0.844732 0.060822                 0.085986       NaN       NaN        NaN      NaN
+belum_pernah_nonaktif   aturan + model        0.516788 0.473759 0.567455 8.543859 0.202613                 0.011810  0.465693  0.418963   0.517595     0.00

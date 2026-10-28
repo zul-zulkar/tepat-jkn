@@ -1,0 +1,5 @@
+segmen,nonaktif_lama_tanpa_sinyal,pengingat_autodebet_REHAB,rujuk_cek_kelayakan_PBI,tanpa_tindakan,verifikasi_pola_reaktivasi
+lalai,0.0,0.887,0.013,0.1,0.0
+patuh,0.0,0.019,0.0,0.981,0.0
+reaktivasi_saat_butuh,0.102,0.083,0.114,0.258,0.443
+tidak_mampu,0.007,0.117,0.705,0.165,0.007

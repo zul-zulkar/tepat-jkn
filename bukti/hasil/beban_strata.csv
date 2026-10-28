@@ -1,0 +1,12 @@
+strata,kelompok,n_peserta,n_jalur,porsi_jalur,rasio_ke_rata2
+kelas,kelas_1,4140,174,0.042,0.92
+kelas,kelas_2,6351,291,0.0458,1.01
+kelas,kelas_3,9509,444,0.0467,1.03
+kemiskinan,rendah,6862,337,0.0491,1.08
+kemiskinan,sedang,6436,291,0.0452,0.99
+kemiskinan,tinggi,6702,281,0.0419,0.92
+usia,36-55,10261,478,0.0466,1.02
+usia,<=35,6320,173,0.0274,0.6
+usia,>55,3419,258,0.0755,1.66
+jk,L,10060,462,0.0459,1.01
+jk,P,9940,447,0.045,0.99

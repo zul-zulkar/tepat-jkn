@@ -1,0 +1,12 @@
+strata,kelompok,n_jujur,n_jujur_jalur,porsi,rasio_ke_rata2
+kelas,kelas_1,3733,2,0.00054,0.54
+kelas,kelas_2,5729,2,0.00035,0.35
+kelas,kelas_3,8526,14,0.00164,1.64
+kemiskinan,rendah,6101,2,0.00033,0.33
+kemiskinan,sedang,5796,6,0.00104,1.03
+kemiskinan,tinggi,6091,10,0.00164,1.64
+usia,36-55,9163,9,0.00098,0.98
+usia,<=35,5936,6,0.00101,1.01
+usia,>55,2889,3,0.00104,1.04
+jk,L,9048,8,0.00088,0.88
+jk,P,8940,10,0.00112,1.12

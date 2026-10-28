@@ -1,0 +1,2 @@
+uji,k_total,tp,presisi_gabungan,base_rate,lift_gabungan,lift_rata_per_bulan,lift_min_bulan,lift_maks_bulan,lift_peringkat_gabungan,lift_peringkat_ik95_bawah,lift_peringkat_ik95_atas,lift_acak_gabungan,target,lulus
+T6,685,358,0.5226,0.0605,8.6404,8.6425,8.044,9.2916,8.5439,7.8066,9.4556,0.9654,>= 3x,True
