@@ -1,0 +1,67 @@
+bagian,kode,uraian,nilai,satuan,n_sampel,dipakai_generator,catatan
+A_status,A01,PBPU dewasa: nonaktif karena premi,40.9,%,382600,ya,target tingkat dasar nonaktif di potret akhir 2024
+A_status,A02,PBPU semua usia: nonaktif karena premi,42.7,%,496400,tidak,
+A_status,A03,BP (bukan pekerja) dewasa: nonaktif karena premi,0.3,%,95600,ya,BP hampir tidak pernah nonaktif karena premi
+A_status,A04,porsi BP di antara PBPU+BP dewasa (bobot),27.8,%,478200,tidak,sebagian besar BP adalah penerima pensiun; iurannya bukan pola bayar mandiri
+A_status,A05,PBPU dewasa: porsi kelas i,10.8,%,382600,ya,
+A_status,A06,PBPU dewasa: porsi kelas ii,14.4,%,382600,ya,
+A_status,A07,PBPU dewasa: porsi kelas iii,74.8,%,382600,ya,
+A_status,A08,PBPU dewasa kelas i: nonaktif karena premi,40.8,%,38400,ya,
+A_status,A09,PBPU dewasa kelas ii: nonaktif karena premi,45.1,%,55200,ya,
+A_status,A10,PBPU dewasa kelas iii: nonaktif karena premi,40.1,%,289000,ya,
+A_status,A11,PBPU usia 18-29: nonaktif karena premi,40.2,%,94800,tidak,model tidak memakai usia; untuk cek realisme
+A_status,A12,PBPU usia 30-44: nonaktif karena premi,49.1,%,111600,tidak,model tidak memakai usia; untuk cek realisme
+A_status,A13,PBPU usia 45-59: nonaktif karena premi,38.2,%,101100,tidak,model tidak memakai usia; untuk cek realisme
+A_status,A14,PBPU usia 60+: nonaktif karena premi,32.2,%,75100,tidak,model tidak memakai usia; untuk cek realisme
+A_status,A15,PBPU dewasa: rata-rata usia,44.0,tahun,382600,ya,
+A_status,A16,PBPU dewasa: simpangan baku usia,16.4,tahun,382600,ya,
+A_status,A17,PBPU dewasa terdaftar s.d. 2016 (tahun sampel): nonaktif karena premi,37.8,%,156500,tidak,
+A_status,A18,PBPU dewasa masuk 2017-2021 (tahun sampel): nonaktif karena premi,48.1,%,156400,tidak,
+A_status,A19,PBPU dewasa masuk 2022-2023 (tahun sampel): nonaktif karena premi,40.5,%,48900,tidak,
+A_status,A20,PBPU dewasa masuk 2024 (tahun sampel): nonaktif karena premi,22.7,%,20800,tidak,
+A_status,A21,KK PBPU (>= 2 anggota di sampel): semua anggota status premi sama,93.2,% KK,128500,tidak,dukungan untuk satu tindakan per KK; tak berbobot
+B_layanan,B01,PBPU dewasa lama (tahun sampel <= 2022): punya >= 1 rawat inap 2024,6.0,%,338300,ya,
+B_layanan,B02,PBPU dewasa baru (tahun sampel 2024): punya >= 1 rawat inap 2024,11.2,%,20800,ya,
+B_layanan,B03,rasio rawat inap peserta baru / lama,1.86,x,20800,ya,
+B_layanan,B04,PBPU dewasa lama: klaim rawat inap per 100 orang per tahun,8.4,per 100,338300,ya,
+B_layanan,B05,PBPU dewasa lama: punya >= 1 rawat jalan RS 2024,13.2,%,338300,ya,
+B_layanan,B06,PBPU dewasa lama: kunjungan rawat jalan RS per orang per tahun,1.1,kunjungan,338300,ya,
+B_layanan,B07,biaya rawat inap: median,3976000.0,Rp,52800,ya,
+B_layanan,B08,biaya rawat inap: persentil 90,9184000.0,Rp,52800,ya,
+B_layanan,B09,biaya rawat inap: rata-rata,5733000.0,Rp,52800,ya,
+B_layanan,B10,biaya rawat jalan RS: median,198000.0,Rp,519600,ya,
+B_layanan,B11,biaya rawat jalan RS: persentil 90,778000.0,Rp,519600,ya,
+B_layanan,B12,rawat jalan RS dengan biaya >= Rp1 juta,3.2,% klaim,519600,ya,
+B_layanan,B13,lama rawat inap (tgl pulang - tgl datang): rata-rata,3.41,hari,52800,ya,
+B_layanan,B14,rasio median biaya rawat inap kelas 1 / kelas 3,1.57,x,6600,ya,
+B_layanan,B15,porsi rawat inap di antara semua klaim RS,8.7,% klaim,572400,ya,
+C_bayar_saat_butuh,C01,"aktivitas (klaim RS saja) terakhir Jan-Jun, tanpa klaim besar 2024: nonaktif",17.7,%,9400,ya,aktivitas = tanggal pulang klaim RS
+C_bayar_saat_butuh,C02,"aktivitas (klaim RS saja) terakhir Jan-Jun, <= 90 hari setelah klaim besar: nonaktif",32.1,%,8000,ya,aktivitas = tanggal pulang klaim RS
+C_bayar_saat_butuh,C03,aktivitas (klaim RS saja) terakhir Jan-Jun: rasio pasca / tanpa klaim besar,1.81,x,8000,ya,
+C_bayar_saat_butuh,C04,"aktivitas (klaim RS saja) terakhir Jul-Sep, tanpa klaim besar 2024: nonaktif",13.4,%,5800,ya,aktivitas = tanggal pulang klaim RS
+C_bayar_saat_butuh,C05,"aktivitas (klaim RS saja) terakhir Jul-Sep, <= 90 hari setelah klaim besar: nonaktif",24.8,%,5400,ya,aktivitas = tanggal pulang klaim RS
+C_bayar_saat_butuh,C06,aktivitas (klaim RS saja) terakhir Jul-Sep: rasio pasca / tanpa klaim besar,1.86,x,5400,ya,
+C_bayar_saat_butuh,C07,"aktivitas (klaim RS saja) terakhir Okt-Des, tanpa klaim besar 2024: nonaktif",1.9,%,16400,ya,aktivitas = tanggal pulang klaim RS
+C_bayar_saat_butuh,C08,"aktivitas (klaim RS saja) terakhir Okt-Des, <= 90 hari setelah klaim besar: nonaktif",5.3,%,11000,ya,aktivitas = tanggal pulang klaim RS
+C_bayar_saat_butuh,C09,aktivitas (klaim RS saja) terakhir Okt-Des: rasio pasca / tanpa klaim besar,2.83,x,11000,ya,
+C_bayar_saat_butuh,C11,"aktivitas (FKTP + RS) terakhir Jan-Jun, tanpa klaim besar 2024: nonaktif",21.4,%,20800,tidak,aktivitas = kunjungan FKTP atau klaim RS
+C_bayar_saat_butuh,C12,"aktivitas (FKTP + RS) terakhir Jan-Jun, <= 90 hari setelah klaim besar: nonaktif",40.0,%,5500,tidak,aktivitas = kunjungan FKTP atau klaim RS
+C_bayar_saat_butuh,C13,aktivitas (FKTP + RS) terakhir Jan-Jun: rasio pasca / tanpa klaim besar,1.87,x,5500,tidak,
+C_bayar_saat_butuh,C14,"aktivitas (FKTP + RS) terakhir Jul-Sep, tanpa klaim besar 2024: nonaktif",13.7,%,18000,tidak,aktivitas = kunjungan FKTP atau klaim RS
+C_bayar_saat_butuh,C15,"aktivitas (FKTP + RS) terakhir Jul-Sep, <= 90 hari setelah klaim besar: nonaktif",30.5,%,4200,tidak,aktivitas = kunjungan FKTP atau klaim RS
+C_bayar_saat_butuh,C16,aktivitas (FKTP + RS) terakhir Jul-Sep: rasio pasca / tanpa klaim besar,2.22,x,4200,tidak,
+C_bayar_saat_butuh,C17,"aktivitas (FKTP + RS) terakhir Okt-Des, tanpa klaim besar 2024: nonaktif",3.1,%,53600,tidak,aktivitas = kunjungan FKTP atau klaim RS
+C_bayar_saat_butuh,C18,"aktivitas (FKTP + RS) terakhir Okt-Des, <= 90 hari setelah klaim besar: nonaktif",5.7,%,11200,tidak,aktivitas = kunjungan FKTP atau klaim RS
+C_bayar_saat_butuh,C19,aktivitas (FKTP + RS) terakhir Okt-Des: rasio pasca / tanpa klaim besar,1.85,x,11200,tidak,
+D_sinyal_tambahan,D01,segmen saat layanan pertama 2024 PBI APBD -> potret akhir PBPU: nonaktif,28.6,%,2300,tidak,hanya pengguna layanan 2024
+D_sinyal_tambahan,D02,segmen saat layanan pertama 2024 PBI APBN -> potret akhir PBPU: nonaktif,20.2,%,2500,tidak,hanya pengguna layanan 2024
+D_sinyal_tambahan,D03,segmen saat layanan pertama 2024 PPU -> potret akhir PBPU: nonaktif,9.2,%,3800,tidak,hanya pengguna layanan 2024
+D_sinyal_tambahan,D04,segmen saat layanan pertama 2024 PBPU -> potret akhir PBPU: nonaktif,10.7,%,119300,tidak,hanya pengguna layanan 2024
+D_sinyal_tambahan,D05,"aktivitas terakhir <= 90 hari setelah klaim besar, penyakit kronis: nonaktif",10.3,%,6400,tidak,"kronis = DM, hipertensi, jantung, CKD, PPOK, cuci darah"
+D_sinyal_tambahan,D06,"aktivitas terakhir <= 90 hari setelah klaim besar, bukan kronis: nonaktif",24.4,%,14400,tidak,"kronis = DM, hipertensi, jantung, CKD, PPOK, cuci darah"
+D_sinyal_tambahan,D07,punya rawat inap; kelas potret lebih rendah dari kelas rawat inap terakhir: nonaktif,18.9,%,400,tidak,proxy turun kelas; lemah
+D_sinyal_tambahan,D08,punya rawat inap; kelas sama: nonaktif,16.9,%,25300,tidak,
+D_sinyal_tambahan,D09,"kohort KIA ibu, PBPU, melahirkan Jan-Jun 2024: nonaktif",44.7,%,4400,tidak,sampel kontekstual terpisah; tidak bisa digabung dengan sampel reguler
+D_sinyal_tambahan,D10,"kohort KIA ibu, PBPU, melahirkan Okt-Des 2024: nonaktif",10.3,%,2100,tidak,sampel kontekstual terpisah; tidak bisa digabung dengan sampel reguler
+D_sinyal_tambahan,D11,kohort KIA ibu PBPU yang melahirkan: tercatat ANC (Z34-Z36) di FKTP sebelum persalinan,52.3,%,8700,tidak,
+D_sinyal_tambahan,D12,jeda ANC pertama ke persalinan: median,64.0,hari,4500,tidak,

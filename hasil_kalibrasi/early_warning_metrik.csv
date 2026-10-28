@@ -1,0 +1,13 @@
+populasi,metrik,nilai
+semua_aktif,n_peserta_bulan_uji,94833.0
+semua_aktif,base_rate,0.1678
+semua_aktif,auc_model,0.8146
+semua_aktif,auc_model_min_bulan,0.8028
+semua_aktif,auc_model_max_bulan,0.822
+semua_aktif,auc_aturan,0.7631
+semua_aktif,brier_model,0.0956
+semua_aktif,brier_tanpa_model,0.1396
+semua_aktif,rata_prediksi,0.1687
+belum_pernah_nonaktif,n_peserta_bulan_uji,52221.0
+belum_pernah_nonaktif,base_rate,0.0691
+belum_pernah_nonaktif,auc_model,0.7253

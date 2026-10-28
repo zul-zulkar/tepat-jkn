@@ -1,0 +1,43 @@
+kode,uraian,satuan,sampel_bpjs,sintetis,rasio,status,dipakai_generator,n_sampel,n_sintetis
+A01,PBPU dewasa: nonaktif karena premi,%,40.9,18.453,0.451,terlalu rendah,ya,382600,16220
+A03,BP (bukan pekerja) dewasa: nonaktif karena premi,%,0.3,19.247,64.155,terlalu tinggi,ya,95600,2920
+A05,PBPU dewasa: porsi kelas i,%,10.8,20.727,1.919,terlalu tinggi,ya,382600,16220
+A06,PBPU dewasa: porsi kelas ii,%,14.4,31.726,2.203,terlalu tinggi,ya,382600,16220
+A07,PBPU dewasa: porsi kelas iii,%,74.8,47.546,0.636,terlalu rendah,ya,382600,16220
+A08,PBPU dewasa kelas i: nonaktif karena premi,%,40.8,12.998,0.319,terlalu rendah,ya,38400,3362
+A09,PBPU dewasa kelas ii: nonaktif karena premi,%,45.1,14.302,0.317,terlalu rendah,ya,55200,5146
+A10,PBPU dewasa kelas iii: nonaktif karena premi,%,40.1,23.6,0.589,terlalu rendah,ya,289000,7712
+A11,PBPU usia 18-29: nonaktif karena premi,%,40.2,15.025,0.374,terlalu rendah,tidak,94800,2609
+A12,PBPU usia 30-44: nonaktif karena premi,%,49.1,17.364,0.354,terlalu rendah,tidak,111600,6093
+A13,PBPU usia 45-59: nonaktif karena premi,%,38.2,20.033,0.524,terlalu rendah,tidak,101100,5536
+A14,PBPU usia 60+: nonaktif karena premi,%,32.2,21.897,0.68,terlalu rendah,tidak,75100,1982
+A15,PBPU dewasa: rata-rata usia,tahun,44.0,43.394,0.986,dekat,ya,382600,16220
+A16,PBPU dewasa: simpangan baku usia,tahun,16.4,13.396,0.817,dekat,ya,382600,16220
+A17,PBPU dewasa terdaftar s.d. 2016 (tahun sampel): nonaktif karena premi,%,37.8,19.242,0.509,terlalu rendah,tidak,156500,2692
+A18,PBPU dewasa masuk 2017-2021 (tahun sampel): nonaktif karena premi,%,48.1,19.002,0.395,terlalu rendah,tidak,156400,10625
+A19,PBPU dewasa masuk 2022-2023 (tahun sampel): nonaktif karena premi,%,40.5,20.731,0.512,terlalu rendah,tidak,48900,1505
+A20,PBPU dewasa masuk 2024 (tahun sampel): nonaktif karena premi,%,22.7,10.3,0.454,terlalu rendah,tidak,20800,1398
+B01,PBPU dewasa lama (tahun sampel <= 2022): punya >= 1 rawat inap 2024,%,6.0,10.498,1.75,terlalu tinggi,ya,338300,13317
+B02,PBPU dewasa baru (tahun sampel 2024): punya >= 1 rawat inap 2024,%,11.2,13.948,1.245,terlalu tinggi,ya,20800,1398
+B03,rasio rawat inap peserta baru / lama,x,1.86,1.329,0.714,terlalu rendah,ya,20800,1398
+B04,PBPU dewasa lama: klaim rawat inap per 100 orang per tahun,per 100,8.4,11.196,1.333,terlalu tinggi,ya,338300,13317
+B05,PBPU dewasa lama: punya >= 1 rawat jalan RS 2024,%,13.2,52.617,3.986,terlalu tinggi,ya,338300,13317
+B06,PBPU dewasa lama: kunjungan rawat jalan RS per orang per tahun,kunjungan,1.1,1.05,0.954,dekat,ya,338300,13317
+B07,biaya rawat inap: median,Rp,3976000.0,9234000.0,2.322,terlalu tinggi,ya,52800,1901
+B08,biaya rawat inap: persentil 90,Rp,9184000.0,19020000.0,2.071,terlalu tinggi,ya,52800,1901
+B09,biaya rawat inap: rata-rata,Rp,5733000.0,10670318.78,1.861,terlalu tinggi,ya,52800,1901
+B10,biaya rawat jalan RS: median,Rp,198000.0,384000.0,1.939,terlalu tinggi,ya,519600,18079
+B11,biaya rawat jalan RS: persentil 90,Rp,778000.0,2977200.0,3.827,terlalu tinggi,ya,519600,18079
+B12,rawat jalan RS dengan biaya >= Rp1 juta,% klaim,3.2,31.407,9.815,terlalu tinggi,ya,519600,18079
+B13,lama rawat inap (tgl pulang - tgl datang): rata-rata,hari,3.41,3.438,1.008,dekat,ya,52800,1901
+B14,rasio median biaya rawat inap kelas 1 / kelas 3,x,1.57,1.123,0.716,terlalu rendah,ya,6600,404
+B15,porsi rawat inap di antara semua klaim RS,% klaim,8.7,9.515,1.094,dekat,ya,572400,19980
+C01,"aktivitas (klaim RS saja) terakhir Jan-Jun, tanpa klaim besar 2024: nonaktif",%,17.7,11.903,0.672,terlalu rendah,ya,9400,2680
+C02,"aktivitas (klaim RS saja) terakhir Jan-Jun, <= 90 hari setelah klaim besar: nonaktif",%,32.1,38.363,1.195,dekat,ya,8000,623
+C03,aktivitas (klaim RS saja) terakhir Jan-Jun: rasio pasca / tanpa klaim besar,x,1.81,3.223,1.781,terlalu tinggi,ya,8000,623
+C04,"aktivitas (klaim RS saja) terakhir Jul-Sep, tanpa klaim besar 2024: nonaktif",%,13.4,8.456,0.631,terlalu rendah,ya,5800,1904
+C05,"aktivitas (klaim RS saja) terakhir Jul-Sep, <= 90 hari setelah klaim besar: nonaktif",%,24.8,30.233,1.219,terlalu tinggi,ya,5400,473
+C06,aktivitas (klaim RS saja) terakhir Jul-Sep: rasio pasca / tanpa klaim besar,x,1.86,3.575,1.922,terlalu tinggi,ya,5400,473
+C07,"aktivitas (klaim RS saja) terakhir Okt-Des, tanpa klaim besar 2024: nonaktif",%,1.9,2.385,1.255,terlalu tinggi,ya,16400,2390
+C08,"aktivitas (klaim RS saja) terakhir Okt-Des, <= 90 hari setelah klaim besar: nonaktif",%,5.3,7.113,1.342,terlalu tinggi,ya,11000,717
+C09,aktivitas (klaim RS saja) terakhir Okt-Des: rasio pasca / tanpa klaim besar,x,2.83,2.982,1.054,dekat,ya,11000,717

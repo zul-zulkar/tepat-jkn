@@ -1,0 +1,53 @@
+== 0. CAKUPAN (Perpres 59/2024 Ps. 42 ayat 7-8) ==
+peserta PBPU/BP mandiri yang dianalisis : 20,000
+dikeluarkan, PPU                         : 1,518
+dikeluarkan, PBI                         : 1,026
+dikeluarkan, PBPU_BP_Pemda               : 456
+reaktivasi segmen lain yang tidak ikut dihitung : 176 (tunggakan pemberi kerja, bukan pola bayar peserta)
+
+== 1. BUNCHING DI BATAS DENDA 45 HARI ==
+kasus rawat inap terjadwal 0-120 hari setelah reaktivasi : 949
+lunas tunggakan di hari masuk RS (hari 0) : 32 kasus (sinyal terpisah)
+massa berlebih hari 46-60 : 126 kasus (IK95% bootstrap 95-160)
+kekurangan hari 31-45 : 66 kasus; lompatan (berlebih + kekurangan) 192 (IK95% 158-234)
+catatan: kasus yang ditunda bisa berasal dari hari 0-45 mana pun. Untuk data nyata,
+         pakai estimator dengan batasan integrasi (Chetty dkk. 2011).
+estimasi denda terhindar  : Rp315 juta (satu kali rawat inap per reaktivasi, paling tinggi Rp20 juta; biaya sintetis)
+
+== 1b. PLASEBO: RAWAT INAP DARURAT (IGD), TIDAK BISA DITUNDA ==
+kasus IGD 0-120 hari setelah reaktivasi : 836 (hari 0: 513, dikeluarkan dari fit)
+massa berlebih hari 46-60 : 16 kasus (IK95% bootstrap -3-33)
+kekurangan hari 31-45    : -19 kasus (negatif = juga berlebih)
+lompatan                 : -4 (IK95% -24-19); IK mencakup 0
+bacaan: pola penundaan = kekurangan sebelum batas DAN kelebihan sesudahnya. Kelebihan
+        di kedua jendela berarti kurva kontrafaktual terlalu rendah di hari 31-60, bukan
+        penundaan. Karena itu lompatan dipakai sebagai uji, bukan massa berlebih saja.
+catatan: di data sintetis IGD memang tidak pernah ditunda, jadi plasebo ini menguji
+         estimator, bukan perilaku. Di data nyata, sebagian rawat inap terencana bisa
+         masuk lewat IGD; lonjakan IGD perlu dibaca dengan itu.
+
+== 2. RUTE TRIASE (tanpa label) ==
+                            peserta  tunggakan_rp_miliar  klaim_rp_miliar  iuran_rp_miliar
+rute                                                                                      
+nonaktif_lama_tanpa_sinyal      500                 0.73             0.01             0.00
+pengingat_autodebet_REHAB      2669                 0.21             5.74             6.06
+rujuk_cek_kelayakan_PBI        5864                 5.34             4.53             7.66
+tanpa_tindakan                10247                 0.97            23.19            20.26
+verifikasi_pola_reaktivasi      720                 0.55             5.78             1.00
+
+peserta rute PBI yang tertangkap lewat pola meski DTSEN belum 1-5 (jeda pembaruan): 438
+
+== 3. VALIDASI TERHADAP LABEL (hanya untuk mengukur) ==
+segmen                      lalai  patuh  reaktivasi_saat_butuh  tidak_mampu    All
+rute                                                                               
+nonaktif_lama_tanpa_sinyal      0      0                    302          198    500
+pengingat_autodebet_REHAB    1563    169                     87          850   2669
+rujuk_cek_kelayakan_PBI         1      0                    233         5630   5864
+tanpa_tindakan                460   7743                    383         1661  10247
+verifikasi_pola_reaktivasi      0      0                    644           76    720
+All                          2024   7912                   1649         8415  20000
+
+verifikasi_pola_reaktivasi   presisi  89.4%  recall  39.1%  (target segmen: reaktivasi_saat_butuh)
+rujuk_cek_kelayakan_PBI      presisi  96.0%  recall  66.9%  (target segmen: tidak_mampu)
+pengingat_autodebet_REHAB    presisi  58.6%  recall  77.2%  (target segmen: lalai)
+peserta patuh/tidak_mampu yang masuk rute verifikasi pola reaktivasi: 76

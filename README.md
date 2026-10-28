@@ -133,6 +133,12 @@ pesan_template.py     draf pesan per rute, tanpa AI
 app_data/             data siap baca untuk aplikasi (ikut di-commit)
 data_sampel/          contoh kecil: 500 peserta mandiri + 75 kelompok lain (seed 2026)
 hasil/                ringkasan, grafik, dan tabel hasil
+kalibrasi_sampel.py   membaca Data Sampel BPJS (di luar repo), menulis angka agregat ke kalibrasi/
+cek_realisme.py       membandingkan data buatan dengan angka agregat data sampel
+kalibrasi/            target_sampel_bpjs_2024.csv: angka agregat data sampel (tanpa data mentah)
+hasil_kalibrasi/      hasil TEPAT di profil sampel2024 dan tabel pembanding realisme
+bukti/                pra-registrasi dan skenario uji: kasus_jujur.py (kasus jujur + jenis
+                      ditahan, N03), generate_konsentrasi.py (bayar-saat-butuh di 5 wilayah, N04)
 ```
 
 ## Aturan JKN yang kami tiru (versi sederhana) dan dasar hukumnya
@@ -220,6 +226,58 @@ Untuk semua peserta, model **tidak lebih baik** dari aturan sederhana kalau petu
 Model berguna untuk peserta yang belum pernah menunggak. Di kelompok itu, aturan sederhana sama saja dengan menebak acak. Model juga menganggap risiko peserta tidak mampu lebih kecil dari kenyataan (tebakan 38%, kenyataan 66%), karena generator kami tidak membuat tanda-tanda sebelum orang jatuh miskin. Kami tidak memakai DTSEN di model: datanya cuma satu potret per 2025-01-01, dan isinya ikut dipengaruhi kejadian sesudahnya.
 
 ![Peringatan dini](hasil/early_warning.png)
+
+## Cek ke Data Sampel BPJS Kesehatan 2024
+
+> Data sampel tidak berisi pembayaran iuran, status bulanan, atau tanggal aktif lagi. Jadi data ini **tidak bisa memvalidasi** triase atau peringatan dini. Yang bisa: mengecek seberapa mirip data buatan kami dengan data nyata, lalu membuat versi data buatan yang lebih mirip.
+
+```bash
+python kalibrasi_sampel.py --sampel ../02-full-project/data_sample      # 5-10 menit pertama kali
+python cek_realisme.py --data data --out hasil_kalibrasi --nama realisme_asumsi.csv
+python generate_data.py --n 20000 --seed 2026 --profil sampel2024 --out data_sampel2024
+python cek_realisme.py --data data_sampel2024 --out hasil_kalibrasi --nama realisme_sampel2024.csv
+python cek_sinyal.py --data data_sampel2024 --out hasil_kalibrasi
+python early_warning.py --data data_sampel2024 --out hasil_kalibrasi
+```
+
+`kalibrasi_sampel.py` hanya menulis angka agregat ke `kalibrasi/target_sampel_bpjs_2024.csv`: persentase, rasio, dan median dari kelompok besar (kelompok di bawah 100 orang dikosongkan), tanpa wilayah, faskes, ID, atau tanggal. Panitia mengizinkan angka agregat seperti ini tampil di repo publik (28 Okt 2026). Data sampel mentah dan cache-nya tetap di luar repo. Status kepesertaan di data sampel berupa satu potret akhir periode, yang kami anggap 31 Des 2024.
+
+Generator punya dua profil. `asumsi` (bawaan) adalah parameter karangan kami; semua angka di atas, aplikasi, dan `cocokkan_angka.py` memakai profil ini, dan hasilnya tidak berubah. `sampel2024` mengkalibrasi parameter yang bisa diamati di data sampel.
+
+**Seberapa mirip data buatan dengan data nyata** (PBPU dewasa, potret akhir 2024; angka data sampel memakai bobot sampel; `hasil_kalibrasi/realisme_*.csv`):
+
+| Ukuran | Data sampel BPJS | Profil asumsi | Profil sampel2024 |
+|---|---|---|---|
+| Nonaktif karena premi, PBPU | 40,9% | 18,5% | 41,8% |
+| Nonaktif karena premi, BP | 0,3% | 19,3% | BP tidak dibuat |
+| Porsi kelas III | 74,8% | 47,6% | 74,6% |
+| Nonaktif kelas I / kelas III | 40,8% / 40,1% | 13,0% / 23,6% | 42,0% / 41,8% |
+| Peserta lama yang rawat jalan di RS dalam setahun | 13,2% | 52,6% | 12,9% |
+| Median biaya rawat inap | Rp3,98 juta | Rp9,23 juta | Rp3,87 juta |
+| Klaim rawat jalan RS ≥ Rp1 juta | 3,2% | 31,4% | 4,0% |
+| Nonaktif sesudah klaim besar ÷ tanpa klaim besar, aktivitas terakhir Jan–Jun | 1,81x | 3,22x | 1,66x |
+| Sama, aktivitas terakhir Jul–Sep | 1,86x | 3,58x | 2,16x |
+| Ukuran yang selisihnya ≤ 20% dari data sampel | – | 7 dari 34 | 26 dari 33 (seed 1: 25) |
+
+- Pola "berhenti bayar sesudah klaim besar" ada di data nyata, sekitar 1,8–2,8 kali. Profil asumsi melebih-lebihkannya (3,2–3,6 kali).
+- Di PBPU nyata, kelas tidak membedakan risiko menunggak. Beda antarkelas di profil asumsi adalah karangan kami. Peserta BP hampir tidak pernah nonaktif karena premi, jadi cakupan yang tepat adalah PBPU.
+- Yang belum cocok: pendaftar baru 2024 di data nyata lebih cepat menunggak (22,7%; generator 12,5%); usia belum memengaruhi risiko di generator; tingkat nonaktif di kelompok pengguna RS 1,2–1,8 kali lebih tinggi dari data nyata, walau rasionya sudah cocok.
+- Proporsi segmen laten (patuh, lalai, tidak mampu, bayar saat butuh) tetap tidak teramati. Proporsi di profil `sampel2024` hanya satu kombinasi yang cocok dengan angka di atas, bukan perkiraan proporsi sebenarnya.
+
+**TEPAT di profil sampel2024** (seed 2026; masih data buatan, jadi tetap uji pipeline, bukan performa):
+
+| Ukuran | Profil asumsi | Profil sampel2024 |
+|---|---|---|
+| Jalur verifikasi: peserta / presisi / recall | 909 / 98,0% / 44,3% | 720 / 89,4% / 39,1% |
+| Peserta tidak mampu di jalur verifikasi | 18 | 76 |
+| Jalur cek PBI: presisi / recall | 86,3% / 70,5% | 96,0% / 66,9% |
+| Jalur pengingat/REHAB: presisi / recall | 86,8% / 88,7% | 58,6% / 77,2% |
+| Uji lonjakan terjadwal: kelebihan hari 46–60 | 169 (IK95% 131–213) | 126 (IK95% 95–160) |
+| Plasebo IGD: lompatan | 4 (IK95% −24 s.d. 31) | −4 (IK95% −24 s.d. 19) |
+| Peringatan dini: AUC model / aturan sederhana | 0,854 / 0,822 | 0,815 / 0,763 |
+| Belum pernah nonaktif: presisi 1% teratas (tingkat dasar) | 52,2% (6,1%) | 46,5% (6,9%) |
+
+Di data yang lebih mirip data nyata, presisi jalur verifikasi turun dari 98% ke 89%, dan peserta tidak mampu yang salah masuk naik dari 18 ke 76. Uji lonjakan dan plasebo IGD tetap berperilaku benar. Peringatan dini tetap berguna, dan selisih model atas aturan sederhana justru membesar (AUC +0,03 menjadi +0,05). Pengaruh kelas di model hilang (rasio odds 1,03 dan 1,00).
 
 ## Keterbatasan
 

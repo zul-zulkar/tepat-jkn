@@ -19,3 +19,10 @@ Thumbs.db
 desktop.ini
 .vscode/
 .idea/
+
+# data buatan profil lain dan skenario uji (buat ulang dengan skripnya)
+data_sampel2024/
+bukti/data_*/
+hasil_kalibrasi/triase_peserta.csv
+# cache data sampel BPJS berisi data baris-per-baris: harus di luar repo
+_cache_kalibrasi/

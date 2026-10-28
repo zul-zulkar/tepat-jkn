@@ -4,8 +4,16 @@ generate_data.py - TEPAT: generator data sintetis peserta JKN segmen PBPU/BP man
 untuk prototipe Healthkathon 2026 (kategori Efisiensi Risiko pada Peserta).
 
 Data ini fiktif. Tidak ada data peserta JKN atau data DTSEN asli di dalamnya.
-Parameter perilaku dan biaya juga karangan kami, jadi kalibrasi dulu sebelum
-mengutip angkanya.
+
+Dua profil parameter (--profil):
+  - asumsi (bawaan): parameter karangan tim. Semua angka proposal, aplikasi, dan
+    cocokkan_angka.py memakai profil ini, dan hasilnya identik dengan versi sebelum
+    profil ada.
+  - sampel2024: parameter yang bisa diamati dikalibrasi ke angka agregat Data Sampel
+    BPJS Kesehatan 2024 (kalibrasi/target_sampel_bpjs_2024.csv, dibuat oleh
+    kalibrasi_sampel.py; dibandingkan oleh cek_realisme.py). Lihat PROFIL di bawah.
+    Perilaku iuran (segmen laten) tetap tidak teramati di data sampel, jadi angka
+    deteksi di profil ini tetap uji pipeline, bukan performa.
 
 Aturan JKN yang kami modelkan (disederhanakan; rujukan lengkap ada di README):
   - Cakupan analisis: PBPU/BP yang iurannya dibayar sendiri. Peserta PPU, PBI, dan
@@ -45,6 +53,7 @@ pemutakhiran. Orang yang jatuh miskin setelah tanggal itu sering masih tercatat 
 
 Pemakaian:
     python generate_data.py --n 20000 --seed 2026 --out data
+    python generate_data.py --n 20000 --seed 2026 --profil sampel2024 --out data_sampel2024
     (--n = peserta PBPU/BP mandiri; --n_lain = peserta segmen lain, bawaan 15% dari n)
 """
 import argparse
@@ -130,12 +139,71 @@ JENIS = {
 SERIUS = {"rjtl_seri", "ritl_darurat", "ritl_elektif"}
 MULT_SERIUS_RSB = 1.8            # seleksi adversal: segmen ini lebih sering butuh layanan mahal
 
+# ---- profil parameter ------------------------------------------------------------------
+# BAWAAN = profil "asumsi": nilai di atas, ditambah angka yang dulu tertulis langsung di
+# simulasi(). Profil lain hanya menimpa kunci yang disebut.
+BAWAAN = dict(
+    SEG_P=SEG_P,                                  # patuh, lalai, tidak_mampu, reaktivasi_saat_butuh
+    KELAS_P=KELAS_P,                              # porsi kelas 1/2/3 per segmen
+    USIA={"rsb": (48, 13), "lain": (42, 14)},     # normal(rata-rata, sb), dipotong 18-85
+    P_BARU={"rsb": 0.35, "lain": 0.20},           # porsi pendaftar baru dalam jendela
+    P_SHOCK_PRA=0.25,                             # tidak_mampu yang sudah jatuh miskin sebelum 2023
+    P_BAYAR_LALAI=(0.80, 0.60),                   # peluang bayar bulanan segmen lalai (autodebet, tidak)
+    P_REAKT_RINGAN=(0.10, 0.35),                  # pengali peluang melunasi demi rawat jalan ringan (RSB, lain)
+    P_PBPU=0.85,                                  # sisanya diberi label BP
+    JENIS={},                                     # timpa rate/biaya/sd per jenis layanan
+    TARIF_KELAS=TARIF_KELAS,
+    MULT_SERIUS_RSB=MULT_SERIUS_RSB,
+    KONTROL_RJTL=0.0,                             # rata-rata kontrol ulang bulanan per rawat jalan
+)
 
-def p_bayar(seg, autodebet, d, shock):
+# "sampel2024": dikalibrasi ke kalibrasi/target_sampel_bpjs_2024.csv (kode di komentar).
+# Yang teramati di data sampel dan dikalibrasi: tingkat nonaktif PBPU (A01), BP (A03), kelas
+# (A05-A10), usia (A15-A16), rawat inap dan rawat jalan RS (B01-B06), biaya (B07-B14), dan
+# rasio nonaktif sesudah klaim besar (C01-C09).
+# Yang TIDAK teramati: pembayaran bulanan, aktif kembali, dan segmen laten. SEG_P,
+# P_SHOCK_PRA, P_BAYAR_LALAI, dan P_REAKT_RINGAN dipilih (dengan mencoba beberapa kombinasi
+# dan membandingkannya lewat cek_realisme.py) supaya A01 dan C01-C09 cocok. Itu satu kombinasi
+# yang cocok, bukan perkiraan proporsi segmen sebenarnya. P_PENGAKAL dan DTSEN tidak diubah.
+# Belum cocok (lihat hasil_kalibrasi/realisme_sampel2024.csv): pendaftar baru 2024 di data nyata lebih
+# cepat menunggak (A20), dan usia tidak dimodelkan sebagai faktor risiko (A11-A14).
+PROFIL = {
+    "asumsi": {},
+    "sampel2024": dict(
+        SEG_P=[0.40, 0.10, 0.42, 0.08],                        # A01 + C01-C09 (lihat catatan di atas)
+        KELAS_P={s: [0.108, 0.144, 0.748] for s in SEGMEN},    # A05-A07; nonaktif datar per kelas (A08-A10)
+        USIA={"rsb": (44.0, 16.4), "lain": (44.0, 16.4)},      # A15-A16; RSB tidak lagi lebih tua
+        P_BARU={"rsb": 0.20, "lain": 0.12},                    # B02-B03
+        P_SHOCK_PRA=0.90,                                      # A01: nonaktif menetap, bukan bolong acak
+        P_BAYAR_LALAI=(0.90, 0.80),                            # C04, C07: lalai lebih jarang bolong
+        P_REAKT_RINGAN=(0.05, 0.15),                           # C01-C09: jarang melunasi demi rawat jalan ringan
+        P_PBPU=1.0,                                            # A03: BP hampir tidak pernah nonaktif karena premi
+        JENIS={
+            "rjtl_biasa": dict(rate=0.11, biaya=250_000, sd=0.75),       # B05-B06, B10-B12
+            "rjtl_seri": dict(rate=0.004, biaya=800_000, sd=0.30),       # B10-B12
+            "ritl_darurat": dict(rate=0.036, biaya=4_300_000, sd=0.65),  # B01, B04, B07-B09
+            "ritl_elektif": dict(rate=0.044, biaya=4_900_000, sd=0.65),
+        },
+        TARIF_KELAS={1: 1.45, 2: 1.22, 3: 1.0},     # B14; kelas 2 = interpolasi (karangan)
+        MULT_SERIUS_RSB=1.8,                        # tidak teramati; tetap
+        KONTROL_RJTL=12.0,                          # B05-B06: pengguna sedikit, kontrol berulang
+    ),
+}
+
+
+def parameter(profil):
+    if profil not in PROFIL:
+        raise ValueError(f"profil tidak dikenal: {profil} (pilihan: {', '.join(PROFIL)})")
+    prm = {**BAWAAN, **PROFIL[profil]}
+    prm["JENIS"] = {j: {**cfg, **prm["JENIS"].get(j, {})} for j, cfg in JENIS.items()}
+    return prm
+
+
+def p_bayar(seg, autodebet, d, shock, lalai=(0.80, 0.60)):
     if seg == "patuh":
         return 0.995 if autodebet else 0.975
     if seg == "lalai":
-        return 0.80 if autodebet else 0.60
+        return lalai[0] if autodebet else lalai[1]
     if seg == "tidak_mampu":
         if d >= shock:
             return 0.05
@@ -143,16 +211,21 @@ def p_bayar(seg, autodebet, d, shock):
     return 0.02                  # reaktivasi_saat_butuh di luar masa "tahan"
 
 
-def p_reaktivasi(seg, d, shock, jenis):
+def p_reaktivasi(seg, d, shock, jenis, ringan=(0.10, 0.35)):
     base = {"patuh": 0.97, "lalai": 0.90, "reaktivasi_saat_butuh": 0.98}.get(seg)
     if seg == "tidak_mampu":
         base = 0.20 if d >= shock else 0.85
     if jenis == "rjtl_biasa":    # jarang ada yang melunasi tunggakan demi kunjungan ringan
-        base *= 0.10 if seg == "reaktivasi_saat_butuh" else 0.35
+        base *= ringan[0] if seg == "reaktivasi_saat_butuh" else ringan[1]
     return base
 
 
-def simulasi(n, seed, n_lain=0):
+def simulasi(n, seed, n_lain=0, profil="asumsi", wilayah_rsb=None):
+    """wilayah_rsb: daftar kode wilayah (mis. ["W01", ..., "W05"]). Bila diisi, peserta
+    reaktivasi_saat_butuh hanya ditempatkan di wilayah itu (dial konsentrasi). Undian acak
+    lain tidak berubah, jadi peserta lain identik dengan data tanpa konsentrasi."""
+    prm = parameter(profil)
+    JP, TK = prm["JENIS"], prm["TARIF_KELAS"]
     rng = np.random.default_rng(seed)
 
     n_w = 40
@@ -161,20 +234,28 @@ def simulasi(n, seed, n_lain=0):
     wilayah = pd.DataFrame({"kode_wilayah": kode_w, "indeks_kemiskinan": pov})
     w_poor = pov / pov.sum()
     w_other = 0.7 / n_w + 0.3 * (1 - pov) / (1 - pov).sum()
+    w_rsb = None
+    if wilayah_rsb:
+        tidak_ada = set(wilayah_rsb) - set(kode_w)
+        if tidak_ada:
+            raise ValueError(f"wilayah tidak ada: {sorted(tidak_ada)}")
+        w_rsb = np.where(np.isin(kode_w, list(wilayah_rsb)), w_other, 0.0)
+        w_rsb = w_rsb / w_rsb.sum()
 
     peserta, bayar_rows, status_rows, klaim_rows, dtsen_rows, label_rows = [], [], [], [], [], []
     cnt = {"bayar": 0, "klaim": 0, "episode": 0}
 
     for k in range(n):
         pid = f"P-{k + 1:06d}"
-        seg = SEGMEN[rng.choice(4, p=SEG_P)]
+        seg = SEGMEN[rng.choice(4, p=prm["SEG_P"])]
         rsb = seg == "reaktivasi_saat_butuh"
-        kelas = int(rng.choice([1, 2, 3], p=KELAS_P[seg]))
+        kelas = int(rng.choice([1, 2, 3], p=prm["KELAS_P"][seg]))
         iuran = IURAN[kelas]
-        usia = int(np.clip(rng.normal(48 if rsb else 42, 13 if rsb else 14), 18, 85))
+        usia = int(np.clip(rng.normal(*prm["USIA"]["rsb" if rsb else "lain"]), 18, 85))
         jk = "L" if rng.random() < 0.5 else "P"
-        wil = kode_w[rng.choice(n_w, p=w_poor if seg == "tidak_mampu" else w_other)]
-        baru = rng.random() < (0.35 if rsb else 0.20)
+        p_wil = w_poor if seg == "tidak_mampu" else (w_rsb if (rsb and w_rsb is not None) else w_other)
+        wil = kode_w[rng.choice(n_w, p=p_wil)]
+        baru = rng.random() < prm["P_BARU"]["rsb" if rsb else "lain"]
         pengakal = rsb and rng.random() < P_PENGAKAL
         f_usia = float(np.clip(0.6 + (usia - 18) / 40, 0.6, 2.2))
 
@@ -182,7 +263,7 @@ def simulasi(n, seed, n_lain=0):
         shock = INF
         shock_pra = False
         if seg == "tidak_mampu":
-            if rng.random() < 0.25:
+            if rng.random() < prm["P_SHOCK_PRA"]:
                 shock, shock_pra = WIN_START - 1, True
             else:
                 shock = int(rng.integers(WIN_START, WIN_END - 120))
@@ -259,7 +340,7 @@ def simulasi(n, seed, n_lain=0):
             return ["va_bank", "minimarket", "mobile_jkn"][int(rng.integers(0, 3))]
 
         def jadwalkan(t, jenis, kelompok=None):
-            cfg = JENIS[jenis]
+            cfg = JP[jenis]
             if kelompok is None:
                 opsi = [g for g in cfg["kelompok"]
                         if not (g == "persalinan_terencana" and (jk == "L" or usia > 45))]
@@ -270,6 +351,9 @@ def simulasi(n, seed, n_lain=0):
                 hari = [t]
             elif jenis == "rjtl_biasa":
                 hari = [t + int(rng.integers(0, 4))]
+                if prm["KONTROL_RJTL"] > 0:      # kontrol ulang bulanan, hanya bila sedang aktif
+                    for v in range(1, 1 + int(rng.poisson(prm["KONTROL_RJTL"]))):
+                        heapq.heappush(heap, (hari[0] + 30 * v, 3, "layanan", (jenis, kelompok, eps, "kontrol")))
             elif jenis == "ritl_elektif":
                 adm = t + 1 + int(round(rng.gamma(2.0, 12.0)))
                 if pengakal and reakt:
@@ -291,8 +375,8 @@ def simulasi(n, seed, n_lain=0):
             heapq.heappush(heap, (MS[i] + int(rng.integers(0, 10)), 1, "bayar", i))
         t_from = WIN_START if not baru else act_start
         tahun = max(0.0, (WIN_END - t_from) / 365.25)
-        for jenis, cfg in JENIS.items():
-            rate = cfg["rate"] * f_usia * (MULT_SERIUS_RSB if (rsb and jenis in SERIUS) else 1.0)
+        for jenis, cfg in JP.items():
+            rate = cfg["rate"] * f_usia * (prm["MULT_SERIUS_RSB"] if (rsb and jenis in SERIUS) else 1.0)
             for _ in range(rng.poisson(rate * tahun)):
                 heapq.heappush(heap, (int(rng.integers(t_from, WIN_END + 1)), 2, "onset", jenis))
         if onset0 is not None:
@@ -306,7 +390,7 @@ def simulasi(n, seed, n_lain=0):
                 i = payload
                 if settled[i] != INF:
                     continue
-                p = 1.0 if d <= hold[0] else p_bayar(seg, autodebet, d, shock)
+                p = 1.0 if d <= hold[0] else p_bayar(seg, autodebet, d, shock, prm["P_BAYAR_LALAI"])
                 if rng.random() < p:
                     ada_tunggakan = any(settled[j] == INF for j in range(i0, i))
                     kanal = "autodebet" if (autodebet and not ada_tunggakan) else kanal_lunas()
@@ -314,18 +398,20 @@ def simulasi(n, seed, n_lain=0):
             elif typ == "onset":
                 jenis = payload
                 if not aktif(d):
-                    if rng.random() >= p_reaktivasi(seg, d, shock, jenis):
+                    if rng.random() >= p_reaktivasi(seg, d, shock, jenis, prm["P_REAKT_RINGAN"]):
                         continue         # tidak berobat lewat JKN
                     bayar(d, month_of(d), kanal_lunas())
                 jadwalkan(d, jenis)
             else:                        # layanan
-                jenis, kelompok, eps = payload
-                cfg = JENIS[jenis]
+                jenis, kelompok, eps = payload[:3]
+                cfg = JP[jenis]
                 if not aktif(d):
-                    if rng.random() >= p_reaktivasi(seg, d, shock, jenis):
+                    if len(payload) > 3:         # kontrol ulang tidak memicu pelunasan tunggakan
+                        continue
+                    if rng.random() >= p_reaktivasi(seg, d, shock, jenis, prm["P_REAKT_RINGAN"]):
                         continue
                     bayar(d, month_of(d), kanal_lunas())
-                biaya = int(round(cfg["biaya"] * TARIF_KELAS[kelas]
+                biaya = int(round(cfg["biaya"] * TK[kelas]
                                   * rng.lognormal(-cfg["sd"] ** 2 / 2, cfg["sd"]), -3))
                 denda = 0
                 if cfg["layanan"] == "RITL":
@@ -373,7 +459,7 @@ def simulasi(n, seed, n_lain=0):
 
     # ---- segmen di luar cakupan: PPU, PBI, PBPU/BP yang dibayar Pemda ----
     # RNG terpisah supaya data PBPU/BP mandiri di atas tidak berubah.
-    seg_kepesertaan = list(np.where(np.random.default_rng([seed, 1]).random(n) < 0.85, "PBPU", "BP"))
+    seg_kepesertaan = list(np.where(np.random.default_rng([seed, 1]).random(n) < prm["P_PBPU"], "PBPU", "BP"))
     pembayar = ["peserta"] * n
     rng_l = np.random.default_rng([seed, 2])
     tahun_win = (WIN_END - WIN_START) / 365.25
@@ -416,7 +502,7 @@ def simulasi(n, seed, n_lain=0):
                                    i_r - i_a + 1, None, "pemberi_kerja"))
 
         kunjungan = []
-        for jenis, cfg in JENIS.items():
+        for jenis, cfg in JP.items():
             for _ in range(rng_l.poisson(cfg["rate"] * f_usia * tahun_win)):
                 t = int(rng_l.integers(WIN_START, WIN_END + 1))
                 opsi = [g for g in cfg["kelompok"]
@@ -434,7 +520,7 @@ def simulasi(n, seed, n_lain=0):
                     mulai = t + int(rng_l.integers(0, 8))
                     hari = [mulai + 7 * v for v in range(int(rng_l.integers(12, 26)))]
                 for h in hari:
-                    biaya = int(round(cfg["biaya"] * TARIF_KELAS[kelas]
+                    biaya = int(round(cfg["biaya"] * TK[kelas]
                                       * rng_l.lognormal(-cfg["sd"] ** 2 / 2, cfg["sd"]), -3))
                     los = 1 + int(rng_l.poisson(3 if jenis == "ritl_darurat" else 2)) \
                         if cfg["layanan"] == "RITL" else 0
@@ -443,7 +529,7 @@ def simulasi(n, seed, n_lain=0):
         for h, jenis, kelompok, eps, biaya, los in sorted(kunjungan):
             if h > WIN_END or (tunggak and tunggak[0] <= h < tunggak[1]):
                 continue                 # di luar jendela, atau sedang dihentikan sementara
-            cfg = JENIS[jenis]
+            cfg = JP[jenis]
             denda = 0
             if (cfg["layanan"] == "RITL" and tunggak and not denda_dipakai
                     and 0 <= h - tunggak[1] <= JENDELA_DENDA):
@@ -516,11 +602,16 @@ def main():
                     help="jumlah peserta PPU, PBI, dan PBPU/BP-Pemda (bawaan: 15%% dari n)")
     ap.add_argument("--seed", type=int, default=2026)
     ap.add_argument("--out", default="data", help="folder keluaran")
+    ap.add_argument("--profil", default="asumsi", choices=list(PROFIL),
+                    help="asumsi (bawaan, angka proposal) atau sampel2024 (dikalibrasi ke data sampel BPJS)")
     a = ap.parse_args()
     n_lain = round(0.15 * a.n) if a.n_lain is None else a.n_lain
 
-    tabel = simulasi(a.n, a.seed, n_lain)
+    tabel = simulasi(a.n, a.seed, n_lain, profil=a.profil)
     os.makedirs(a.out, exist_ok=True)
+    if a.profil != "asumsi":
+        with open(os.path.join(a.out, "profil.txt"), "w", encoding="utf-8") as f:
+            f.write(f"profil={a.profil} seed={a.seed} n={a.n} n_lain={n_lain}\n")
     for nama, df in tabel.items():
         df.to_csv(os.path.join(a.out, f"{nama}.csv"), index=False)
         print(f"{nama:20s} {len(df):>9,d} baris")

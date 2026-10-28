@@ -1,0 +1,32 @@
+N05 skor_verifikasi - cek tanpa label (label_ground_truth.csv tidak dibaca)
+
+== data ==
+peserta 20000; jalur diperiksa 909; k 1% = 200
+skor > 0: 2084; skor kosong (NaN): 0
+jalur diperiksa dengan skor 0 (tidak bisa diurutkan): 0
+cek cepat: dari 909 skor tertinggi, 858 di jalur diperiksa (94.4%)
+peserta di luar jalur dengan skor di atas skor terendah jalur: 217
+skor jalur: maks 5.7025, median 1.0000, min 0.1526
+skor jalur pada peringkat 200: 2.0369; peserta jalur dengan skor itu: 1
+jalur dengan tambahan +1 (pendaftar baru klaim lalu berhenti): 369
+
+== bukti/data_jujur ==
+peserta 2500; jalur diperiksa 67; k 1% = 25
+skor > 0: 447; skor kosong (NaN): 0
+jalur diperiksa dengan skor 0 (tidak bisa diurutkan): 0
+cek cepat: dari 67 skor tertinggi, 63 di jalur diperiksa (73.3%)
+peserta di luar jalur dengan skor di atas skor terendah jalur: 44
+skor jalur: maks 3.6615, median 1.0000, min 0.6861
+skor jalur pada peringkat 25: 1.2127; peserta jalur dengan skor itu: 1
+jalur dengan tambahan +1 (pendaftar baru klaim lalu berhenti): 35
+
+== bukti/data_konsentrasi ==
+peserta 20000; jalur diperiksa 909; k 1% = 200
+skor > 0: 2084; skor kosong (NaN): 0
+jalur diperiksa dengan skor 0 (tidak bisa diurutkan): 0
+cek cepat: dari 909 skor tertinggi, 858 di jalur diperiksa (94.4%)
+peserta di luar jalur dengan skor di atas skor terendah jalur: 217
+skor jalur: maks 5.7025, median 1.0000, min 0.1526
+skor jalur pada peringkat 200: 2.0369; peserta jalur dengan skor itu: 1
+jalur dengan tambahan +1 (pendaftar baru klaim lalu berhenti): 369
+
