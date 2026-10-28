@@ -15,6 +15,12 @@ Riwayat:
   (bagian 5) ditetapkan Zul pada 28 Okt, sebelum penilaian apa pun.
 - Revisi ini juga mengganti satu kalimat di bagian 7: angka plasebo lama tidak
   bisa ditelusuri ke berkas di repo, jadi diganti angka plasebo IGD kanonik.
+- Commit sesudah 5b7b632 (28 Okt 2026, sebelum penilaian berlabel apa pun):
+  menambah bagian 3a, yaitu penjelasan rumus skor dalam bahasa sehari-hari
+  dan cara skor dipakai di T1, T2, T8, dan aplikasi. Alasannya, 5b7b632 belum
+  mengatur pemakaian skor, padahal eval-kit memilih k teratas tanpa aturan
+  seri dan mengisi kursi kosong dengan peserta luar jalur. Rumus, target, dan
+  aturan IGD tidak berubah.
 
 ## 0. Yang sudah terjadi sebelum revisi ini (diungkap)
 
@@ -134,6 +140,94 @@ Riwayat:
   Rumus boleh disetel hanya supaya lebih cocok dengan aturan, tanpa melihat
   label, dan setiap perubahan di-commit sebelum dinilai.
 - `label_ground_truth.csv` hanya dibaca untuk menilai.
+
+## 3a. Skor urutan: cara membacanya dan cara memakainya
+
+Ditambahkan 28 Okt 2026 setelah 5b7b632 dan sebelum penilaian berlabel apa
+pun. Rumus di bagian 3 tidak berubah. Bagian ini hanya menjelaskan rumus itu
+dengan kata-kata, lalu mengunci cara skor dipakai di T1, T2, dan T8. Commit
+5b7b632 belum mengatur hal itu.
+
+### Rumus dalam bahasa sehari-hari
+
+Skor dihitung per peserta dari riwayat bayar dan klaim Jan 2023 sampai
+Des 2025 (fungsi `fitur_peserta` di `cek_sinyal.py`). Skor dibentuk dari tiga
+pengali, ditambah satu bonus:
+
+1. **Porsi reaktivasi yang diikuti klaim besar** (0 sampai 1). Hitung berapa
+   kali peserta aktif lagi setelah menunggak. Dari jumlah itu, hitung berapa
+   kali ia mendapat klaim besar dalam 90 hari sesudahnya. Klaim besar artinya
+   rawat inap apa pun, atau rawat jalan senilai Rp1 juta atau lebih.
+   Contoh: aktif lagi 2 kali, dua-duanya diikuti rawat inap, maka nilainya 1,0.
+   Kalau hanya satu yang diikuti rawat inap, nilainya 0,5.
+2. **Porsi waktu tidak aktif** (0 sampai 1), yaitu 1 dikurangi porsi hari
+   aktif. Masa tunggu tidak dihitung. Peserta yang aktif 30% dari waktunya
+   mendapat 0,7.
+3. **Besar klaim dibanding iuran**, yaitu ln(1 + total klaim / total iuran
+   yang dibayar). Kalau iuran yang dibayar kurang dari satu bulan iuran,
+   pembaginya satu bulan iuran, supaya tidak dibagi nol. Logaritma membuat
+   klaim raksasa tidak menenggelamkan dua pengali lainnya. Klaim 1 kali iuran
+   memberi 0,69, 10 kali memberi 2,40, dan 100 kali memberi 4,62.
+4. **Bonus +1** untuk pendaftar baru (daftar 2023 atau sesudahnya) yang
+   mendapat klaim besar dalam 90 hari sejak pertama aktif, lalu menunggak
+   6 bulan atau lebih.
+5. **Pengaman**: peserta DTSEN desil 1-5 selalu bernilai 0, apa pun
+   riwayatnya.
+
+Jadi skor = pengali 1 x pengali 2 x pengali 3, ditambah bonus 4, lalu
+pengaman 5 diterapkan.
+
+Contoh perhitungan, dengan peserta rekaan:
+
+| Peserta | 1 | 2 | Klaim / iuran | 3 | Bonus | Skor |
+|---|---|---|---|---|---|---|
+| Aktif lagi 2 kali, keduanya diikuti rawat inap; aktif 30%; klaim Rp20 jt, iuran Rp1,2 jt | 1,0 | 0,7 | 16,7 | 2,87 | 0 | 2,01 |
+| Sama, tetapi hanya 1 dari 2 diikuti rawat inap | 0,5 | 0,7 | 16,7 | 2,87 | 0 | 1,01 |
+| Pendaftar 2024, rawat inap 20 hari setelah aktif, lalu menunggak 8 bulan, tidak pernah aktif lagi | 0 | - | - | - | 1 | 1,00 |
+| Riwayat sama dengan baris pertama, tetapi DTSEN desil 3 | - | - | - | - | - | 0 |
+
+Di data dasar (dihitung tanpa label), skor 909 peserta jalur diperiksa
+berkisar 0,15 sampai 5,70. Sebanyak 310 orang mendapat skor tepat 1,00,
+kebanyakan pendaftar baru yang hanya mendapat bonus. Skor ini hanya urutan.
+Ia bukan peluang, bukan bukti, dan bukan vonis.
+
+### Cara skor dipakai
+
+1. **Skor hanya mengurutkan peserta di dalam jalur diperiksa**, yaitu rute
+   `verifikasi_pola_reaktivasi` aturan A. Peserta di luar jalur tidak pernah
+   masuk daftar periksa, berapa pun skornya. Di data dasar ada 217 peserta
+   luar jalur yang skornya di atas skor terendah jalur, dan 38 di antaranya
+   berada di rute cek PBI.
+2. **Daftar periksa pada kapasitas k** berisi k peserta jalur dengan skor
+   tertinggi. Kalau isi jalur kurang dari k, semua isi jalur masuk daftar,
+   dan sisa kapasitas tidak diisi peserta lain. Presisi jalur diperiksa (T1,
+   T2, T8) dihitung atas min(k, isi jalur) peserta, dan jumlah itu selalu
+   disebut di sebelah angka presisi. Angka eval-kit apa adanya, dengan k
+   penuh yang diisi peserta luar jalur, ikut dilaporkan sebagai angka kedua.
+3. **Seri dipecah acak dengan seed tetap.** Eval-kit memilih k teratas dengan
+   `np.argpartition`, sehingga pilihan di antara skor yang sama tidak
+   ditentukan. Mengurutkan menurut ID juga bukan pilihan netral: ID kasus
+   jujur (J-) selalu mendahului data dasar (P-). Cara yang dipakai:
+   - Peserta diurutkan menurut id_peserta.
+   - Tiap peserta mendapat bilangan acak u dari
+     `numpy.random.default_rng([7, 1])`.
+   - Skor yang dimasukkan ke eval-kit = skor + (1 + u) x 0,000001 untuk
+     anggota jalur, dan 0 untuk peserta luar jalur.
+   - Tambahan ini lebih kecil dari ketelitian skor (0,0001), jadi urutan skor
+     yang berbeda tidak berubah. Anggota jalur selalu di atas peserta luar
+     jalur.
+   - Jumlah peserta yang seri di batas k dilaporkan.
+4. **Nilai k.** Untuk T2 dan T8, k 1% = 200 dari 20.000 peserta. Untuk T1:
+   - Populasinya data dasar ditambah kasus jujur.
+   - Peserta bayar-saat-butuh (`reaktivasi_saat_butuh` dan
+     `baru_berhenti_cepat`) dikurangi secara acak sampai tinggal 1% dari
+     populasi. Undian dilakukan 200 kali dengan seed 7.
+   - k = 1% dari populasi tiap undian, dibulatkan ke atas.
+   - Skor dan rute tiap peserta tidak berubah karena undian, sebab keduanya
+     dihitung per orang.
+5. **Di aplikasi**: bagian verifikasi di Daftar kerja diurutkan menurut skor
+   menurun. Petugas melihat peringkat dan alasan, bukan angka skor. Skor
+   tidak dipakai untuk rute lain, dan tidak pernah ditampilkan ke peserta.
 
 ## 4. Target
 
