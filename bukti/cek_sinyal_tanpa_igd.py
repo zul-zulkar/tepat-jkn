@@ -294,7 +294,8 @@ def fitur_peserta(D, re):
 
     # reaktivasi & keterkaitannya dengan klaim besar
     k = D["klaim"]
-    besar = k[(k["jenis_layanan"] == "RITL") | (k["biaya_klaim"] >= KLAIM_BESAR)]
+    besar = k[((k["jenis_layanan"] == "RITL") & (k["cara_masuk"] != "IGD"))
+              | ((k["jenis_layanan"] == "RJTL") & (k["biaya_klaim"] >= KLAIM_BESAR))]
     besar = besar[["id_peserta", "tgl_masuk"]].sort_values("tgl_masuk")
     r = pd.merge_asof(re.sort_values("tgl_reakt"), besar, left_on="tgl_reakt",
                       right_on="tgl_masuk", by="id_peserta", direction="forward")
