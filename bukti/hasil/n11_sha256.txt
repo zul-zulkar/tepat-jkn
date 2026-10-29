@@ -1,0 +1,12 @@
+# N11 review pakar buta: sidik jari SHA-256, dicatat sebelum lembar dikirim ke pakar.
+# review_key.csv dan review_sheet.csv TIDAK di repo publik; disimpan di
+# D:\ZUL\bpjs-healthkathon\review_n11\ (kirim_ke_pakar\ berisi tiga file untuk pakar).
+# Dibuat 2026-10-28 19:21 WITA dengan buat_review_n11.py.
+# Pemilihan: hkeval.review.make_review_sheet(k=20, n_random=20, seed=0), skor bukti/hasil/kit_scores_dasar.csv (sha256 d6664a92f67284acebafdabebc484ce25f4c3aacd432a93bcb63e4f908dbe65a).
+# Data: generate_data.py --n 20000 --seed 2026 (profil asumsi); label dan kit_truth tidak dibaca.
+# Cek: nilai_n11.py menolak menilai bila sha256 review_key.csv berbeda dari baris di bawah.
+69d558b5f5bcaaeee6d45099abb3540e50f83475bc7f8c0465be056395a327f8  review_sheet.csv
+6b1a390bed418404f4efd013ccafbb0d1c3110bfebca4f2bca0e5bdfb61c4be2  review_key.csv
+ddc1cc60c416c84fb2e75b81b76086594ff87b3cee1d7997c8cff98a3690a9dd  kirim_ke_pakar/lembar_jawaban.xlsx
+81e572b3e70a5dedb44f01bd9fd732f382c519ea99d7f91a301c8ddaaa689fc7  kirim_ke_pakar/buku_kasus.pdf
+4c6d287981c1fe4bfc76a11775f66cbf7af405317c6faa2e97517805ed714142  kirim_ke_pakar/petunjuk_penilai.pdf

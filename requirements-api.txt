@@ -1,0 +1,11 @@
+# API tipis TEPAT (api.py), ditambahkan 28 Okt 2026. Dipasang DI ATAS requirements.txt:
+# api.py memanggil cek_sinyal.py, jadi butuh pandas, numpy, dan matplotlib dari sana.
+#     pip install -r requirements.txt -r requirements-api.txt
+#
+# Diuji 28 Okt 2026 dengan fastapi 0.162.0, uvicorn 0.54.0, pydantic 2.14.1
+# (Python 3.13, pandas 3.1.0, numpy 2.5.4). Batas bawah = versi yang diuji, karena versi
+# lebih lama belum dicoba. Batas atas = versi mayor berikutnya.
+# pydantic ditulis eksplisit: api.py memakai API pydantic 2 (model_validator, ConfigDict).
+fastapi>=0.162,<1
+uvicorn>=0.54,<1
+pydantic>=2.14,<3
