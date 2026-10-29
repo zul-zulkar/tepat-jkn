@@ -1,6 +1,7 @@
 """Aplikasi TEPAT (Streamlit). Jalankan:  streamlit run app.py
 
-Hanya membaca app_data/ (dibuat siapkan_app.py). Tidak melatih model saat dibuka.
+Hanya membaca app_data/ (dibuat siapkan_app.py), kecuali halaman Keadilan yang juga membaca
+bukti/hasil/skor_verifikasi.csv dan beban_strata.csv (tanpa label). Tidak melatih model saat dibuka.
 Tema dan font: .streamlit/config.toml. Bagian bersama: tepat_ui.py. Logo: static/logo/.
 """
 import streamlit as st
@@ -20,6 +21,8 @@ halaman = st.navigation(
                 url_path="profil"),
         st.Page(ui.HALAMAN_KEBIJAKAN, title="Kebijakan", icon=":material/gavel:",
                 url_path="kebijakan"),
+        st.Page(ui.HALAMAN_KEADILAN, title="Keadilan", icon=":material/balance:",
+                url_path="keadilan"),
     ],
     position="top",
 )

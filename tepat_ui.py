@@ -35,6 +35,7 @@ KLAIM_BESAR, JEDA_KAIT = _konstanta("cek_sinyal.py", "KLAIM_BESAR", "JEDA_KAIT")
 HALAMAN_DAFTAR = "halaman/daftar_kerja.py"
 HALAMAN_PROFIL = "halaman/profil_peserta.py"
 HALAMAN_KEBIJAKAN = "halaman/kebijakan.py"
+HALAMAN_KEADILAN = "halaman/keadilan.py"
 
 # ---------------------------------------------------------------- label dan warna
 # Palet deck proposal TEPAT; sama dengan .streamlit/config.toml.
@@ -375,6 +376,32 @@ p, li { font-feature-settings: "tnum" 1; }
 .tp-catatan-kecil { font-size: .78rem; color: #5E6B66; margin: .2rem 0 0; line-height: 1.45; }
 .tp-baca { margin: .2rem 0 0; padding: 0 0 0 1.1rem; color: #3D4B46; font-size: .92rem; line-height: 1.55; }
 .tp-baca li { margin: 0 0 .35rem; }
+
+/* halaman Keadilan: baris beban per kelompok. Batang = seluruh jalur, belah ketupat = yang diperiksa. */
+.tp-beban { margin: .55rem 0 0; }
+.tp-beban-r, .tp-beban-ax { display: grid; grid-template-columns: minmax(92px, 140px) minmax(0, 1fr) 104px; gap: .7rem; align-items: center; }
+.tp-beban-r { padding: .42rem 0; border-top: 1px solid #ECEBE4; }
+.tp-beban-r:first-child { border-top: 0; }
+.tp-beban-r .nm { font-size: .86rem; font-weight: 600; color: #12302A; line-height: 1.25; }
+.tp-beban-r .nm small { display: block; font-weight: 400; color: #5E6B66; font-size: .74rem; }
+.tp-beban-r .nm .tp-chip { margin-top: .3rem; font-size: .7rem; padding: .18rem .5rem; white-space: normal; }
+.tp-trek { position: relative; height: 28px; background: #F3F2EC; border-radius: 6px; }
+.tp-trek .g { position: absolute; top: -3px; bottom: -3px; width: 0; border-left: 1.5px solid #8F9993; }
+.tp-trek .g2 { border-left: 1.5px dashed #9A3F12; }
+.tp-trek .br { position: absolute; left: 0; top: 6px; height: 16px; border-radius: 0 4px 4px 0; background: var(--wj); }
+.tp-trek .dm { position: absolute; top: 50%; width: 13px; height: 13px; margin: -6.5px 0 0 -6.5px; transform: rotate(45deg);
+               background: var(--wp); border: 2px solid #12302A; box-sizing: border-box; }
+.tp-beban-r .ang { font-size: .8rem; line-height: 1.4; color: #3D4B46; text-align: right; }
+.tp-beban-r .ang span { display: block; }
+.tp-beban-r .ang small { font-size: .7rem; color: #5E6B66; }
+.tp-beban-r .ang b { font-size: .95rem; font-weight: 700; }
+.tp-beban-r .bagi { grid-column: 1 / -1; font-size: .74rem; line-height: 1.4; color: #5E6B66; margin-top: -.1rem; }
+.tp-beban-r .bagi b { color: #3D4B46; font-weight: 600; }
+.tp-beban-r .bagi em { font-style: normal; color: #9A3F12; }
+.tp-trek-ax { position: relative; height: 1.2rem; font-size: .7rem; color: #5E6B66; }
+.tp-trek-ax i { position: absolute; top: .15rem; transform: translateX(-50%); font-style: normal; white-space: nowrap; }
+.tp-trek-ax i:first-child { transform: none; }
+@media (max-width: 640px) { .tp-beban-r, .tp-beban-ax { grid-template-columns: minmax(80px, 110px) minmax(0, 1fr) 88px; gap: .45rem; } }
 </style>
 """
 
