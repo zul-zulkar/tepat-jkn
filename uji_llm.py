@@ -322,6 +322,39 @@ def test_opsi_hanya_dari_template():
     assert llm.opsi_dalam("cek lewat pbi") == {"PBI"} and llm.opsi_dalam("Pbi") == {"PBI"}  # ejaan lain tak lolos
 
 
+def test_penguat_kepastian_ditolak():
+    """Temuan uji model asli 30 Okt: 'mungkin memenuhi syarat' di template PBI menjadi 'besar kemungkinan Anda
+    memenuhi syarat' dan lolos. Pesan tidak boleh lebih pasti daripada template."""
+    pb, tb = P_PBI, P_PBI["rute"]
+    dasar = json.loads(jawaban(pb, tb))["pesan_peserta"]
+    assert "mungkin memenuhi syarat" in dasar
+    for ganti in ("besar kemungkinan memenuhi syarat", "Besar  Kemungkinan memenuhi syarat",
+                  "besar\nkemungkinan memenuhi syarat", "tinggi kemungkinan memenuhi syarat",
+                  "kemungkinan besar memenuhi syarat", "sangat mungkin memenuhi syarat",
+                  "amat mungkin memenuhi syarat", "hampir pasti memenuhi syarat", "sudah pasti memenuhi syarat",
+                  "pasti memenuhi syarat", "dipastikan memenuhi syarat"):
+        tolak(pb, tb, jawaban(pb, tb, pesan=dasar.replace("mungkin memenuhi syarat", ganti)),
+              "melanggar_aturan", "klaim_pasti")
+    # berlaku juga untuk jalur lain dan sisipan di tempat lain
+    p, t, dasar2 = _dasar()
+    tolak(p, t, jawaban(p, t, pesan=dasar2 + " Pembayaran dipastikan berhasil."), "melanggar_aturan", "klaim_pasti")
+    # kata sah yang mirip tidak ditolak: template sendiri memakai 'Pastikan', draf wajar memakai 'Jaminan Kesehatan'
+    for aman in ("mungkin memenuhi syarat", "kemungkinan memenuhi syarat", "dapat mengecek apakah memenuhi syarat"):
+        with lingkungan():
+            h = llm.susun(pb, tb, klien=Tiruan(jawaban(pb, tb, pesan=dasar.replace("mungkin memenuhi syarat", aman))))
+        assert h.status == "ai", (aman, h.cadangan, h.rinci)
+    for kalimat in ("Pastikan saldo rekening cukup.", "Kami akan memastikan data Anda.", "Program Jaminan Kesehatan Nasional.",
+                    "Untuk kepastian, hubungi Care Center 165.", "Besarnya kemungkinan tidak kami ketahui.",
+                    "Iuran besar bukan masalah."):
+        assert not llm._KEPASTIAN.search(kalimat), kalimat
+    # prompt memuat aturan yang sama untuk semua jalur
+    for pp, tt in KASUS_AI:
+        c = Tiruan(jawaban(pp, tt))
+        with lingkungan():
+            llm.susun(pp, tt, klien=c)
+        assert "Jangan menaikkan kepastian" in c.sistem and "besar kemungkinan" in c.sistem, tt
+
+
 def test_bawaan_sesuai_hasil_uji_nyata():
     """Bawaan dikunci ke hasil uji 29 Okt (6/6 sukses, tercepat); 3.8-flash sering 503, 20 dtk terlalu ketat."""
     assert llm.MODEL_GEMINI == "gemini-3.1-flash-lite"
