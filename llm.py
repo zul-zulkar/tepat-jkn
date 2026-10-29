@@ -342,6 +342,13 @@ _ANCAMAN = re.compile(  # \w* di belakang: tangkap imbuhan (konsekuensinya, dend
 _INTERNAL = re.compile(
     r"\b(skor|score|peluang|probabilitas|risiko|berisiko|peringatan dini|triase|rute|jalur|model|algoritma|"
     r"prediksi|diprediksi|kecerdasan buatan|desil|dtsen|reaktivasi|verifikasi|klaim)\b", re.I)
+# Penguat kepastian: draf template sengaja berhati-hati ("mungkin memenuhi syarat"). Temuan uji model asli 30 Okt:
+# draf PBI menjadi "besar kemungkinan Anda memenuhi syarat" dan lolos semua aturan. Hanya frasa yang benar-benar
+# menaikkan kepastian; "pastikan"/"memastikan" (dipakai template: "Pastikan saldo rekening cukup") dan "Jaminan
+# Kesehatan Nasional" tidak kena. Pelemahan hedge tanpa kata di daftar ini ("mungkin" dibuang) tidak terdeteksi.
+_KEPASTIAN = re.compile(
+    r"\b(?:(?:sudah|hampir)\s+pasti|pasti|dipastikan|(?:besar|tinggi)\s+kemungkinan|kemungkinan\s+(?:besar|tinggi)|"
+    r"(?:sangat|amat)\s+mungkin)\b", re.I)
 _AI_KAPITAL = re.compile(r"\bAI\b")
 _PERSEN = re.compile(r"\d\s*%|\bpersen\b", re.I)
 _TAUTAN = re.compile(r"https?://|www\.|@\w|\b[\w-]+\.(?:com|id|co|net|org)\b|(?:\+62|\b0)8\d{6,}", re.I)
@@ -407,6 +414,8 @@ def periksa_pesan_peserta(teks: str, *, kode_aturan: str, bulan: int, nominal: l
         p.append("istilah_internal")
     if _PERSEN.search(t):
         p.append("angka_persen")
+    if _KEPASTIAN.search(t):
+        p.append("klaim_pasti")
     if _TAUTAN.search(t):
         p.append("tautan_atau_kontak")
     if _REHAB_LAMA.search(t):
@@ -540,6 +549,8 @@ Jangan mengarang angka, tanggal, tautan, atau nomor telepon.
 7. Tulis {{ID}} (persis, dengan kurung kurawal) bila ingin menyebut nomor peserta. Jangan menulis nomor sendiri.
 8. Bahasa Indonesia baku yang ramah, tanpa emoji, tanpa markdown, paling banyak 700 karakter. Ejaan harus rapi: \
 setiap kata dipisah satu spasi, jangan menggabungkan dua kata, dan beri spasi setelah titik dan koma.
+9. Jangan menaikkan kepastian di atas draf_template. Bila template memakai "mungkin" atau "kemungkinan", \
+pertahankan; jangan menulis "pasti", "dipastikan", "besar kemungkinan", atau "kemungkinan besar".
 
 Jawab HANYA dengan satu objek JSON tanpa teks lain, persis berbentuk:
 {{"jalur": "<salin jalur>", "pesan_peserta": "<pesan untuk peserta>", \
