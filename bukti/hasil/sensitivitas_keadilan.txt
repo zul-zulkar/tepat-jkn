@@ -1,0 +1,72 @@
+run per varian: {'asumsi': 5, 'asumsi_netral': 5, 'sampel2024': 5, 'sampel2024_netral': 5}
+rata-rata [min-maks] antar seed; 1x = sama dengan rata-rata semua peserta
+
+== isi jalur dan jumlah diperiksa (rata-rata) ==
+                     isi      m
+varian                         
+asumsi             927.0  200.0
+asumsi_netral      913.0  200.0
+sampel2024         708.0  200.0
+sampel2024_netral  694.0  200.0
+
+== A. SELURUH JALUR: rasio ke rata-rata ==
+<=35     asumsi (asli): 0.52 [0.49-0.60] | asumsi, usia netral: 0.58 [0.51-0.64] | sampel2024 (asli): 0.84 [0.81-0.90] | sampel2024, usia netral: 1.03 [1.00-1.05]
+36-55    asumsi (asli): 1.07 [1.02-1.09] | asumsi, usia netral: 1.08 [1.05-1.12] | sampel2024 (asli): 1.00 [0.90-1.06] | sampel2024, usia netral: 1.00 [0.97-1.04]
+>55      asumsi (asli): 1.68 [1.65-1.73] | asumsi, usia netral: 1.56 [1.46-1.68] | sampel2024 (asli): 1.22 [1.14-1.34] | sampel2024, usia netral: 0.97 [0.92-1.03]
+kelas_1  asumsi (asli): 0.97 [0.92-1.04] | asumsi, usia netral: 0.96 [0.92-0.99] | sampel2024 (asli): 0.99 [0.84-1.14] | sampel2024, usia netral: 0.99 [0.85-1.11]
+kelas_2  asumsi (asli): 0.95 [0.86-1.01] | asumsi, usia netral: 0.94 [0.93-0.95] | sampel2024 (asli): 1.00 [0.94-1.06] | sampel2024, usia netral: 0.95 [0.88-1.03]
+kelas_3  asumsi (asli): 1.04 [1.02-1.11] | asumsi, usia netral: 1.06 [1.05-1.08] | sampel2024 (asli): 1.00 [0.99-1.03] | sampel2024, usia netral: 1.01 [0.99-1.04]
+rendah   asumsi (asli): 1.05 [0.99-1.08] | asumsi, usia netral: 1.10 [1.06-1.13] | sampel2024 (asli): 1.22 [1.20-1.25] | sampel2024, usia netral: 1.21 [1.14-1.30]
+sedang   asumsi (asli): 1.03 [0.98-1.11] | asumsi, usia netral: 0.99 [0.96-1.03] | sampel2024 (asli): 1.02 [0.94-1.08] | sampel2024, usia netral: 1.04 [0.99-1.13]
+tinggi   asumsi (asli): 0.92 [0.88-0.96] | asumsi, usia netral: 0.91 [0.84-0.98] | sampel2024 (asli): 0.83 [0.80-0.90] | sampel2024, usia netral: 0.82 [0.80-0.86]
+L        asumsi (asli): 1.01 [0.93-1.04] | asumsi, usia netral: 1.02 [1.00-1.04] | sampel2024 (asli): 0.99 [0.96-1.02] | sampel2024, usia netral: 1.01 [0.98-1.06]
+P        asumsi (asli): 0.99 [0.96-1.07] | asumsi, usia netral: 0.98 [0.95-1.00] | sampel2024 (asli): 1.01 [0.98-1.04] | sampel2024, usia netral: 0.99 [0.94-1.02]
+
+== B. DIPERIKSA (skor tertinggi, k = 1%): rasio ke rata-rata ==
+<=35     asumsi (asli): 0.48 [0.40-0.55] | asumsi, usia netral: 0.55 [0.43-0.72] | sampel2024 (asli): 0.73 [0.63-0.90] | sampel2024, usia netral: 1.03 [0.84-1.27]
+36-55    asumsi (asli): 1.09 [1.00-1.14] | asumsi, usia netral: 1.11 [1.03-1.21] | sampel2024 (asli): 1.01 [0.87-1.19] | sampel2024, usia netral: 0.98 [0.88-1.10]
+>55      asumsi (asli): 1.70 [1.47-1.93] | asumsi, usia netral: 1.52 [1.15-1.74] | sampel2024 (asli): 1.34 [1.12-1.62] | sampel2024, usia netral: 1.01 [0.73-1.15]
+kelas_1  asumsi (asli): 0.51 [0.39-0.69] | asumsi, usia netral: 0.61 [0.56-0.67] | sampel2024 (asli): 0.41 [0.23-0.65] | sampel2024, usia netral: 0.36 [0.14-0.55]
+kelas_2  asumsi (asli): 0.71 [0.50-0.88] | asumsi, usia netral: 0.75 [0.72-0.81] | sampel2024 (asli): 0.69 [0.38-0.86] | sampel2024, usia netral: 0.58 [0.52-0.61]
+kelas_3  asumsi (asli): 1.40 [1.21-1.51] | asumsi, usia netral: 1.34 [1.30-1.36] | sampel2024 (asli): 1.15 [1.09-1.21] | sampel2024, usia netral: 1.17 [1.14-1.20]
+rendah   asumsi (asli): 1.03 [0.79-1.15] | asumsi, usia netral: 1.12 [0.96-1.22] | sampel2024 (asli): 1.24 [1.12-1.36] | sampel2024, usia netral: 1.26 [1.15-1.46]
+sedang   asumsi (asli): 1.08 [0.93-1.22] | asumsi, usia netral: 0.96 [0.90-1.04] | sampel2024 (asli): 0.96 [0.82-1.10] | sampel2024, usia netral: 1.02 [0.90-1.18]
+tinggi   asumsi (asli): 0.89 [0.81-1.00] | asumsi, usia netral: 0.92 [0.84-1.01] | sampel2024 (asli): 0.86 [0.82-0.90] | sampel2024, usia netral: 0.81 [0.74-0.93]
+L        asumsi (asli): 0.97 [0.88-1.07] | asumsi, usia netral: 0.97 [0.90-1.09] | sampel2024 (asli): 0.96 [0.79-1.07] | sampel2024, usia netral: 1.03 [0.89-1.15]
+P        asumsi (asli): 1.03 [0.93-1.12] | asumsi, usia netral: 1.03 [0.90-1.10] | sampel2024 (asli): 1.04 [0.92-1.21] | sampel2024, usia netral: 0.97 [0.85-1.10]
+
+== C. PORSI KELAS DI POPULASI vs DI YANG DIPERIKSA (rata-rata antar seed) ==
+asumsi (asli)            skor asli        1: 20.5% -> 10.5%  2: 31.9% -> 22.8%  3: 47.6% -> 66.7%
+asumsi (asli)            iuran disamakan  1: 20.5% -> 21.6%  2: 31.9% -> 30.6%  3: 47.6% -> 47.8%
+asumsi, usia netral      skor asli        1: 20.8% -> 12.6%  2: 31.8% -> 24.0%  3: 47.4% -> 63.4%
+asumsi, usia netral      iuran disamakan  1: 20.8% -> 22.0%  2: 31.8% -> 30.2%  3: 47.4% -> 47.8%
+sampel2024 (asli)        skor asli        1: 10.8% -> 4.4%  2: 14.3% -> 9.9%  3: 74.8% -> 85.7%
+sampel2024 (asli)        iuran disamakan  1: 10.8% -> 13.1%  2: 14.3% -> 16.6%  3: 74.8% -> 70.3%
+sampel2024, usia netral  skor asli        1: 10.7% -> 3.9%  2: 14.5% -> 8.4%  3: 74.8% -> 87.7%
+sampel2024, usia netral  iuran disamakan  1: 10.7% -> 12.5%  2: 14.5% -> 15.6%  3: 74.8% -> 71.9%
+
+== D. FREKUENSI TANDA (jumlah seed) ==
+asumsi (asli)            [jalur    ] usia/<=35: 0 perhatian, 0 >2x, 5 jarang; usia/>55: 5 perhatian, 0 >2x, 0 jarang
+asumsi (asli)            [diperiksa] kelas/kelas_1: 0 perhatian, 0 >2x, 5 jarang; kelas/kelas_2: 0 perhatian, 0 >2x, 3 jarang; kelas/kelas_3: 4 perhatian, 0 >2x, 0 jarang; usia/<=35: 0 perhatian, 0 >2x, 5 jarang; usia/>55: 5 perhatian, 0 >2x, 0 jarang
+asumsi, usia netral      [jalur    ] usia/<=35: 0 perhatian, 0 >2x, 5 jarang; usia/>55: 5 perhatian, 0 >2x, 0 jarang
+asumsi, usia netral      [diperiksa] kelas/kelas_1: 0 perhatian, 0 >2x, 5 jarang; kelas/kelas_2: 0 perhatian, 0 >2x, 3 jarang; kelas/kelas_3: 5 perhatian, 0 >2x, 0 jarang; usia/<=35: 0 perhatian, 0 >2x, 5 jarang; usia/>55: 4 perhatian, 0 >2x, 0 jarang
+sampel2024 (asli)        [jalur    ] kemiskinan/tinggi: 0 perhatian, 0 >2x, 1 jarang; usia/>55: 1 perhatian, 0 >2x, 0 jarang
+sampel2024 (asli)        [diperiksa] jk/L: 0 perhatian, 0 >2x, 1 jarang; kelas/kelas_1: 0 perhatian, 0 >2x, 4 jarang; kelas/kelas_2: 0 perhatian, 0 >2x, 1 jarang; kemiskinan/rendah: 2 perhatian, 0 >2x, 0 jarang; usia/<=35: 0 perhatian, 0 >2x, 4 jarang; usia/>55: 2 perhatian, 0 >2x, 0 jarang
+sampel2024, usia netral  [jalur    ] kemiskinan/rendah: 1 perhatian, 0 >2x, 0 jarang; kemiskinan/tinggi: 0 perhatian, 0 >2x, 1 jarang
+sampel2024, usia netral  [diperiksa] kelas/kelas_1: 0 perhatian, 0 >2x, 5 jarang; kelas/kelas_2: 0 perhatian, 0 >2x, 5 jarang; kemiskinan/rendah: 2 perhatian, 0 >2x, 0 jarang; kemiskinan/tinggi: 0 perhatian, 0 >2x, 2 jarang; usia/<=35: 1 perhatian, 0 >2x, 0 jarang
+
+== E. CORONG USIA (rasio ke rata-rata semua peserta) ==
+-- usia >55
+  pernah_reaktivasi             asumsi (asli): 1.03 [1.02-1.05] | asumsi, usia netral: 1.01 [0.99-1.02] | sampel2024 (asli): 1.01 [1.00-1.02] | sampel2024, usia netral: 1.00 [0.99-1.01]
+  punya_klaim_besar             asumsi (asli): 1.38 [1.35-1.41] | asumsi, usia netral: 1.08 [1.06-1.09] | sampel2024 (asli): 1.31 [1.29-1.34] | sampel2024, usia netral: 0.99 [0.95-1.05]
+  reaktivasi_lalu_klaim_besar   asumsi (asli): 1.55 [1.46-1.65] | asumsi, usia netral: 1.15 [1.11-1.24] | sampel2024 (asli): 1.36 [1.33-1.39] | sampel2024, usia netral: 0.98 [0.94-1.02]
+  masuk_jalur                   asumsi (asli): 1.68 [1.65-1.73] | asumsi, usia netral: 1.56 [1.46-1.68] | sampel2024 (asli): 1.22 [1.14-1.34] | sampel2024, usia netral: 0.97 [0.92-1.03]
+  jalur_bila_pernah_reaktivasi  asumsi (asli): 1.74 [1.69-1.83] | asumsi, usia netral: 1.55 [1.45-1.62] | sampel2024 (asli): 1.29 [1.21-1.41] | sampel2024, usia netral: 0.96 [0.85-1.04]
+-- usia <=35
+  pernah_reaktivasi             asumsi (asli): 0.98 [0.97-1.00] | asumsi, usia netral: 0.99 [0.98-1.00] | sampel2024 (asli): 0.99 [0.98-1.00] | sampel2024, usia netral: 1.00 [0.99-1.01]
+  punya_klaim_besar             asumsi (asli): 0.71 [0.69-0.73] | asumsi, usia netral: 0.94 [0.93-0.96] | sampel2024 (asli): 0.71 [0.69-0.73] | sampel2024, usia netral: 1.02 [0.98-1.04]
+  reaktivasi_lalu_klaim_besar   asumsi (asli): 0.61 [0.59-0.63] | asumsi, usia netral: 0.88 [0.83-0.93] | sampel2024 (asli): 0.69 [0.64-0.71] | sampel2024, usia netral: 1.01 [0.97-1.05]
+  masuk_jalur                   asumsi (asli): 0.52 [0.49-0.60] | asumsi, usia netral: 0.58 [0.51-0.64] | sampel2024 (asli): 0.84 [0.81-0.90] | sampel2024, usia netral: 1.03 [1.00-1.05]
+  jalur_bila_pernah_reaktivasi  asumsi (asli): 0.45 [0.41-0.54] | asumsi, usia netral: 0.58 [0.54-0.64] | sampel2024 (asli): 0.77 [0.70-0.81] | sampel2024, usia netral: 1.04 [1.00-1.07]
+
+cek kanonik: 11 dari 11 baris cocok dengan bukti/hasil/beban_strata.csv
