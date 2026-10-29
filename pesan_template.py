@@ -1,4 +1,4 @@
-"""Draf pesan dari template. Ini juga jalur cadangan lapisan AI (llm.py, menyusul).
+"""Draf pesan dari template. Ini juga jalur cadangan lapisan AI (llm.py, Z09).
 
 Aturan yang dijaga (sama untuk versi AI nanti):
 - Pesan tidak pernah mengubah rute. Rute datang dari aturan triase / model peringatan dini.

@@ -5,6 +5,7 @@ import altair as alt
 import pandas as pd
 import streamlit as st
 
+import llm
 import pesan_template
 import tepat_ui as ui
 from ikon import ikon
@@ -364,18 +365,62 @@ with kiri:
                 teks += f". {ada['alasan']}"
             st.markdown(teks)
 
+def _antre_ai(kunci_antre: str) -> None:
+    """Callback tombol AI: hanya menandai antrean (seketika). Panggilan AI-nya jalan di badan halaman,
+    di dalam spinner, supaya petugas melihat bahwa sistem sedang bekerja (tunggu bisa sampai 45 detik)."""
+    st.session_state[kunci_antre] = True
+
+
+def _tulis_ulang_ai(peserta: dict, tindakan: str, kunci: str) -> None:
+    """Hanya mengganti isi kotak draf bila AI berhasil dan lolos aturan; bila tidak, isi kotak (termasuk
+    sunting petugas) dibiarkan dan alasannya tampil di bawahnya. Harus dipanggil SEBELUM kotak draf dibuat
+    pada putaran skrip yang sama, karena state widget tidak boleh diubah setelah widgetnya dirender."""
+    h = llm.susun(peserta, tindakan, pakai_ai=st.session_state.get("ai_aktif", True))
+    st.session_state[f"ai_hasil_{peserta['id_peserta']}"] = h
+    if h.status == "ai":
+        st.session_state[kunci] = h.draf[0]["isi"]
+
+
 with kanan:
     ui.judul_bagian("Draf pesan", "message-square-text",
-                    "Draf untuk tindakan bulan ini, dari template; bisa disunting sebelum dikirim. "
-                    "Lapisan AI menyusul dan tidak mengubah rute.")
+                    "Draf awal dari template, bisa disunting sebelum dikirim. Tombol AI menulis ulang kata-katanya: "
+                    "rute tidak berubah, nomor peserta tidak dikirim ke AI, dan bila AI tidak tersedia template "
+                    "tetap dipakai. Rute verifikasi hanya punya catatan untuk petugas, tanpa AI.")
     draf = pesan_template.susun(p, utama)
     if not draf:
         st.markdown("Tidak ada pesan bulan ini.")
     else:
         for d in draf:
+            kunci_draf = f"draf_{pid}_{d['sumber']}"
             st.html(f'<div style="margin:0 0 .5rem">{ui.chip(d["judul"], "file-text")}</div>')
-            st.text_area(d["judul"], d["isi"], height=280, key=f"draf_{pid}_{d['sumber']}",
-                         label_visibility="collapsed")
+            # nilai awal lewat session state (bukan value=) karena tombol AI menimpa isinya lewat state yang sama
+            st.session_state.setdefault(kunci_draf, d["isi"])
+            kunci_antre = f"ai_antre_{pid}"
+            if d["jenis"] == "pesan_peserta" and st.session_state.pop(kunci_antre, False):
+                with st.spinner(f"AI sedang menyusun draf. Biasanya 3 sampai 30 detik, paling lama "
+                                f"{llm.batas_waktu():g} detik. Bila gagal, template tetap dipakai."):
+                    _tulis_ulang_ai(p, utama, kunci_draf)
+            st.text_area(d["judul"], height=280, key=kunci_draf, label_visibility="collapsed")
+            if d["jenis"] == "pesan_peserta":
+                a1, a2 = st.columns([3, 2], vertical_alignment="center")
+                a1.button("Tulis ulang dengan AI", icon=":material/auto_awesome:", key=f"ai_{pid}",
+                          on_click=_antre_ai, args=(kunci_antre,),
+                          disabled=not st.session_state.get("ai_aktif", True))
+                a2.toggle("Pakai AI", value=True, key="ai_aktif",
+                          help="Matikan untuk bekerja hanya dengan template, misalnya saat API tidak tersedia.")
+                hasil_ai = st.session_state.get(f"ai_hasil_{pid}")
+                if not st.session_state.get("ai_aktif", True):
+                    st.caption("AI dimatikan petugas. Draf dari template.")
+                elif hasil_ai is None or hasil_ai.jalur != utama:
+                    st.caption("Draf dari template.")
+                elif hasil_ai.status == "ai":
+                    st.html(ui.chip("Disusun AI", "message-square-text", ui.WARNA["utama"], "#E1EEE6"))
+                    st.caption(hasil_ai.keterangan)
+                    if hasil_ai.ringkasan_petugas:
+                        st.caption(f"Ringkasan untuk petugas: {hasil_ai.ringkasan_petugas}")
+                else:
+                    st.html(ui.chip("Template", "info", "#9A5F0E", "#F5E6C8"))
+                    st.caption(hasil_ai.keterangan + " Isi kotak tidak diubah.")
 
 # ---------------------------------------------------------------- riwayat
 ui.judul_bagian("Riwayat", "history", "Angka di setiap tab adalah jumlah baris: berapa kali membayar, "
