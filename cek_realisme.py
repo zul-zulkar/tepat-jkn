@@ -7,7 +7,8 @@ Setiap ukuran dihitung dengan definisi yang sama dengan kalibrasi_sampel.py, sej
 sintetis mengizinkan:
   - potret status 31 Des 2024; populasi = peserta PBPU mandiri yang sudah terdaftar;
   - "lama" = terdaftar s.d. 2022, "baru" = terdaftar 2024 (di data sampel: tahun sampel);
-  - klaim besar = rawat inap atau klaim >= Rp1 juta; aktivitas = tanggal pulang klaim RS.
+  - klaim besar = rawat inap atau klaim >= Rp1 juta; aktivitas = tanggal pulang klaim RS;
+  - B16-B20 (rawat inap menurut usia, peserta lama) hanya pembanding, tidak dipakai kalibrasi.
 Data sintetis tidak berbobot; angka sampel berbobot. Generator hanya membuat orang dewasa
 dan tidak punya data FKTP, jadi baris C hanya memakai klaim RS (C01-C09).
 
@@ -27,6 +28,7 @@ POTRET = pd.Timestamp("2024-12-31")
 AWAL = pd.Timestamp("2024-01-01")
 KLAIM_BESAR = 1_000_000
 JEDA_PASCA = 90
+PITA_USIA = [(18, 30), (30, 45), (45, 60), (60, 200)]   # sama dengan A11-A14 dan B16-B19
 
 
 def baca(folder):
@@ -77,6 +79,10 @@ def ukur(p, s, k, segmen="PBPU"):
     out["B04"] = (100 * ri_n.reindex(lama.index).fillna(0).mean(), len(lama))
     out["B05"] = (100 * lama.index.isin(rj_n.index).mean(), len(lama))
     out["B06"] = (rj_n.reindex(lama.index).fillna(0).mean(), len(lama))
+    for kode, (a, b) in zip(["B16", "B17", "B18", "B19"], PITA_USIA):   # rawat inap menurut usia (cek realisme)
+        g = lama[(lama.usia >= a) & (lama.usia < b)]
+        out[kode] = (100 * g.index.isin(ri_n.index).mean(), len(g))
+    out["B20"] = (out["B19"][0] / out["B16"][0] if out["B16"][0] else np.nan, min(out["B16"][1], out["B19"][1]))
     ri, rj = k[k.ritl], k[~k.ritl]
     out["B07"] = (ri.biaya_klaim.median(), len(ri))
     out["B08"] = (ri.biaya_klaim.quantile(.9), len(ri))

@@ -35,6 +35,11 @@ B_layanan,B12,rawat jalan RS dengan biaya >= Rp1 juta,3.2,% klaim,519600,ya,
 B_layanan,B13,lama rawat inap (tgl pulang - tgl datang): rata-rata,3.41,hari,52800,ya,
 B_layanan,B14,rasio median biaya rawat inap kelas 1 / kelas 3,1.57,x,6600,ya,
 B_layanan,B15,porsi rawat inap di antara semua klaim RS,8.7,% klaim,572400,ya,
+B_layanan,B16,PBPU dewasa lama usia 18-29: punya >= 1 rawat inap 2024,6.4,%,82400,tidak,cek realisme usia; generator mengalikan kebutuhan layanan dengan faktor usia (asumsi)
+B_layanan,B17,PBPU dewasa lama usia 30-44: punya >= 1 rawat inap 2024,4.7,%,100600,tidak,cek realisme usia; generator mengalikan kebutuhan layanan dengan faktor usia (asumsi)
+B_layanan,B18,PBPU dewasa lama usia 45-59: punya >= 1 rawat inap 2024,5.7,%,88300,tidak,cek realisme usia; generator mengalikan kebutuhan layanan dengan faktor usia (asumsi)
+B_layanan,B19,PBPU dewasa lama usia 60+: punya >= 1 rawat inap 2024,8.3,%,67000,tidak,cek realisme usia; generator mengalikan kebutuhan layanan dengan faktor usia (asumsi)
+B_layanan,B20,rasio rawat inap usia 60+ / 18-29 (PBPU dewasa lama),1.3,x,67000,tidak,
 C_bayar_saat_butuh,C01,"aktivitas (klaim RS saja) terakhir Jan-Jun, tanpa klaim besar 2024: nonaktif",17.7,%,9400,ya,aktivitas = tanggal pulang klaim RS
 C_bayar_saat_butuh,C02,"aktivitas (klaim RS saja) terakhir Jan-Jun, <= 90 hari setelah klaim besar: nonaktif",32.1,%,8000,ya,aktivitas = tanggal pulang klaim RS
 C_bayar_saat_butuh,C03,aktivitas (klaim RS saja) terakhir Jan-Jun: rasio pasca / tanpa klaim besar,1.81,x,8000,ya,

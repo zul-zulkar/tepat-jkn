@@ -62,6 +62,8 @@ NONAKTIF = "NON AKTIF KARNA PREMI"
 KRONIS = r"^(E1[0-4]|I1[0-5]|I2[05]|I50|N18|J44|Z49)"   # DM, HT, jantung, gagal jantung, CKD, PPOK, HD
 PERSALINAN = r"^O8[0-4]"
 ANC = r"^Z3[4-6]"
+PITA_USIA = [(18, 30), (30, 45), (45, 60), (60, 200)]   # sama dengan A11-A14
+KODE_USIA_RI = ["B16", "B17", "B18", "B19"]
 
 
 # ---------------------------------------------------------------- baca
@@ -93,6 +95,23 @@ def baca(path, kolom, chunk=500_000):
     for c in kolom:
         if c not in BERLABEL and df[c].dtype == object:
             df[c] = df[c].astype(str).str.strip().astype("category")
+    return df
+
+
+def baca_cepat(path, kolom):
+    """Seperti baca() (kode mentah), lewat pyreadstat bila terpasang: jauh lebih cepat pada berkas besar."""
+    try:
+        import pyreadstat
+    except ImportError:
+        return baca(path, kolom)
+    df, _ = pyreadstat.read_dta(path, usecols=kolom, apply_value_formats=False, dates_as_pandas_datetime=True)
+    for c in kolom:
+        if c not in BERLABEL and df[c].dtype == object:
+            angka = pd.to_numeric(df[c], errors="coerce")
+            if angka.notna().sum() == df[c].notna().sum():   # kolom angka berisi kosong (mis. tahun meninggal)
+                df[c] = angka.astype(float)                  # sama dengan pandas: NaN bila kosong
+            else:
+                df[c] = df[c].astype(str).str.strip().astype("category")
     return df
 
 
@@ -175,6 +194,77 @@ def uji_pasca_klaim(pop, ev):
     for (j, k), g in d.groupby(["jen", "kel"]):
         out[(j, k)] = (pw(g.np, g.w), len(g))
     return out
+
+
+def catat_ri_per_usia(bagian, lama, ada_ri):
+    """B16-B20: porsi PBPU dewasa lama (tahun sampel <= 2022) dengan >= 1 rawat inap 2024, per kelompok
+    usia (usia di potret 31 Des 2024; kelompok sama dengan A11-A14), dan rasio kelompok tertua / termuda.
+    lama: index PSTV01, kolom usia dan w. ada_ri: PSTV01 yang punya rawat inap sebagai PBPU.
+    Dipakai hitung() dan hitung_tambahan(): satu definisi."""
+    p, n = [], []
+    for (a, b), kode in zip(PITA_USIA, KODE_USIA_RI):
+        g = lama[(lama.usia >= a) & (lama.usia < b)]
+        lab = f"{a}-{b - 1}" if b < 200 else f"{a}+"
+        p.append(pw(g.index.isin(ada_ri), g.w))
+        n.append(len(g))
+        catat(bagian, kode, f"PBPU dewasa lama usia {lab}: punya >= 1 rawat inap 2024", p[-1], "%", n[-1], "tidak",
+              "cek realisme usia; generator mengalikan kebutuhan layanan dengan faktor usia (asumsi)")
+    catat(bagian, "B20", "rasio rawat inap usia 60+ / 18-29 (PBPU dewasa lama)", p[3] / p[0] if p[0] else np.nan,
+          "x", min(n[0], n[3]), "tidak", des=2)
+
+
+def hitung_tambahan(sampel):
+    """Hanya B16-B20, untuk mesin ber-RAM kecil: dua tabel dengan kolom seperlunya, tanpa cache.
+    Populasi dan definisi rawat inap sama dengan hitung(). Mengembalikan (tabel B16-B20, cek silang),
+    cek silang = A15, A16, B01, B02 yang dihitung ulang dari bacaan ini."""
+    BARIS.clear()
+    kol_p = ["PSTV01", "PSTV03", "PSTV08", "PSTV15", "PSTV16", "PSTV18"]
+    pth = os.path.join(sampel, TABEL["pst"][0])
+    P = beri_label(baca_cepat(pth, kol_p), kamus_label(pth, kol_p))
+    P["w"] = P.PSTV15.astype(float)
+    P["hidup"] = P.PSTV18.isna()
+    P["usia"] = (POTRET - P.PSTV03).dt.days / 365.25
+    pb = P[P.PSTV08.astype(str).eq("PBPU") & P.hidup & (P.usia >= 18)].set_index("PSTV01")
+    pb.index = pb.index.astype(str)
+    kol_f = ["PSTV01", "FKL10", "FKL12"]
+    pth = os.path.join(sampel, TABEL["fkrtl"][0])
+    F = beri_label(baca_cepat(pth, kol_f), kamus_label(pth, kol_f))
+    F = F[F.FKL12.astype(str).eq("PBPU") & F.FKL10.astype(str).eq("RITL")]
+    ada_ri = pd.Index(F.PSTV01.astype(str).unique())
+    lama, baru = pb[pb.PSTV16 <= 2022], pb[pb.PSTV16 == 2024]
+    sd = np.sqrt(np.average((pb.usia - np.average(pb.usia, weights=pb.w)) ** 2, weights=pb.w))
+    cek = {"A15": np.average(pb.usia, weights=pb.w), "A16": sd,
+           "B01": pw(lama.index.isin(ada_ri), lama.w), "B02": pw(baru.index.isin(ada_ri), baru.w)}
+    catat_ri_per_usia("B_layanan", lama, ada_ri)
+    return pd.DataFrame(BARIS), cek
+
+
+def sisipkan_tambahan(a):
+    """Jalankan hitung_tambahan, cek silang ke CSV yang ada, lalu sisipkan baris B16-B20 setelah B15
+    (baris lain tidak disentuh, format sama)."""
+    f = os.path.join(a.out, "target_sampel_bpjs_2024.csv")
+    ada = pd.read_csv(f)
+    baru, cek = hitung_tambahan(a.sampel)
+    print("cek silang (hitung ulang vs CSV yang ada):")
+    for k, v in cek.items():
+        acuan = float(ada.loc[ada.kode.eq(k), "nilai"].iloc[0])
+        print(f"  {k}: {v:.2f} vs {acuan:.2f}")
+        if abs(round(v, 1) - acuan) > 0.051:
+            raise SystemExit(f"cek silang {k} gagal: bacaan ini tidak sama dengan CSV yang ada. Tidak ditulis.")
+    with pd.option_context("display.width", 200, "display.max_colwidth", 80):
+        print(baru[["kode", "uraian", "nilai", "satuan", "n_sampel"]].to_string(index=False))
+    teks = open(f, encoding="utf-8", newline="").read()
+    nl = "\r\n" if "\r\n" in teks else "\n"
+    baris = teks.split(nl)
+    akhir_kosong = baris[-1] == ""
+    baris = [b for b in baris if b != ""] if akhir_kosong else baris
+    baris = [b for b in baris if not any(b.startswith(f"B_layanan,{k},") for k in baru.kode)]
+    i = next(j for j, b in enumerate(baris) if b.startswith("B_layanan,B15,")) + 1
+    tambah = baru.to_csv(index=False, header=False, lineterminator="\n").rstrip("\n").split("\n")
+    baris = baris[:i] + tambah + baris[i:]
+    with open(f, "w", encoding="utf-8", newline="") as h:
+        h.write(nl.join(baris) + (nl if akhir_kosong else ""))
+    print(f"\nditulis: {f} (+{len(tambah)} baris agregat, setelah B15)")
 
 
 # ---------------------------------------------------------------- hitung
@@ -267,6 +357,7 @@ def hitung(sampel, cache):
     catat(B, "B14", "rasio median biaya rawat inap kelas 1 / kelas 3", qw(m1.biaya, m1.w, .5) / qw(m3.biaya, m3.w, .5),
           "x", min(len(m1), len(m3)), "ya", des=2)
     catat(B, "B15", "porsi rawat inap di antara semua klaim RS", pw(F.ritl, F.w), "% klaim", len(F), "ya")
+    catat_ri_per_usia(B, lama, ri_n.index)
 
     # ---------- C. uji bayar saat butuh (potong-lintang)
     T = m("fktp")
@@ -361,7 +452,12 @@ def main():
                     help="folder cache baris-per-baris, DI LUAR repo")
     ap.add_argument("--out", default="kalibrasi")
     ap.add_argument("--hanya_baca", action="store_true", help="hanya isi cache, lalu berhenti")
+    ap.add_argument("--tambahan", action="store_true",
+                    help="hanya hitung B16-B20 (RAM kecil, tanpa cache) dan sisipkan ke CSV yang ada; "
+                         "cek silang ke A15, A16, B01, B02")
     a = ap.parse_args()
+    if a.tambahan:
+        return sisipkan_tambahan(a)
     if os.path.abspath(a.cache).startswith(os.path.abspath(".") + os.sep):
         raise SystemExit("--cache tidak boleh di dalam repo: isinya data baris-per-baris.")
     os.makedirs(a.cache, exist_ok=True)
