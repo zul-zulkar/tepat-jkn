@@ -100,7 +100,7 @@ class Hasil:
     draf: list[dict]                 # bentuk sama dengan pesan_template.susun: sumber, jenis, judul, isi
     status: str = "template"         # "ai" | "template"
     cadangan: str = ""               # kode PESAN_CADANGAN bila status "template"
-    rinci: str = ""                  # kode pelanggaran, mis. "ancaman,angka_asing"
+    rinci: str = ""                  # kode pelanggaran, mis. "ancaman,angka_asing"; atau "ringkasan_dibuang:..." (status ai)
     ringkasan_petugas: str = ""      # hanya bila status "ai"
     model: str = ""
     penyedia: str = ""               # "anthropic" | "gemini" bila status "ai"
@@ -313,6 +313,15 @@ TANPA_OPSI_BAYAR = frozenset({"rujuk_cek_kelayakan_PBI"})
 CATATAN_TANPA_OPSI_BAYAR = (" Peserta ini diarahkan ke pengecekan PBI dan tidak sedang diminta membayar: "
                             "jangan menyebut autodebet, REHAB 3.0, cicilan, atau angsuran.")
 _OPSI_BAYAR = re.compile(r"auto[\s-]?debet|rehab|\w*cicil\w*|\w*angsur\w*", re.I)
+
+# Ringkasan untuk petugas pada jalur PBI harus menyebut tindak lanjutnya sebagai "cek kelayakan PBI". Temuan uji
+# aplikasi publik 30 Okt: model menulis "mengecek kepesertaan PBI", yang artinya lain (memeriksa apakah peserta
+# sudah terdaftar PBI). Ringkasan tidak memuat keputusan keselamatan, jadi pelanggaran aturan ini tidak menolak
+# seluruh draf: ringkasannya dibuang, pesan ke peserta tetap dipakai. Teks AI tidak ditulis ulang.
+_KELAYAKAN_PBI = re.compile(r"\bkelayakan\s+PBI\b", re.I)
+RINGKASAN_WAJIB = {"rujuk_cek_kelayakan_PBI": _KELAYAKAN_PBI, "peringatan_dini:cek_kelayakan_PBI": _KELAYAKAN_PBI}
+CATATAN_RINGKASAN_PBI = ('\n10. Di "ringkasan_petugas" sebut tindak lanjut peserta ini persis "cek kelayakan PBI". '
+                         'Jangan menulis "kepesertaan PBI": artinya lain.')
 
 # Opsi yang boleh disebut pesan AI = opsi yang disebut draf template jalur itu untuk peserta itu. Template sudah
 # memuat aturan kelayakan (REHAB 3.0 hanya bila ada tunggakan, autodebet tidak untuk peserta nonaktif, PBI hanya
@@ -550,7 +559,7 @@ Jangan mengarang angka, tanggal, tautan, atau nomor telepon.
 8. Bahasa Indonesia baku yang ramah, tanpa emoji, tanpa markdown, paling banyak 700 karakter. Ejaan harus rapi: \
 setiap kata dipisah satu spasi, jangan menggabungkan dua kata, dan beri spasi setelah titik dan koma.
 9. Jangan menaikkan kepastian di atas draf_template. Bila template memakai "mungkin" atau "kemungkinan", \
-pertahankan; jangan menulis "pasti", "dipastikan", "besar kemungkinan", atau "kemungkinan besar".
+pertahankan; jangan menulis "pasti", "dipastikan", "besar kemungkinan", atau "kemungkinan besar".{ringkasan}
 
 Jawab HANYA dengan satu objek JSON tanpa teks lain, persis berbentuk:
 {{"jalur": "<salin jalur>", "pesan_peserta": "<pesan untuk peserta>", \
@@ -632,7 +641,9 @@ def susun(p: dict, tindakan: str, *, klien: Klien | None = None, pakai_ai: bool 
         wajib = " / ".join(" atau ".join(f'"{k}"' for k in g) for g in WAJIB_SEBUT.get(kode, [ISTILAH_BOLEH]))
         masukan = bangun_masukan(p, tindakan, templat[0]["isi"])
         dilarang = CATATAN_TANPA_OPSI_BAYAR if kode in TANPA_OPSI_BAYAR else ""
-        mentah = klien(SISTEM.format(wajib=wajib, dilarang=dilarang), json.dumps(masukan, ensure_ascii=False))
+        catatan = CATATAN_RINGKASAN_PBI if kode in RINGKASAN_WAJIB else ""
+        mentah = klien(SISTEM.format(wajib=wajib, dilarang=dilarang, ringkasan=catatan),
+                       json.dumps(masukan, ensure_ascii=False))
         d = _urai(mentah)
         if d["jalur"].strip() != tindakan:
             raise AIGagal("jalur_berubah", f"{d['jalur'][:40]!r}")
@@ -645,7 +656,10 @@ def susun(p: dict, tindakan: str, *, klien: Klien | None = None, pakai_ai: bool 
         isi = pesan.strip().replace("{ID}", str(p["id_peserta"]))
         hasil.draf = [dict(templat[0], isi=isi, judul="Pesan ke peserta (draf AI)")]
         hasil.status, hasil.model, hasil.penyedia, hasil.dirapikan = "ai", model, penyedia, dirapikan
-        hasil.ringkasan_petugas = bersihkan_karakter(d["ringkasan_petugas"]).strip()
+        ringkasan = bersihkan_karakter(d["ringkasan_petugas"]).strip()
+        if kode in RINGKASAN_WAJIB and not RINGKASAN_WAJIB[kode].search(ringkasan):
+            ringkasan, hasil.rinci = "", "ringkasan_dibuang:tanpa_kelayakan_PBI"
+        hasil.ringkasan_petugas = ringkasan
     except AIGagal as e:
         hasil.cadangan, hasil.rinci = e.kode, e.rinci
     except Exception as e:  # jaring terakhir: halaman petugas tidak boleh gagal karena AI

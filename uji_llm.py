@@ -592,6 +592,43 @@ def test_ringkasan_petugas():
     tolak(p, t, jawaban(p, t, pesan=dasar, ringkasan="x" * 500), "melanggar_aturan", "panjang_ringkasan")
 
 
+def test_ringkasan_pbi_wajib_cek_kelayakan():
+    """Temuan aplikasi publik 30 Okt: "mengecek kepesertaan PBI" (artinya lain). Pada jalur PBI ringkasan petugas
+    wajib menyebut "kelayakan PBI"; bila tidak, ringkasan dibuang dan pesan peserta tetap dipakai."""
+    p_ew = peserta("x", saran="cek_kelayakan_PBI")
+    kasus = [(P_PBI, P_PBI["rute"]), (p_ew, "peringatan_dini")]
+    for p, t in kasus:
+        for sah in ("Peserta menunggak 24 bulan, desil 1-5; diarahkan untuk cek kelayakan PBI.",
+                    "Diarahkan untuk pengecekan Kelayakan  PBI.", "Cek KELAYAKAN PBI dulu.",
+                    "Cek kelayakan​ PBI."):
+            with lingkungan():
+                h = llm.susun(p, t, klien=Tiruan(jawaban(p, t, ringkasan=sah)))
+            assert h.status == "ai" and h.ringkasan_petugas and not h.rinci, (t, sah, h.rinci)
+        for salah in ("Peserta menunggak 24 bulan; diarahkan untuk mengecek kepesertaan PBI.",
+                      "Diarahkan ke Dinas Sosial.", "Cek kelayakanPBI.", "Cek kelayakan dan PBI.",
+                      "Cek PBI kelayakan."):
+            with lingkungan():
+                h = llm.susun(p, t, klien=Tiruan(jawaban(p, t, ringkasan=salah)))
+            # pesan ke peserta tetap draf AI (lolos aturan keselamatan); hanya ringkasannya yang dibuang
+            assert h.status == "ai" and h.ringkasan_petugas == "", (t, salah, h)
+            assert h.rinci == "ringkasan_dibuang:tanpa_kelayakan_PBI" and h.draf[0]["judul"].endswith("(draf AI)")
+        # ringkasan yang melanggar aturan keselamatan tetap menolak seluruh draf, bukan hanya dibuang
+        tolak(p, t, jawaban(p, t, ringkasan="Cek kelayakan PBI; peserta curang."), "melanggar_aturan", "curang@ringkasan")
+        c = Tiruan(jawaban(p, t))
+        with lingkungan():
+            llm.susun(p, t, klien=c)
+        assert "cek kelayakan PBI" in c.sistem and "kepesertaan PBI" in c.sistem and "\n10. " in c.sistem
+    # jalur lain: tanpa syarat dan tanpa catatan di prompt
+    for p, t in KASUS_AI:
+        if t == P_PBI["rute"] or (t == "peringatan_dini" and p.get("ew_saran") == "cek_kelayakan_PBI"):
+            continue
+        c = Tiruan(jawaban(p, t, ringkasan="Peserta menunggak; pesan mengingatkan opsi yang ada."))
+        with lingkungan():
+            h = llm.susun(p, t, klien=c)
+        assert h.status == "ai" and h.ringkasan_petugas and not h.rinci, (t, h.rinci)
+        assert "\n10. " not in c.sistem and "kepesertaan PBI" not in c.sistem, t
+
+
 def test_verifikasi_tanpa_ai():
     c = Tiruan(jawaban(P_VERIF, P_VERIF["rute"]))
     with lingkungan(ANTHROPIC_API_KEY="k"):
