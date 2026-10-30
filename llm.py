@@ -481,6 +481,8 @@ def periksa_ringkasan(teks: str) -> list[str]:
 # ditambah, huruf tidak diubah, jadi aturan pesan dinilai pada teks yang sudah rapi.
 # Kosakata sengaja tidak memuat kata yang bersama kata lain membentuk kata sah (mis. "dari" dan "pada",
 # karena "daripada" sah). uji_llm.py menjaga itu: tak ada anggota yang gabungan dua anggota lain.
+# Token yang diperiksa mulai 6 huruf (bukan 8) agar "inicek" (ini + cek) tertangkap; bagian sedikitnya 3 huruf.
+# Ringkasan petugas dirapikan dengan cara yang sama (uji 30 Okt: "diarahkanuntuk", "inicek").
 
 _KOSAKATA = frozenset("""
 untuk dengan oleh atau dapat lebih lanjut yang agar bisa terus juga serta jika bila mohon silakan kami anda
@@ -490,8 +492,9 @@ mendaftarkan mencicil cicilan berkonsultasi menghubungi mengakses informasi bant
 setempat pengecekan mengecek membantu terlindungi perlindungan kembali aktif nonaktif otomatis rutin berobat
 minimarket bank autodebet pemerintah petugas tercatat dibayar dibayarkan terbayar menyarankan menanyakan
 memanfaatkan memenuhi syarat kriteria rujukan proses data
+diarahkan disarankan cek ini tindak kelayakan menunggak memiliki sehingga karena namun termasuk kategori
 """.split())
-_TOKEN_PANJANG = re.compile(r"\b[A-Za-z]{8,}\b")
+_TOKEN_PANJANG = re.compile(r"\b[A-Za-z]{6,}\b")
 _POLA_SPASI = [  # (pola, pengganti); semuanya hanya menyisipkan spasi
     (re.compile(r"(?<=[a-z0-9])([.,;:!?])(?=[A-Z])"), r"\1 "),               # "Rp450.000.Selama", "bulan,Anda"
     (re.compile(r"(?<=[A-Za-z])([,;:])(?=[a-z])"), r"\1 "),                  # "bulan,anda"
@@ -558,8 +561,10 @@ Jangan mengarang angka, tanggal, tautan, atau nomor telepon.
 7. Tulis {{ID}} (persis, dengan kurung kurawal) bila ingin menyebut nomor peserta. Jangan menulis nomor sendiri.
 8. Bahasa Indonesia baku yang ramah, tanpa emoji, tanpa markdown, paling banyak 700 karakter. Ejaan harus rapi: \
 setiap kata dipisah satu spasi, jangan menggabungkan dua kata, dan beri spasi setelah titik dan koma.
-9. Jangan menaikkan kepastian di atas draf_template. Bila template memakai "mungkin" atau "kemungkinan", \
-pertahankan; jangan menulis "pasti", "dipastikan", "besar kemungkinan", atau "kemungkinan besar".{ringkasan}
+9. Jangan menaikkan kepastian di atas draf_template. Kalimat template yang memuat "mungkin" atau "kemungkinan" \
+salin hampir persis dan pertahankan kata "mungkin" (contoh benar: "Keluarga Anda mungkin memenuhi syarat"). \
+Contoh SALAH yang dibuang otomatis: "besar kemungkinan Anda memenuhi syarat", "kemungkinan besar", "pasti", \
+"dipastikan". Yang boleh kamu ubah hanya sapaan dan kalimat penghubung.{ringkasan}
 
 Jawab HANYA dengan satu objek JSON tanpa teks lain, persis berbentuk:
 {{"jalur": "<salin jalur>", "pesan_peserta": "<pesan untuk peserta>", \
@@ -648,15 +653,18 @@ def susun(p: dict, tindakan: str, *, klien: Klien | None = None, pakai_ai: bool 
         if d["jalur"].strip() != tindakan:
             raise AIGagal("jalur_berubah", f"{d['jalur'][:40]!r}")
         pesan, dirapikan = rapikan_spasi(bersihkan_karakter(d["pesan_peserta"]))
+        # Ringkasan petugas juga dirapikan (uji 30 Okt: "diarahkanuntuk", "inicek") dan dinilai setelah dirapikan.
+        ringkasan, rapi_ringkasan = rapikan_spasi(bersihkan_karakter(d["ringkasan_petugas"]))
+        ringkasan = ringkasan.strip()
         pelanggaran = periksa_pesan_peserta(pesan, kode_aturan=kode, bulan=int(p["tunggakan_bulan"]),
                                             nominal=_nominal(p), opsi_boleh=opsi_dalam(templat[0]["isi"]))
-        pelanggaran += [x + "@ringkasan" for x in periksa_ringkasan(d["ringkasan_petugas"])]
+        pelanggaran += [x + "@ringkasan" for x in periksa_ringkasan(ringkasan)]
         if pelanggaran:
             raise AIGagal("melanggar_aturan", ",".join(pelanggaran))
         isi = pesan.strip().replace("{ID}", str(p["id_peserta"]))
         hasil.draf = [dict(templat[0], isi=isi, judul="Pesan ke peserta (draf AI)")]
-        hasil.status, hasil.model, hasil.penyedia, hasil.dirapikan = "ai", model, penyedia, dirapikan
-        ringkasan = bersihkan_karakter(d["ringkasan_petugas"]).strip()
+        hasil.status, hasil.model, hasil.penyedia = "ai", model, penyedia
+        hasil.dirapikan = dirapikan + rapi_ringkasan
         if kode in RINGKASAN_WAJIB and not RINGKASAN_WAJIB[kode].search(ringkasan):
             ringkasan, hasil.rinci = "", "ringkasan_dibuang:tanpa_kelayakan_PBI"
         hasil.ringkasan_petugas = ringkasan

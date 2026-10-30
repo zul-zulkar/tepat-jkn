@@ -418,6 +418,11 @@ def test_rapikan_spasi_pola():
         ("tunggakaniuran Anda", "tunggakan iuran Anda", 1),
         ("datang ke kantordesa setempat", "datang ke kantor desa setempat", 1),
         ("Anda dapatmelakukan pembayaran", "Anda dapat melakukan pembayaran", 1),
+        # ringkasan petugas, uji nyata 30 Okt: "diarahkanuntuk", "inicek" (6 huruf: di bawah batas lama 8)
+        ("sehingga diarahkanuntuk cek kelayakan PBI", "sehingga diarahkan untuk cek kelayakan PBI", 1),
+        ("Tindak lanjut peserta inicek kelayakan PBI", "Tindak lanjut peserta ini cek kelayakan PBI", 1),
+        ("disarankanuntuk cek", "disarankan untuk cek", 1),
+        ("menunggaksehingga", "menunggak sehingga", 1),
         ("kepesertaanaktif kembali", "kepesertaan aktif kembali", 1),
     ]
     for kotor, benar, n in kasus:
@@ -463,7 +468,9 @@ def test_rapikan_spasi_kata_sah_tidak_dipisah():
            "beruntung", "keuntungan", "peruntukan", "layanannya", "informasinya", "bantuannya", "dengannya",
            "kesehatannya", "pelunasannya", "mengecekkan", "perlindungannya", "bermanfaat", "memudahkan",
            "pemerintahan", "pemerintahnya", "perusahaan", "mengajukannya", "berkonsultasilah", "otomatisasi",
-           "kelurahannya", "aplikasinya", "terbayarkan", "dibayarkannya", "mengaksesnya", "menghubunginya"]
+           "kelurahannya", "aplikasinya", "terbayarkan", "dibayarkannya", "mengaksesnya", "menghubunginya",
+           "inisial", "cekatan", "ceklis", "kategorinya", "memilikinya", "diarahkannya", "disarankannya",
+           "tindakan", "karenanya", "kelayakannya", "menunggaknya", "terkategori"]
     for w in sah:
         assert r(w) == (w, 0), w
         assert r(w.capitalize()) == (w.capitalize(), 0), w
@@ -592,6 +599,49 @@ def test_ringkasan_petugas():
     tolak(p, t, jawaban(p, t, pesan=dasar, ringkasan="x" * 500), "melanggar_aturan", "panjang_ringkasan")
 
 
+def test_ringkasan_petugas_dirapikan():
+    """Uji nyata 30 Okt: 2 dari 14 ringkasan petugas punya kata menempel ("diarahkanuntuk", "inicek"). Ringkasan
+    dirapikan seperti pesan peserta, dihitung di Hasil.dirapikan, dan dinilai pada teks yang dibaca petugas."""
+    p, t = P_PBI, P_PBI["rute"]
+    kasus = [("Peserta menunggak 5 bulan sehingga diarahkanuntuk cek kelayakan PBI.",
+              "Peserta menunggak 5 bulan sehingga diarahkan untuk cek kelayakan PBI.", 1),
+             ("Tindak lanjut peserta inicek kelayakan PBI.", "Tindak lanjut peserta ini cek kelayakan PBI.", 1),
+             ("Diarahkanuntuk cek kelayakan PBI; inicek.", "Diarahkan untuk cek kelayakan PBI; ini cek.", 2),
+             ("Peserta diarahkan untuk cek kelayakan PBI.", "Peserta diarahkan untuk cek kelayakan PBI.", 0)]
+    for mentah, rapi, n in kasus:
+        with lingkungan():
+            h = llm.susun(p, t, klien=Tiruan(jawaban(p, t, ringkasan=mentah)))
+        assert h.status == "ai" and h.ringkasan_petugas == rapi and h.dirapikan == n, (mentah, h.ringkasan_petugas, h.dirapikan)
+    # jumlah gabungan: perbaikan di pesan dan di ringkasan
+    dasar = json.loads(jawaban(p, t))["pesan_peserta"]
+    kotor = dasar.replace("untuk pengecekan", "untukpengecekan")
+    assert kotor != dasar
+    with lingkungan():
+        h = llm.susun(p, t, klien=Tiruan(jawaban(p, t, pesan=kotor, ringkasan="Diarahkanuntuk cek kelayakan PBI.")))
+    assert h.status == "ai" and h.dirapikan == 2 and "untuk pengecekan" in h.draf[0]["isi"], (h.dirapikan, h.draf[0]["isi"])
+    assert "Spasi dirapikan otomatis di 2 tempat" in h.keterangan
+    # jalur lain juga dirapikan
+    pp, tp, dp = _dasar()
+    with lingkungan():
+        h = llm.susun(pp, tp, klien=Tiruan(jawaban(pp, tp, pesan=dp, ringkasan="Peserta diarahkanuntuk melunasi iuran.")))
+    assert h.status == "ai" and h.ringkasan_petugas == "Peserta diarahkan untuk melunasi iuran." and h.dirapikan == 1
+    # batas panjang dinilai pada teks yang sudah rapi: 400 huruf mentah lolos, 401 setelah dirapikan ditolak
+    ringkasan = "diarahkanuntuk " + "b" * (llm.MAKS_RINGKASAN - 15)
+    assert len(ringkasan) == llm.MAKS_RINGKASAN
+    tolak(pp, tp, jawaban(pp, tp, pesan=dp, ringkasan=ringkasan), "melanggar_aturan", "panjang_ringkasan")
+
+
+def test_aturan_kepastian_di_prompt():
+    """Uji nyata 30 Okt: 3 dari 14 draf PBI menulis "Besar kemungkinan" dan jatuh ke template. Prompt meminta kalimat
+    ber-"mungkin" disalin hampir persis, dengan contoh benar dan contoh salah."""
+    c = Tiruan(jawaban(P_PBI, P_PBI["rute"]))
+    with lingkungan():
+        llm.susun(P_PBI, P_PBI["rute"], klien=c)
+    for k in ("Jangan menaikkan kepastian", "salin hampir persis", 'pertahankan kata "mungkin"',
+              "Keluarga Anda mungkin memenuhi syarat", "besar kemungkinan Anda memenuhi syarat", "SALAH"):
+        assert k in c.sistem, k
+
+
 def test_ringkasan_pbi_wajib_cek_kelayakan():
     """Temuan aplikasi publik 30 Okt: "mengecek kepesertaan PBI" (artinya lain). Pada jalur PBI ringkasan petugas
     wajib menyebut "kelayakan PBI"; bila tidak, ringkasan dibuang dan pesan peserta tetap dipakai."""
@@ -605,13 +655,17 @@ def test_ringkasan_pbi_wajib_cek_kelayakan():
                 h = llm.susun(p, t, klien=Tiruan(jawaban(p, t, ringkasan=sah)))
             assert h.status == "ai" and h.ringkasan_petugas and not h.rinci, (t, sah, h.rinci)
         for salah in ("Peserta menunggak 24 bulan; diarahkan untuk mengecek kepesertaan PBI.",
-                      "Diarahkan ke Dinas Sosial.", "Cek kelayakanPBI.", "Cek kelayakan dan PBI.",
+                      "Diarahkan ke Dinas Sosial.", "Cek kelayakanpbi.", "Cek kelayakan dan PBI.",
                       "Cek PBI kelayakan."):
             with lingkungan():
                 h = llm.susun(p, t, klien=Tiruan(jawaban(p, t, ringkasan=salah)))
             # pesan ke peserta tetap draf AI (lolos aturan keselamatan); hanya ringkasannya yang dibuang
             assert h.status == "ai" and h.ringkasan_petugas == "", (t, salah, h)
             assert h.rinci == "ringkasan_dibuang:tanpa_kelayakan_PBI" and h.draf[0]["judul"].endswith("(draf AI)")
+        # "kelayakanPBI" menempel diperbaiki dulu (spasi), jadi sah; yang dinilai teks yang dibaca petugas
+        with lingkungan():
+            h = llm.susun(p, t, klien=Tiruan(jawaban(p, t, ringkasan="Cek kelayakanPBI.")))
+        assert h.status == "ai" and h.ringkasan_petugas == "Cek kelayakan PBI." and h.dirapikan == 1, (t, h)
         # ringkasan yang melanggar aturan keselamatan tetap menolak seluruh draf, bukan hanya dibuang
         tolak(p, t, jawaban(p, t, ringkasan="Cek kelayakan PBI; peserta curang."), "melanggar_aturan", "curang@ringkasan")
         c = Tiruan(jawaban(p, t))

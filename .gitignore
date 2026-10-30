@@ -26,3 +26,8 @@ bukti/data_*/
 hasil_kalibrasi/triase_peserta.csv
 # cache data sampel BPJS berisi data baris-per-baris: harus di luar repo
 _cache_kalibrasi/
+
+# rahasia: kunci API hanya lewat variabel lingkungan atau Streamlit Secrets, tidak pernah di repo
+.streamlit/secrets.toml
+.env
+.env.*
