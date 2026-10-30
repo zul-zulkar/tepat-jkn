@@ -29,9 +29,12 @@ NotebookLM.
 ## Cara memasukkan ke NotebookLM
 
 1. Buat notebook baru.
-2. Unggah kesepuluh file `.md` di folder `docs/notebooklm/` sebagai sumber terpisah. NotebookLM
-   menerima Markdown. Kalau unggahan `.md` ditolak, ganti ekstensinya ke `.txt`; isinya tetap
-   terbaca.
+2. Tambahkan kesepuluh sumber sebagai sumber terpisah. Ada dua cara:
+   - **Google Docs:** di NotebookLM pilih "Google Drive", lalu centang kesepuluh dokumen di folder
+     "TEPAT - Sumber NotebookLM (30 Okt 2026)". Kalau dokumennya diubah, tekan sinkronkan di
+     NotebookLM supaya isinya ikut terbarui.
+   - **File Markdown:** unggah kesepuluh file `.md` di folder `docs/notebooklm/` repo. Kalau
+     unggahan `.md` ditolak, ganti ekstensinya ke `.txt`; isinya tetap terbaca.
 3. Opsional: tambahkan `bukti/preregistration.md` apa adanya. Itu dokumen yang dikunci sebelum
    penilaian, jadi berguna kalau perlu kutipan kata per kata. `README.md` tidak perlu ditambahkan:
    isinya sudah tercakup, dan sebagian bagiannya sudah usang (lihat sumber 08).
