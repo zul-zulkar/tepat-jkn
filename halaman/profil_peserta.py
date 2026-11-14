@@ -189,6 +189,17 @@ if panel_ew:
 else:
     st.html(panel_triase)
 
+# ---------------------------------------------------------------- alur perlakuan peserta ini
+juga = tuple(t for t in (p["rute"], ui.PERINGATAN_DINI if masuk_ew else None)
+             if t and t not in ("tanpa_tindakan", utama))
+no_langkah = next((i + 1 for i, x in enumerate(ui.LANGKAH) if x["tindakan"] == utama), None)
+ringkas = (f"berhenti di pertanyaan {no_langkah}, {ui.kecil(ui.nama_pendek(utama))}" if no_langkah
+           else "tanpa tindakan bulan ini")
+with st.expander(f"Alur perlakuan peserta ini: {ringkas}", icon=":material/account_tree:"):
+    st.html(ui.alur_perlakuan(utama=utama, juga=juga, label_mulai=pid))
+    st.caption(f"Perlakuan: {ui.PERLAKUAN[utama]['panjang']} Kanal tiap perlakuan adalah usulan tim setelah "
+               "coaching dan perlu dikonfirmasi BPJS. Keputusan tetap di petugas.")
+
 # ---------------------------------------------------------------- linimasa
 ui.judul_bagian("Linimasa 2023 sampai 2025", "activity",
                 "Garis putus-putus hijau: aktif kembali. Garis oranye: klaim besar paling lama 90 hari setelah "

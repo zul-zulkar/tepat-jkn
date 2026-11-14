@@ -99,6 +99,119 @@ def nama_tindakan(t: str) -> str:
     return "Pencegahan untuk peserta berisiko menunggak" if t == PERINGATAN_DINI else RUTE[t]["nama"]
 
 
+# ---------------------------------------------------------------- perlakuan dan alurnya
+# Perlakuan = apa yang dikerjakan petugas untuk tiap tindakan, lewat kanal yang sudah ada di BPJS.
+# Disusun setelah coaching 11 Nov 2026: mentor menyebut REHAB, autodebet, WA blast, dan Kader JKN sudah
+# berjalan, dan aktif kembali setelah melunasi itu sah (jadi tanpa sanksi). Pembagian kanal per tindakan
+# adalah usulan tim; pelaksananya perlu dikonfirmasi BPJS.
+PERLAKUAN = {
+    "verifikasi_pola_reaktivasi": dict(
+        pendek="Periksa riwayat, tawarkan autodebet",
+        panjang="Petugas memeriksa riwayatnya, lalu menawarkan autodebet dan edukasi manfaat lewat "
+                "telekolekting atau Kader JKN. Aktif kembali itu sah, jadi tanpa sanksi."),
+    "rujuk_cek_kelayakan_PBI": dict(
+        pendek="Rujuk cek PBI, tawarkan REHAB",
+        panjang="Dirujuk ke pengecekan kelayakan PBI. Sambil menunggu, tunggakannya bisa dicicil lewat REHAB."),
+    "nonaktif_lama_tanpa_sinyal": dict(
+        pendek="Kader JKN cek kemampuan bayar",
+        panjang="Kader JKN memastikan kondisi dan kemampuan bayarnya sebelum ditagih."),
+    PERINGATAN_DINI: dict(
+        pendek="Pengingat sebelum jatuh tempo",
+        panjang="Diingatkan sebelum jatuh tempo tanggal 10 lewat WA blast, dengan tawaran autodebet "
+                "atau pengingat saldo autodebet."),
+    "pengingat_autodebet_REHAB": dict(
+        pendek="WA blast, tawarkan autodebet",
+        panjang="Cukup diingatkan lewat WA blast dan ditawari autodebet. Bila tunggakan menumpuk, cicilan REHAB."),
+    "tanpa_tindakan": dict(pendek="Tidak dihubungi", panjang="Tidak dihubungi bulan ini."),
+}
+
+# Alur keputusan untuk satu peserta. Urutannya SAMA dengan PRIORITAS: pertanyaan dijawab dari atas,
+# jawaban "ya" pertama menentukan satu tindakan. Ambang di teks mengikuti cek_sinyal.triase.
+LANGKAH = [
+    dict(tindakan="verifikasi_pola_reaktivasi", tanya="Aktif kembali menjelang klaim besar?",
+         syarat=f"Separuh atau lebih reaktivasi diikuti klaim besar ≤ {JEDA_KAIT} hari dan aktif kurang dari "
+                "separuh waktu, atau peserta baru langsung klaim besar lalu menunggak ≥ 6 bulan. "
+                "DTSEN desil 1–5 tidak pernah masuk."),
+    dict(tindakan="rujuk_cek_kelayakan_PBI", tanya="Menunggak dan tampak tidak mampu?",
+         syarat="Menunggak ≥ 3 bulan, dan DTSEN desil 1–5 atau dulu rutin bayar lalu berhenti."),
+    dict(tindakan="nonaktif_lama_tanpa_sinyal", tanya="Menunggak lama tanpa pernah aktif kembali?",
+         syarat="Menunggak ≥ 12 bulan tanpa satu pun reaktivasi."),
+    dict(tindakan=PERINGATAN_DINI, tanya="Masih aktif, tetapi berisiko menunggak?",
+         syarat="Masuk daftar teratas model peringatan dini, sebanyak kapasitas petugas bulan ini."),
+    dict(tindakan="pengingat_autodebet_REHAB", tanya="Sering nonaktif lalu melunasi sendiri?",
+         syarat="Aktif kembali ≥ 3 kali, dan tidak memenuhi pertanyaan di atas."),
+]
+assert [x["tindakan"] for x in LANGKAH] == PRIORITAS, "LANGKAH harus mengikuti PRIORITAS"
+
+
+def warna_tindakan(t: str) -> tuple[str, str, str]:
+    """(warna, lembut, ikon) satu tindakan."""
+    if t == PERINGATAN_DINI:
+        return WARNA_EW, EW_LEMBUT, EW_IKON
+    return RUTE[t]["warna"], RUTE[t]["lembut"], RUTE[t]["ikon"]
+
+
+def nama_pendek(t: str) -> str:
+    return EW_NAMA if t == PERINGATAN_DINI else (RUTE[t]["pendek"] or RUTE[t]["nama"])
+
+
+def alur_perlakuan(jumlah: dict | None = None, total: int | None = None, utama: str | None = None,
+                   juga: tuple[str, ...] = (), label_mulai: str = "Peserta PBPU/BP mandiri") -> str:
+    """Flowchart HTML dari peserta ke satu tindakan dan perlakuannya.
+
+    Mode jumlah (halaman Daftar kerja): jumlah = {tindakan: n}, total = n semua peserta.
+    Mode satu peserta (halaman Profil): utama = tindakan peserta itu; jalurnya disorot, langkah sesudahnya
+    diredupkan. juga = tindakan lain yang juga dipenuhi peserta itu tetapi tidak dijalankan.
+    """
+    jalur = utama is not None
+    henti = next((i for i, x in enumerate(LANGKAH) if x["tindakan"] == utama), len(LANGKAH))
+    sisa = total
+
+    def angka_n(t: str) -> str:
+        if jumlah is None:
+            return ""
+        return f'<span class="n">{angka(int(jumlah.get(t, 0)))}<small> peserta</small></span>'
+
+    bag = [f'<div class="tp-alur{" tp-alur-jalur" if jalur else ""}">',
+           f'<div class="tp-alur-ujung mulai">{ikon("user-round", 18, "#F2F0E5")}<span>{e(label_mulai)}</span>'
+           + (f'<span class="n">{angka(total)}</span>' if total is not None else "") + "</div>"]
+    for i, x in enumerate(LANGKAH):
+        t = x["tindakan"]
+        c, lmbt, ik = warna_tindakan(t)
+        keadaan = "" if not jalur else ("lewat" if i < henti else "kena" if i == henti else "sesudah")
+        jawab = ""
+        if jalur and i <= henti:
+            jawab = chip("Ya" if i == henti else "Tidak", None,
+                         "#FCFCF9" if i == henti else WARNA["tinta2"], WARNA["utama"] if i == henti else "#E6E4DC")
+        tanda = ""
+        if jalur and i == henti:
+            tanda = '<span class="tanda">Tindakan peserta ini</span>'
+        elif jalur and t in juga:
+            tanda = '<span class="tanda redup">Juga dipenuhi, tidak dijalankan</span>'
+        teks = "" if i == 0 else "Tidak" + (f", {angka(sisa)} peserta lanjut" if sisa is not None else "")
+        turun = (f'<div class="tp-alur-turun{" aktif" if jalur and i <= henti else ""}{" pendek" if i == 0 else ""}">'
+                 f'<div><span>{e(teks)}</span></div></div>')
+        bag.append(
+            turun
+            + f'<div class="tp-alur-baris {keadaan}" style="--c:{c};--l:{lmbt}">'
+            f'<div class="tp-alur-tanya"><div class="kepala"><span class="no">{i + 1}</span>'
+            f'<span class="q">{e(x["tanya"])}</span>{jawab}</div><div class="s">{e(x["syarat"])}</div></div>'
+            f'<div class="tp-alur-ya"><span>Ya</span></div>'
+            f'<div class="tp-alur-hasil"><div class="tp-bulat">{ikon(ik, 18, c)}</div>'
+            f'<div class="isi"><div class="nm">{e(nama_tindakan(t) if t == PERINGATAN_DINI else RUTE[t]["nama"])}</div>'
+            f'<div class="pl">{e(PERLAKUAN[t]["pendek"])}</div>{tanda}</div>{angka_n(t)}</div></div>')
+        if sisa is not None and jumlah is not None:
+            sisa -= int(jumlah.get(t, 0))
+    akhir_aktif = jalur and henti == len(LANGKAH)
+    teks = "Tidak" + (f", {angka(sisa)} peserta" if sisa is not None else "")
+    bag.append(f'<div class="tp-alur-turun{" aktif" if akhir_aktif else ""}"><div><span>{e(teks)}</span></div></div>'
+               f'<div class="tp-alur-ujung akhir{" kena" if akhir_aktif else ""}">'
+               f'{ikon("circle-check-big", 18, WARNA["tinta2"])}<span>Tanpa tindakan bulan ini</span>'
+               + ('<span class="tanda">Tindakan peserta ini</span>' if akhir_aktif else "")
+               + "</div></div>")
+    return "".join(bag)
+
+
 SARAN = {
     "pengingat_H-5_dan_tawaran_autodebet": "Pengingat H-5 dan tawaran autodebet",
     "cek_kelayakan_PBI": "Cek kelayakan PBI",
@@ -402,6 +515,75 @@ p, li { font-feature-settings: "tnum" 1; }
 .tp-trek-ax i { position: absolute; top: .15rem; transform: translateX(-50%); font-style: normal; white-space: nowrap; }
 .tp-trek-ax i:first-child { transform: none; }
 @media (max-width: 640px) { .tp-beban-r, .tp-beban-ax { grid-template-columns: minmax(80px, 110px) minmax(0, 1fr) 88px; gap: .45rem; } }
+
+/* alur perlakuan: tangga keputusan dari peserta ke satu tindakan */
+.tp-alur { margin: .2rem 0 .4rem; --garis: #A9B0AB; --jalur: #17704D; }
+.tp-alur-ujung { display: inline-flex; align-items: center; gap: .55rem; padding: .55rem .95rem; border-radius: 12px;
+                 font-size: .92rem; font-weight: 700; }
+.tp-alur-ujung.mulai { background: #12302A; color: #F2F0E5; }
+.tp-alur-ujung.akhir { background: #ECEBE4; color: #3D4B46; }
+.tp-alur-ujung .n { font-weight: 700; padding-left: .55rem; border-left: 1px solid rgba(242, 240, 229, .35); }
+.tp-alur-ujung.akhir .n { border-left-color: #C9CCC4; }
+.tp-alur-baris, .tp-alur-turun { display: grid; grid-template-columns: minmax(0, 1fr) 64px minmax(0, 1.05fr); }
+.tp-alur-baris { align-items: stretch; transition: opacity .15s; }
+.tp-alur-tanya { background: #FCFCF9; border: 1px solid #DCDFD7; border-radius: 12px; padding: .6rem .8rem; }
+.tp-alur-tanya .kepala { display: flex; align-items: center; gap: .55rem; }
+.tp-alur-tanya .no { flex: none; width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center;
+                     background: #ECEBE4; color: #3D4B46; font-size: .78rem; font-weight: 700; }
+.tp-alur-tanya .q { font-size: .93rem; font-weight: 700; color: #12302A; line-height: 1.3; }
+.tp-alur-tanya .kepala .tp-chip { margin-left: auto; font-size: .72rem; padding: .16rem .55rem; }
+.tp-alur-tanya .s { font-size: .77rem; color: #5E6B66; line-height: 1.42; margin: .25rem 0 0 calc(24px + .55rem); }
+.tp-alur-ya { position: relative; }
+.tp-alur-ya::before { content: ""; position: absolute; left: 4px; right: 9px; top: 50%; border-top: 2px solid var(--garis); }
+.tp-alur-ya::after { content: ""; position: absolute; right: 2px; top: calc(50% - 5px); border-left: 9px solid var(--garis);
+                     border-top: 6px solid transparent; border-bottom: 6px solid transparent; }
+.tp-alur-ya span { position: absolute; left: 0; right: 0; top: calc(50% - 1.35rem); text-align: center;
+                   font-size: .74rem; font-weight: 600; color: #5E6B66; }
+.tp-alur-hasil { display: flex; align-items: center; gap: .7rem; border-radius: 12px; padding: .6rem .8rem;
+                 background: var(--l); }
+.tp-alur-hasil .tp-bulat { width: 34px; height: 34px; border-radius: 10px; background: #FCFCF9; }
+.tp-alur-hasil .isi { min-width: 0; }
+.tp-alur-hasil .nm { font-size: .93rem; font-weight: 700; color: var(--c); line-height: 1.25; }
+.tp-alur-hasil .pl { font-size: .8rem; color: #3D4B46; line-height: 1.35; margin-top: .1rem; }
+.tp-alur-hasil .n { margin-left: auto; text-align: right; font-size: 1.15rem; font-weight: 700; color: #12302A;
+                    line-height: 1.1; white-space: nowrap; }
+.tp-alur-hasil .n small { display: block; font-size: .7rem; font-weight: 400; color: #5E6B66; }
+.tp-alur .tanda { display: inline-block; margin-top: .3rem; font-size: .72rem; font-weight: 700; color: #FCFCF9;
+                  background: var(--c); border-radius: 999px; padding: .12rem .55rem; }
+.tp-alur-ujung .tanda { margin: 0 0 0 .2rem; background: #3D4B46; }
+.tp-alur .tanda.redup { background: transparent; color: #5E6B66; border: 1px dashed #A9B0AB; font-weight: 600; }
+.tp-alur-turun { height: 30px; }
+.tp-alur-turun.pendek { height: 18px; }
+.tp-alur-turun > div { position: relative; }
+.tp-alur-turun > div::before { content: ""; position: absolute; left: calc(.8rem + 11px); top: 0; bottom: 7px;
+                               border-left: 2px solid var(--garis); }
+.tp-alur-turun > div::after { content: ""; position: absolute; left: calc(.8rem + 6px); bottom: 0;
+                              border-top: 8px solid var(--garis); border-left: 6px solid transparent;
+                              border-right: 6px solid transparent; }
+.tp-alur-turun span { position: absolute; left: calc(.8rem + 24px); top: 50%; transform: translateY(-50%);
+                      font-size: .74rem; color: #5E6B66; white-space: nowrap; }
+/* mode satu peserta: jalur disorot, langkah sesudahnya diredupkan */
+.tp-alur-jalur .tp-alur-turun.aktif > div::before { border-left-color: var(--jalur); border-left-width: 3px; }
+.tp-alur-jalur .tp-alur-turun.aktif > div::after { border-top-color: var(--jalur); }
+.tp-alur-jalur .tp-alur-turun.aktif span { color: var(--jalur); font-weight: 600; }
+.tp-alur-jalur .tp-alur-baris.lewat .tp-alur-hasil, .tp-alur-jalur .tp-alur-baris.lewat .tp-alur-ya { opacity: .35; }
+.tp-alur-jalur .tp-alur-baris.kena .tp-alur-tanya { border: 2px solid var(--jalur); }
+.tp-alur-jalur .tp-alur-baris.kena .tp-alur-ya { --garis: var(--jalur); }
+.tp-alur-jalur .tp-alur-baris.kena .tp-alur-ya span { color: var(--jalur); }
+.tp-alur-jalur .tp-alur-baris.kena .tp-alur-hasil { box-shadow: 0 0 0 2px var(--c); }
+.tp-alur-jalur .tp-alur-baris.sesudah { opacity: .38; }
+.tp-alur-jalur .tp-alur-turun:not(.aktif) { opacity: .38; }
+.tp-alur-jalur .tp-alur-ujung.akhir:not(.kena) { opacity: .38; }
+.tp-alur-jalur .tp-alur-ujung.akhir.kena { box-shadow: 0 0 0 2px var(--jalur); }
+@media (max-width: 760px) {
+  .tp-alur-baris { grid-template-columns: 1fr; }
+  .tp-alur-ya { height: 26px; }
+  .tp-alur-ya::before { left: calc(.8rem + 11px); right: auto; top: 0; bottom: 7px; border-top: 0; border-left: 2px solid var(--garis); }
+  .tp-alur-ya::after { left: calc(.8rem + 6px); right: auto; top: auto; bottom: 0; border-top: 8px solid var(--garis);
+                       border-left: 6px solid transparent; border-right: 6px solid transparent; border-bottom: 0; }
+  .tp-alur-ya span { left: calc(.8rem + 24px); right: auto; top: 50%; transform: translateY(-50%); text-align: left; }
+  .tp-alur-turun { grid-template-columns: 1fr; }
+}
 </style>
 """
 

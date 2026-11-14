@@ -38,6 +38,21 @@ pilihan = c2.segmented_control(
                            else f"{ui.EW_MI} {ui.EW_NAMA}  {ui.angka(n_ew)}"))
 pilihan = pilihan or "triase"
 
+# ---------------------------------------------------------------- alur perlakuan (flowchart)
+with st.expander("Alur perlakuan: dari peserta ke satu tindakan", icon=":material/account_tree:"):
+    st.html(ui.alur_perlakuan(jumlah=T_w["utama"].value_counts().to_dict(), total=len(T_w),
+                              label_mulai="Peserta PBPU/BP mandiri" + (" di wilayah terpilih" if wilayah else "")))
+    st.caption(f"Pertanyaan diperiksa dari atas; jawaban ya pertama menentukan tindakan, jadi satu peserta hanya "
+               f"mendapat satu tindakan. Jumlah mengikuti filter wilayah dan kapasitas "
+               f"{st.session_state['f_k']}% di daftar {ui.EW_NAMA}. Kanal tiap perlakuan adalah usulan tim "
+               f"setelah coaching dan perlu dikonfirmasi BPJS.")
+
+
+def label_warna(kode: pd.Series, urutan: list[str], nama, warna) -> tuple[pd.Series, dict]:
+    """Isi kolom label berwarna (satu label per baris) dan konfigurasinya untuk st.dataframe."""
+    opsi = [nama(k) for k in urutan]
+    return kode.map(lambda k: [nama(k)]), dict(options=opsi, color=[warna(k) for k in urutan], disabled=True)
+
 
 def tabel_pilih(view: pd.DataFrame, kunci: str, unduh: pd.DataFrame, nama_file: str,
                 column_config: dict) -> None:
@@ -92,9 +107,13 @@ if pilihan == "triase":
         if hanya_nonaktif:
             d = d[d["status_akhir"] == "nonaktif"]
         d = d.sort_values(["urut_rute", "tunggakan_rp", "id_peserta"], ascending=[True, False, True])
+        # label rute berwarna sesuai perlakuannya (warna sama dengan kartu di atas dan flowchart)
+        isi_rute, cfg_rute = label_warna(d["rute"], ui.RUTE_AKSI, lambda r: ui.RUTE[r]["pendek"],
+                                         lambda r: ui.RUTE[r]["warna"])
         view = pd.DataFrame({
             "ID peserta": d["id_peserta"],
-            "Rute": d["rute"].map(lambda r: ui.RUTE[r]["pendek"]),
+            "Rute": isi_rute,
+            "Perlakuan": d["rute"].map(lambda r: ui.PERLAKUAN[r]["pendek"]),
             "Alasan": d["alasan"].map(ui.alasan_rapi),
             "Status": d["status_akhir"].map(ui.STATUS),
             "Tunggakan": d["tunggakan_bulan"].astype(int),
@@ -106,14 +125,18 @@ if pilihan == "triase":
         unduh = d[["id_peserta", "rute", "alasan", "status_akhir", "tunggakan_bulan", "tunggakan_rp",
                    "kode_wilayah", "rentang_desil"]].assign(
             juga_berisiko_menunggak=d["id_peserta"].isin(ew_ids), tindakan_utama=d["utama"],
+            perlakuan=d["rute"].map(lambda r: ui.PERLAKUAN[r]["pendek"]),
             keputusan=d["id_peserta"].map(ui.label_keputusan))
         if not ui.keputusan():
             view = view.drop(columns="Keputusan")
         kunci = "tbl_triase_" + str(abs(hash((tuple(wilayah), tuple(sorted(rute)), hanya_nonaktif))))
         tabel_pilih(view, kunci, unduh, "tepat_triase.csv", {
             "ID peserta": st.column_config.TextColumn(width=88, pinned=True),
-            "Rute": st.column_config.TextColumn(width=104, help=" | ".join(
-                f"{ui.RUTE[r]['pendek']}: {ui.RUTE[r]['nama']}" for r in ui.RUTE_AKSI)),
+            "Rute": st.column_config.MultiselectColumn(width=118, help=" | ".join(
+                f"{ui.RUTE[r]['pendek']}: {ui.RUTE[r]['nama']}" for r in ui.RUTE_AKSI), **cfg_rute),
+            "Perlakuan": st.column_config.TextColumn(
+                width=230, help="Yang dikerjakan petugas, lewat kanal yang sudah ada. Usulan tim, perlu "
+                                "dikonfirmasi BPJS. Alurnya ada di bagian Alur perlakuan."),
             "Alasan": st.column_config.TextColumn(width=420),
             "Status": st.column_config.TextColumn(width=78),
             "Tunggakan": st.column_config.NumberColumn(format="%d bulan", width=88,
@@ -147,13 +170,21 @@ else:
         f"{ui.angka(ke_rute)} peserta juga ada di rute verifikasi, jadi ditangani lewat verifikasi."))
 
     d = ew_utama
+    # saran berwarna: warna mengikuti perlakuan yang paling dekat (cek PBI biru, autodebet hijau)
+    warna_saran = {"pengingat_H-5_dan_tawaran_autodebet": ui.WARNA_EW,
+                   "cek_kelayakan_PBI": ui.RUTE["rujuk_cek_kelayakan_PBI"]["warna"],
+                   "pengingat_saldo_autodebet": ui.RUTE["pengingat_autodebet_REHAB"]["warna"]}
+    saran_pendek = {"pengingat_H-5_dan_tawaran_autodebet": "Pengingat H-5 + autodebet",
+                    "cek_kelayakan_PBI": "Cek kelayakan PBI",
+                    "pengingat_saldo_autodebet": "Pengingat saldo autodebet"}
+    isi_saran, cfg_saran = label_warna(d["ew_saran"], list(ui.SARAN), saran_pendek.get, warna_saran.get)
     view = pd.DataFrame({
         "Peringkat": d["urut"].values,
         "ID peserta": d["id_peserta"].values,
         # dibulatkan ke bawah: skor 0,9975 tampil 99%, bukan 100% yang terkesan pasti
         "Peluang menunggak": np.floor(100 * d["ew_skor"].values),
         "Alasan": d["ew_alasan"].map(ui.alasan_rapi).values,
-        "Saran": d["ew_saran"].map(ui.SARAN).values,
+        "Saran": isi_saran.values,
         "Wilayah": d["kode_wilayah"].values,
         "Juga di": d["rute"].map(lambda r: ui.RUTE[r]["pendek"]).values,
         "Keputusan": d["id_peserta"].map(ui.label_keputusan).values,
@@ -173,7 +204,7 @@ else:
             format="%.0f%%", min_value=0, max_value=100, width=150,
             help="Peluang menunggak dalam 3 bulan menurut model (data sintetis)"),
         "Alasan": st.column_config.TextColumn(width=360),
-        "Saran": st.column_config.TextColumn(width=200),
+        "Saran": st.column_config.MultiselectColumn(width=210, help="Perlakuan yang disarankan model", **cfg_saran),
         "Wilayah": st.column_config.TextColumn(width=66),
         "Juga di": st.column_config.TextColumn(
             width=98, help="Juga memenuhi rute triase ini, tetapi ditangani lewat daftar ini"),
