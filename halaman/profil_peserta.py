@@ -5,13 +5,17 @@ import altair as alt
 import pandas as pd
 import streamlit as st
 
+import akun
 import llm
 import pesan_template
 import tepat_ui as ui
 from ikon import ikon
 
-T = ui.tabel_peserta()
-IDX = T.set_index("id_peserta")
+T_SEMUA = ui.tabel_peserta()
+IDX = T_SEMUA.set_index("id_peserta")
+PUSAT = akun.adalah_pusat()
+# pilihan contoh untuk kantor cabang hanya dari wilayahnya
+T = T_SEMUA if PUSAT else T_SEMUA[T_SEMUA["kode_wilayah"].isin(akun.wilayah_akun())]
 W = ui.WARNA
 STATUS_WARNA = {"aktif": ("#17704D", "#E1EEE6"), "nonaktif": ("#9A3F12", "#F6E4D6"),
                 "masa_tunggu": ("#9A5F0E", "#F5E6C8")}
@@ -69,6 +73,11 @@ if pid not in IDX.index:
     st.markdown(f":material/error: ID **{ui.e(pid)}** tidak ada di data peserta mandiri. Periksa penulisannya.")
     st.stop()
 
+if not akun.boleh_peserta(IDX.loc[pid, "kode_wilayah"]):
+    ui.kepala("Profil peserta", "Peserta di luar wilayah kantor cabang tidak dibuka.")
+    st.info("Peserta ini di luar wilayah kantor cabang Anda.", icon=":material/lock:")
+    st.stop()
+
 st.session_state["_pid_terakhir"] = pid
 p = IDX.loc[pid].to_dict() | {"id_peserta": pid}
 p["alasan_rapi"] = ui.alasan_rapi(p["alasan"])
@@ -80,7 +89,8 @@ reakt = ui.linimasa("linimasa_reaktivasi", pid).sort_values("tgl_reakt")
 pasangan = ui.pasangan_reaktivasi_klaim(reakt, klaim)
 
 # daftar berisiko menunggak memakai filter dan kapasitas yang sedang dipakai di halaman Daftar kerja
-ew_list, _ = ui.daftar_ew(T, st.session_state.get("f_wilayah", []), st.session_state.get("f_k", 5))
+ew_list, _ = ui.daftar_ew(T, akun.wilayah_efektif(st.session_state.get("f_wilayah", [])),
+                          st.session_state.get("f_k", 5))
 masuk_ew = pid in set(ew_list["id_peserta"])
 utama = ui.tindakan_utama(pd.Series([p["rute"]]), pd.Series([masuk_ew])).iloc[0]
 m = ui.manifest()
@@ -346,27 +356,31 @@ with kiri:
     else:
         c, lmbt, ik = _warna_tindakan(utama)
         st.html(f'<div style="margin:0 0 .5rem">{ui.chip(sasaran[1], ik, c, lmbt)}</div>')
-        kep = st.radio("Keputusan", ["setuju", "tolak"], index=None, horizontal=True, key=f"kep_{pid}",
-                       format_func={"setuju": ":material/check_circle: Setuju",
-                                    "tolak": ":material/cancel: Tolak"}.get,
-                       label_visibility="collapsed")
-        alasan = None
-        if kep == "tolak":
-            alasan = st.selectbox("Alasan menolak", ALASAN_TOLAK, index=None, key=f"alasan_{pid}",
-                                  placeholder="Pilih alasan")
-        catatan = st.text_area("Catatan", key=f"catatan_{pid}", height=80,
-                               placeholder="Wajib bila alasannya Lainnya")
-        if st.button("Simpan keputusan", icon=":material/save:", type="primary", disabled=kep is None,
-                     key=f"simpan_{pid}"):
-            if kep == "tolak" and not alasan:
-                st.error("Pilih alasan menolak, lalu simpan lagi.")
-            elif alasan == "Lainnya" and not catatan.strip():
-                st.error("Tulis catatan untuk alasan Lainnya, lalu simpan lagi.")
-            else:
-                ui.keputusan()[pid] = dict(id_peserta=pid, sasaran=sasaran[0], kode=sasaran[2],
-                                           keputusan=kep, alasan=alasan or "", catatan=catatan.strip(),
-                                           waktu=datetime.now().strftime("%Y-%m-%d %H:%M"))
-                st.toast("Keputusan disimpan", icon=":material/task_alt:")
+        if PUSAT:  # Pusat hanya membaca; keputusan dicatat petugas kantor cabang
+            st.caption(":material/lock: Keputusan dicatat oleh petugas kantor cabang")
+        else:
+            kep = st.radio("Keputusan", ["setuju", "tolak"], index=None, horizontal=True, key=f"kep_{pid}",
+                           format_func={"setuju": ":material/check_circle: Setuju",
+                                        "tolak": ":material/cancel: Tolak"}.get,
+                           label_visibility="collapsed")
+            alasan = None
+            if kep == "tolak":
+                alasan = st.selectbox("Alasan menolak", ALASAN_TOLAK, index=None, key=f"alasan_{pid}",
+                                      placeholder="Pilih alasan")
+            catatan = st.text_area("Catatan", key=f"catatan_{pid}", height=80,
+                                   placeholder="Wajib bila alasannya Lainnya")
+            if st.button("Simpan keputusan", icon=":material/save:", type="primary", disabled=kep is None,
+                         key=f"simpan_{pid}"):
+                if kep == "tolak" and not alasan:
+                    st.error("Pilih alasan menolak, lalu simpan lagi.")
+                elif alasan == "Lainnya" and not catatan.strip():
+                    st.error("Tulis catatan untuk alasan Lainnya, lalu simpan lagi.")
+                else:
+                    ui.keputusan()[pid] = dict(id_peserta=pid, sasaran=sasaran[0], kode=sasaran[2],
+                                               keputusan=kep, alasan=alasan or "", catatan=catatan.strip(),
+                                               waktu=datetime.now().strftime("%Y-%m-%d %H:%M"),
+                                               dicatat_oleh=akun.nama_akun())
+                    st.toast("Keputusan disimpan", icon=":material/task_alt:")
         ada = ui.keputusan().get(pid)
         if ada:
             jam = datetime.strptime(ada["waktu"], "%Y-%m-%d %H:%M")
@@ -374,7 +388,13 @@ with kiri:
                     f"{jam.day} {ui.BULAN[jam.month - 1]} pukul {jam:%H.%M}")
             if ada["alasan"]:
                 teks += f". {ada['alasan']}"
+            if ada.get("catatan") and PUSAT:
+                teks += f". Catatan: {ada['catatan']}"
+            if ada.get("dicatat_oleh"):
+                teks += f". Dicatat oleh {ada['dicatat_oleh']}."
             st.markdown(teks)
+        elif PUSAT:
+            st.markdown("Belum ada keputusan dari kantor cabang.")
 
 def _antre_ai(kunci_antre: str) -> None:
     """Callback tombol AI: hanya menandai antrean (seketika). Panggilan AI-nya jalan di badan halaman,

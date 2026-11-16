@@ -32,6 +32,7 @@ def _konstanta(nama_file: str, *nama: str) -> list:
 
 # satu sumber aturan "klaim besar": konstanta yang sama dengan cek_sinyal.py
 KLAIM_BESAR, JEDA_KAIT = _konstanta("cek_sinyal.py", "KLAIM_BESAR", "JEDA_KAIT")
+HALAMAN_MASUK = "halaman/masuk.py"
 HALAMAN_DAFTAR = "halaman/daftar_kerja.py"
 HALAMAN_PROFIL = "halaman/profil_peserta.py"
 HALAMAN_KEBIJAKAN = "halaman/kebijakan.py"
@@ -382,6 +383,12 @@ def keputusan() -> dict:
     return st.session_state.setdefault("_keputusan", {})
 
 
+def pencatat(pid: str) -> str:
+    """Nama akun yang mencatat keputusan peserta ini ('' bila belum ada)."""
+    k = keputusan().get(pid)
+    return "" if not k else k.get("dicatat_oleh", "")
+
+
 def label_keputusan(pid: str) -> str:
     k = keputusan().get(pid)
     return "" if not k else ("Disetujui" if k["keputusan"] == "setuju" else "Ditolak")
@@ -584,6 +591,11 @@ p, li { font-feature-settings: "tnum" 1; }
   .tp-alur-ya span { left: calc(.8rem + 24px); right: auto; top: 50%; transform: translateY(-50%); text-align: left; }
   .tp-alur-turun { grid-template-columns: 1fr; }
 }
+.tp-pita { display: flex; flex-wrap: wrap; align-items: center; gap: .3rem .6rem; padding: .35rem .8rem;
+           background: #FCFCF9; border: 1px solid #DCDFD7; border-radius: 12px; font-size: .88rem; color: #12302A; }
+.tp-pita .ket { color: #5E6B66; font-size: .8rem; }
+.tp-peran-pusat { background: #E1EEE6; color: #17704D; }
+.tp-peran-cabang { background: #DDE6F0; color: #2F5D8C; }
 </style>
 """
 

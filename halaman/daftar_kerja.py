@@ -3,6 +3,7 @@ import numpy as np
 import pandas as pd
 import streamlit as st
 
+import akun
 import tepat_ui as ui
 
 FILTER = dict(f_wilayah=[], f_daftar="triase", f_rute=list(ui.RUTE_AKSI), f_nonaktif=False, f_k=5)
@@ -11,6 +12,9 @@ for k, v in FILTER.items():
     st.session_state.setdefault(k, v)
 
 T = ui.tabel_peserta()
+CABANG = akun.adalah_cabang()
+if CABANG:  # kantor cabang hanya melihat peserta di wilayahnya
+    T = T[T["kode_wilayah"].isin(akun.wilayah_akun())]
 
 ui.kepala("Daftar kerja",
           "Siapa yang ditangani bulan ini, lewat jalur apa, dan kenapa. Satu peserta hanya mendapat satu "
@@ -18,9 +22,13 @@ ui.kepala("Daftar kerja",
 
 # ---------------------------------------------------------------- filter bersama dan hitungan
 c1, c2 = st.columns([2, 3], vertical_alignment="bottom")
-wilayah = c1.multiselect(":material/location_on: Wilayah", sorted(T["kode_wilayah"].unique()),
-                         key="f_wilayah", placeholder="Semua wilayah")
+wilayah = c1.multiselect(":material/location_on: Wilayah",
+                         akun.wilayah_akun() if CABANG else sorted(T["kode_wilayah"].unique()),
+                         key="f_wilayah",
+                         placeholder="Semua wilayah cabang ini" if CABANG else "Semua wilayah")
+wilayah = akun.wilayah_efektif(wilayah)  # cabang: kosong = semua wilayah cabangnya
 T_w = T[T["kode_wilayah"].isin(wilayah)] if wilayah else T
+terpilih_w = bool(wilayah) and not (CABANG and set(wilayah) == set(akun.wilayah_akun()))
 
 ew_list, n_ew_dinilai = ui.daftar_ew(T, wilayah, st.session_state["f_k"])
 ew_list = ew_list.assign(urut=np.arange(1, len(ew_list) + 1))  # peringkat risiko di daftar k
@@ -41,7 +49,8 @@ pilihan = pilihan or "triase"
 # ---------------------------------------------------------------- alur perlakuan (flowchart)
 with st.expander("Alur perlakuan: dari peserta ke satu tindakan", icon=":material/account_tree:"):
     st.html(ui.alur_perlakuan(jumlah=T_w["utama"].value_counts().to_dict(), total=len(T_w),
-                              label_mulai="Peserta PBPU/BP mandiri" + (" di wilayah terpilih" if wilayah else "")))
+                              label_mulai="Peserta PBPU/BP mandiri" + (" di wilayah terpilih" if terpilih_w else
+                                                                  " di wilayah cabang ini" if CABANG else "")))
     st.caption(f"Pertanyaan diperiksa dari atas; jawaban ya pertama menentukan tindakan, jadi satu peserta hanya "
                f"mendapat satu tindakan. Jumlah mengikuti filter wilayah dan kapasitas "
                f"{st.session_state['f_k']}% di daftar {ui.EW_NAMA}. Kanal tiap perlakuan adalah usulan tim "
@@ -61,6 +70,8 @@ def tabel_pilih(view: pd.DataFrame, kunci: str, unduh: pd.DataFrame, nama_file: 
         kol = [c for c in view.columns if c != "Keputusan"]
         kol.insert(kol.index("ID peserta") + 1, "Keputusan")
         view = view[kol]
+    if "Dicatat oleh" in view.columns:  # hanya Pusat; sempit supaya tabel tidak melebar
+        view = view.assign(**{"Dicatat oleh": view["Dicatat oleh"].str.replace(" (contoh)", "", regex=False)})
     sel = st.session_state.get(kunci)
     pid = None
     if sel is not None and sel.selection.rows:
@@ -121,14 +132,18 @@ if pilihan == "triase":
             "DTSEN": d["rentang_desil"].map(ui.DESIL),
             "Juga di": np.where(d["id_peserta"].isin(ew_ids), ui.EW_NAMA, ""),
             "Keputusan": d["id_peserta"].map(ui.label_keputusan),
+            "Dicatat oleh": d["id_peserta"].map(ui.pencatat),
         })
         unduh = d[["id_peserta", "rute", "alasan", "status_akhir", "tunggakan_bulan", "tunggakan_rp",
                    "kode_wilayah", "rentang_desil"]].assign(
             juga_berisiko_menunggak=d["id_peserta"].isin(ew_ids), tindakan_utama=d["utama"],
             perlakuan=d["rute"].map(lambda r: ui.PERLAKUAN[r]["pendek"]),
-            keputusan=d["id_peserta"].map(ui.label_keputusan))
+            keputusan=d["id_peserta"].map(ui.label_keputusan),
+            dicatat_oleh=d["id_peserta"].map(ui.pencatat))
         if not ui.keputusan():
-            view = view.drop(columns="Keputusan")
+            view = view.drop(columns=["Keputusan", "Dicatat oleh"])
+        elif CABANG:  # pencatat sama dengan akun sendiri; kolom ini untuk Pusat
+            view = view.drop(columns="Dicatat oleh")
         kunci = "tbl_triase_" + str(abs(hash((tuple(wilayah), tuple(sorted(rute)), hanya_nonaktif))))
         tabel_pilih(view, kunci, unduh, "tepat_triase.csv", {
             "ID peserta": st.column_config.TextColumn(width=88, pinned=True),
@@ -146,6 +161,7 @@ if pilihan == "triase":
             "Juga di": st.column_config.TextColumn(
                 width=110, help="Juga memenuhi daftar lain, tetapi ditangani lewat rute ini"),
             "Keputusan": st.column_config.TextColumn(width=88, help="Keputusan petugas di sesi ini"),
+            "Dicatat oleh": st.column_config.TextColumn(width=150, help="Akun kantor cabang yang mencatat"),
         })
 
 # ---------------------------------------------------------------- berisiko menunggak
@@ -162,11 +178,14 @@ else:
                 n=ui.angka(int(saran.get(s, 0))), label=ikon_saran[s][1]) for s in ui.SARAN]))
 
     c1, c2 = st.columns([3, 5], vertical_alignment="center")
-    c1.slider(":material/groups: Kapasitas petugas bulan ini", 1, 20, key="f_k", format="%d%% peserta aktif")
+    c1.slider(":material/groups: Kapasitas petugas bulan ini", 1, 20, key="f_k", format="%d%% peserta aktif",
+              disabled=CABANG)
+    if CABANG:
+        c1.caption(f"Kapasitas ditetapkan Kantor Pusat: {st.session_state['f_k']}%")
     c2.html(ui.info(
         f"Peserta aktif yang berisiko menunggak dalam 3 bulan ke depan menurut model peringatan dini, "
         f"diurutkan dari peluang tertinggi. Kapasitas dihitung dari {ui.angka(n_ew_dinilai)} peserta aktif"
-        f"{' di wilayah terpilih' if wilayah else ''}; angka proposal adalah 5%, yaitu 712 orang. "
+        f"{' di wilayah terpilih' if terpilih_w else ' di wilayah cabang ini' if CABANG else ''}; angka proposal adalah 5%, yaitu 712 orang. "
         f"{ui.angka(ke_rute)} peserta juga ada di rute verifikasi, jadi ditangani lewat verifikasi."))
 
     d = ew_utama
@@ -188,12 +207,16 @@ else:
         "Wilayah": d["kode_wilayah"].values,
         "Juga di": d["rute"].map(lambda r: ui.RUTE[r]["pendek"]).values,
         "Keputusan": d["id_peserta"].map(ui.label_keputusan).values,
+        "Dicatat oleh": d["id_peserta"].map(ui.pencatat).values,
     })
     unduh = d[["ew_peringkat", "id_peserta", "ew_skor", "ew_alasan", "ew_saran", "kode_wilayah",
                "rute", "urut"]].rename(columns={"urut": "peringkat_di_daftar"}).assign(
-        keputusan=d["id_peserta"].map(ui.label_keputusan))
+        keputusan=d["id_peserta"].map(ui.label_keputusan),
+        dicatat_oleh=d["id_peserta"].map(ui.pencatat))
     if not ui.keputusan():
-        view = view.drop(columns="Keputusan")
+        view = view.drop(columns=["Keputusan", "Dicatat oleh"])
+    elif CABANG:
+        view = view.drop(columns="Dicatat oleh")
     kunci = "tbl_ew_" + str(abs(hash((tuple(wilayah), st.session_state["f_k"]))))
     tabel_pilih(view, kunci, unduh, "tepat_berisiko_menunggak.csv", {
         "Peringkat": st.column_config.NumberColumn(
@@ -209,4 +232,5 @@ else:
         "Juga di": st.column_config.TextColumn(
             width=98, help="Juga memenuhi rute triase ini, tetapi ditangani lewat daftar ini"),
         "Keputusan": st.column_config.TextColumn(width=88),
+        "Dicatat oleh": st.column_config.TextColumn(width=150),
     })
