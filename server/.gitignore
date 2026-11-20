@@ -1,0 +1,6 @@
+# salinan data dan antarmuka untuk build rilis (dibuat rilis.sh)
+internal/aset/data/
+internal/aset/bukti/
+internal/aset/web/
+# berkas program hasil rilis.sh
+rilis/

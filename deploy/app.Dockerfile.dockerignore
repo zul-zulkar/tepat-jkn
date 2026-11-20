@@ -1,0 +1,17 @@
+**
+!static/fonts
+!static/logo
+!web
+web/node_modules
+web/.next
+web/out
+web/public
+!server
+server/internal/aset/data
+server/internal/aset/bukti
+server/internal/aset/web
+server/rilis
+!app_data
+app_data/evaluasi_label.parquet
+!bukti/hasil/skor_verifikasi.csv
+!bukti/hasil/beban_strata.csv

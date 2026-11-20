@@ -1,0 +1,7 @@
+node_modules/
+.next/
+out/
+next-env.d.ts
+*.tsbuildinfo
+# disalin dari ../static saat build (salin-aset.mjs)
+public/

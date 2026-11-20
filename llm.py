@@ -42,7 +42,7 @@ import time
 import unicodedata
 import urllib.error
 import urllib.request
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from datetime import date
 from typing import Callable
 
@@ -369,8 +369,8 @@ _SATUAN_UANG = re.compile(r"\b\d[\d.,]*\s*(?:ribu|rb|juta|jt|rupiah)\b", re.I)
 
 
 def _norm(s: str) -> str:
-    s = unicodedata.normalize("NFKC", s).replace(" ", " ")
-    s = re.sub(r"[​-‏⁠﻿]", "", s)
+    s = unicodedata.normalize("NFKC", s).replace("\u00a0", " ")
+    s = re.sub("[\u200b-\u200f\u2060\ufeff]", "", s)
     return s
 
 
