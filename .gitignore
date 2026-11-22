@@ -31,3 +31,4 @@ _cache_kalibrasi/
 .streamlit/secrets.toml
 .env
 .env.*
+!server/internal/data/
