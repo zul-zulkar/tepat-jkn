@@ -64,7 +64,7 @@ dan cocok; **luar repo** = dari sumber publik yang dikutip di slide 12, tidak ad
 
 | Halaman | Angka | Arti | Sumber | Status |
 |---|---|---|---|---|
-| Daftar kerja | 7.788 | Peserta dengan satu tindakan bulan ini (k 5%) | aplikasi; CLAUDE.md bagian 7 | tidak dihitung ulang di sesi ini |
+| Daftar kerja | 7.788 | Peserta dengan satu tindakan bulan ini (k 5%) | aplikasi; catatan kerja bagian 7 | tidak dihitung ulang di sesi ini |
 | Daftar kerja | 650 | Peserta "berisiko menunggak (3 bulan ke depan)" | idem | tidak dihitung ulang di sesi ini |
 | Kebijakan | 169 (IK 131-213) | Kelebihan rawat inap terjadwal hari 46-60 = perkiraan yang ditunda | `hasil/ringkasan.txt` | cek |
 | Kebijakan | 227 (IK 185-274) | Lompatan, ukuran uji (bukan jumlah yang ditunda) | idem | cek |
